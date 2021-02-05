@@ -31,7 +31,7 @@ public class ARN {
     private List<List<Integer>> ARNs = new ArrayList<>();
 
     public static void main(String[] args) {
-        String inputMessage = "13000,13000,13000,13000,7000,5000,6000,13000,5000,2000,7000,13000,5000,2000,7000|5000,5000,5000,10000|5";
+        String inputMessage = "13000,13000,7000,5000,6000|5000,5000,5000,10000|5";
         ARN arn = new ARN();
         Instant start = Instant.now();
         System.out.println(arn.algorithm_task(inputMessage));
@@ -63,14 +63,14 @@ public class ARN {
 
         Pair<Integer, Integer> chromosomeSimulateVal = chromosomeSimulate();
         int bestValue = chromosomeSimulateVal.getKey(),
-            bestPos = chromosomeSimulateVal.getValue();
+            bestPosition = chromosomeSimulateVal.getValue();
 
-        if (bestValue < 0 && bestPos < 0) {
+        if (bestValue < 0 && bestPosition < 0) {
             return "0";
         }
 
         System.out.println("Best Value = " + bestValue);
-        String content = ARNs.get(bestPos).stream()
+        String content = ARNs.get(bestPosition).stream()
             .map(String::valueOf)
             .collect(Collectors.joining(","));
         System.out.print("Best ARN = " + content);
@@ -95,12 +95,11 @@ public class ARN {
     }
 
     public Pair<Integer, Integer> chromosomeSimulate() {
-
         List<Integer> ARN = new ArrayList<>();
         List<Integer> stockState = new ArrayList<>(stocks);
 
         start_gen = Instant.now();
-        isFinishedGen = false;
+//        isFinishedGen = false;
         generateARN(ARN, stockState);
 
         ARNs.sort(Comparator.comparingInt(this::getWeightOfARN));
@@ -119,64 +118,65 @@ public class ARN {
         int maxRandomInt = ARNsN - 1;
 
         Instant start = Instant.now(); // auto start = high_resolution_clock::now();
-        int bestPos;
+        int bestPosition = 0;
 
         int genCount = 0;
         while (true) {
             genCount++;
-            int maxARNPos = 0, secondARNPos, worstARNPos;
+            int maxARNPosition = 0, secondARNPosition, worstARNPosition;
             int mutationARNsN = (int) (ARNsN * MUTATION_RATE);
+            //todo thinking mutationARNsN
             for (int i = 0; i < mutationARNsN; ++i) {
                 Triplet<Integer, Integer, Integer> findBestInPopulationVal = findBestInPopulation(ARNs, ARNsN);
-                maxARNPos = findBestInPopulationVal.getValue0();
-                secondARNPos = findBestInPopulationVal.getValue1();
-                worstARNPos = findBestInPopulationVal.getValue2();
-                int randInt = getRandomNumber(0, maxRandomInt);
-                mutate(ARNs.get(randInt), worstARNPos, getWeightOfARN(ARNs.get(worstARNPos)));
+                maxARNPosition = findBestInPopulationVal.getValue0();
+                secondARNPosition = findBestInPopulationVal.getValue1();
+                worstARNPosition = findBestInPopulationVal.getValue2();
+                int randInt = getRandomNumber(secondARNPosition + 1, maxRandomInt);
+                mutate(ARNs.get(randInt), worstARNPosition, getWeightOfARN(ARNs.get(worstARNPosition)));
             }
 
             Instant stop = Instant.now();
             long duration = Duration.between(start, stop).getSeconds();
             if (duration > TIME_LIMIT) {
-                bestPos = maxARNPos;
+                bestPosition = maxARNPosition;
                 break;
             }
         }
         System.out.println("In " + genCount + " Generations");
-        return new Pair<>(getWeightOfARN(ARNs.get(bestPos)), bestPos);
+        return new Pair<>(getWeightOfARN(ARNs.get(bestPosition)), bestPosition);
     }
 
     Triplet<Integer, Integer, Integer> findBestInPopulation(List<List<Integer>> population, int populationSize) {
         int maxValue = Integer.MAX_VALUE;
+        int maxARNPosition = 0;
+        
         int secondValue = Integer.MAX_VALUE;
-        int maxARNPos = 0;
-        int secondARNPos = 0;
+        int secondARNPosition = 0;
 
         int worstValue = Integer.MIN_VALUE;
-        int worstARNPos = 0;
+        int worstARNPosition = 0;
 
         for (int i = 0; i < populationSize; ++i) {
-            List<Integer> tmpARN = population.get(i);
-            int currValue = getWeightOfARN(tmpARN);
+            int currValue = getWeightOfARN(population.get(i));
             if (currValue < maxValue) {
                 secondValue = maxValue;
-                secondARNPos = maxARNPos;
+                secondARNPosition = maxARNPosition;
                 maxValue = currValue;
-                maxARNPos = i;
+                maxARNPosition = i;
             } else {
                 if (secondValue > currValue) {
                     secondValue = currValue;
-                    secondARNPos = i;
+                    secondARNPosition = i;
                 }
             }
 
             if (currValue > worstValue) {
-                worstARNPos = i;
+                worstARNPosition = i;
                 worstValue = currValue;
             }
         }
 
-        return new Triplet<>(maxARNPos, secondARNPos, worstARNPos);
+        return new Triplet<>(maxARNPosition, secondARNPosition, worstARNPosition);
     }
 
     void generateARN(List<Integer> currARN, List<Integer> currStockState) {
@@ -210,11 +210,11 @@ public class ARN {
             int idx = currARN.size();
 
             if (orders.get(idx).equals(currStockState.get(i))) {
-                currStockState.set(i, currStockState.get(i) - orders.get(idx));
+                List<Integer> stockTemp = new ArrayList<>(currStockState);
+                stockTemp.set(i, stockTemp.get(i) - orders.get(idx));
                 currARN.add(i);
-                generateARN(currARN, currStockState);
+                generateARN(currARN, stockTemp);
                 currARN.remove(currARN.size() - 1);
-                currStockState.set(i, currStockState.get(i) + orders.get(idx));
                 if (isFinishedGen) {
                     return;
                 }
@@ -225,10 +225,10 @@ public class ARN {
                 }
             } else {
                 if (orders.get(idx) + CUT_WIDTH <= currStockState.get(i)) {
-                    currStockState.set(i, currStockState.get(i) - orders.get(idx) - CUT_WIDTH);
+                    List<Integer> stockTemp = new ArrayList<>(currStockState);
+                    stockTemp.set(i, stockTemp.get(i) - orders.get(idx) - CUT_WIDTH);
                     currARN.add(i);
-                    generateARN(currARN, currStockState);
-                    currStockState.set(i, currStockState.get(i) + orders.get(idx) + CUT_WIDTH);
+                    generateARN(currARN, stockTemp);
                     currARN.remove(currARN.size() - 1);
                     if (isFinishedGen) {
                         return;
@@ -249,15 +249,19 @@ public class ARN {
         }
     }
 
-    void mutate(List<Integer> ARN, int worstPos, int worstValue) {
+    void mutate(List<Integer> ARN, int worstPosition, int worstValue) {
         List<Integer> stockTemp = computeStockRemain(ARN);
+        //todo thinking bestGapOfAll for what?
         int bestGapOfAll = Integer.MAX_VALUE;
+        //todo thinking finalMoveTo for what?
         int finalMoveTo = -1;
-        int finalFromPos = -1;
+        //todo thinking finalFromPosition for what?
+        int finalFromPosition = -1;
+
         for (int i = 0; i < ordersN; ++i) {
             int bestGap = Integer.MAX_VALUE;
             int moveTo = -1;
-            int fromPos = -1;
+            int fromPosition = -1;
             for (int j = 0; j < stocksN; ++j) {
                 if (j == ARN.get(i)) {
                     continue;
@@ -267,14 +271,15 @@ public class ARN {
                         if (bestGap > -stockTemp.get(ARN.get(i))) {
                             bestGap = -stockTemp.get(ARN.get(i));
                             moveTo = j;
-                            fromPos = i;
+                            fromPosition = i;
                         }
                     }
                     if (stockTemp.get(j) >= orders.get(i) + CUT_WIDTH) {
-                        if (bestGap > (stockTemp.get(j) - (orders.get(i) + CUT_WIDTH)) - stockTemp.get(ARN.get(i))) {
-                            bestGap = (stockTemp.get(j) - (orders.get(i) + CUT_WIDTH)) - stockTemp.get(ARN.get(i));
+                        int number = (stockTemp.get(j) - (orders.get(i) + CUT_WIDTH)) - stockTemp.get(ARN.get(i));
+                        if (bestGap > number) {
+                            bestGap = number;
                             moveTo = j;
-                            fromPos = i;
+                            fromPosition = i;
                         }
                     }
                 }
@@ -283,18 +288,18 @@ public class ARN {
             if (bestGapOfAll > bestGap) {
                 bestGapOfAll = bestGap;
                 finalMoveTo = moveTo;
-                finalFromPos = fromPos;
+                finalFromPosition = fromPosition;
             }
         }
 
-        if (finalFromPos < 0 || finalMoveTo < 0) {
+        if (finalFromPosition < 0 || finalMoveTo < 0) {
             return;
         }
 
-        ARN.set(finalFromPos, finalMoveTo);
+        ARN.set(finalFromPosition, finalMoveTo);
 
         if (getWeightOfARN(ARN) < worstValue) {
-            ARNs.set(worstPos, ARN);
+            ARNs.set(worstPosition, ARN);
         }
     }
 
