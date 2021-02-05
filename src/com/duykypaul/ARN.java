@@ -31,10 +31,11 @@ public class ARN {
     private List<List<Integer>> ARNs = new ArrayList<>();
 
     public static void main(String[] args) {
-        String inputMessage = "13000,13000,7000,5000,6000|5000,5000,5000,10000|5";
+        String inputMessage = "7000,5000,13000,13000,6000|5000,5000,5000,10000|5";
+        String inputMessage1 = "2220,2220,2534,7093,7093,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|3303,3303,3303,3303,3303,3303,31803180,3180,4080,4080,4080,4080,4180,4180,990|5";
         ARN arn = new ARN();
         Instant start = Instant.now();
-        System.out.println(arn.algorithm_task(inputMessage));
+        System.out.println(arn.algorithm_task(inputMessage1));
         System.out.println("time line: " + Duration.between(start, Instant.now()));
     }
 
@@ -101,6 +102,9 @@ public class ARN {
         start_gen = Instant.now();
 //        isFinishedGen = false;
         generateARN(ARN, stockState);
+
+        System.out.println(105);
+        ARNs.forEach(item -> System.out.println(Arrays.toString(item.toArray())));
 
         ARNs.sort(Comparator.comparingInt(this::getWeightOfARN));
 

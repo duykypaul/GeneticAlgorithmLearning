@@ -1,5 +1,10 @@
 package com.duykypaul.steel;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+import org.javatuples.Triplet;
+
+import java.util.List;
+
 public class GeneticAlgorithm {
     private int populationSize;
 
@@ -35,11 +40,13 @@ public class GeneticAlgorithm {
     /**
      * Initialize population
      *
-     * @param chromosomeLength The length of the individuals chromosome
+     * @param stocks
+     * @param orders
+     * @param CUT_WIDTH
      * @return population The initial population generated
      */
-    public Population initPopulation(int chromosomeLength) {
-        return new Population(this.populationSize, chromosomeLength);
+    public Population initPopulation(List<Integer> stocks, List<Integer> orders, int CUT_WIDTH) {
+        return new Population(this.populationSize, stocks, orders, CUT_WIDTH);
     }
 
     /**
@@ -54,22 +61,14 @@ public class GeneticAlgorithm {
      *
      * @param individual
      *            the individual to evaluate
+     * @param stocks
+     * @param orders
+     * @param cutWidth
      * @return double The fitness value for individual
      */
-    public double calcFitness(Individual individual) {
+    public double calcFitness(Individual individual, List<Integer> stocks, List<Integer> orders, int cutWidth) {
         // Track number of correct genes
-        int correctGenes = 0;
-
-        // Loop over individual's genes
-        for (int geneIndex = 0; geneIndex < individual.getChromosomeLength(); geneIndex++) {
-            // Add one fitness point for each "1" found
-            if (individual.getGene(geneIndex) == 1) {
-                correctGenes += 1;
-            }
-        }
-
-        // Calculate fitness
-        double fitness = (double) correctGenes / individual.getChromosomeLength();
+        double fitness = Population.getWeightOfARN(individual.getChromosome(), stocks, orders, cutWidth);
 
         // Store fitness
         individual.setFitness(fitness);
@@ -94,10 +93,12 @@ public class GeneticAlgorithm {
         // Loop over population evaluating individuals and suming population
         // fitness
         for (Individual individual : population.getIndividuals()) {
-            populationFitness += calcFitness(individual);
+            populationFitness += calcFitness(individual, Population.stocks, Population.orders, Population.CUT_WIDTH);
         }
 
-        population.setPopulationFitness(populationFitness);
+        double populationFitnessAvg = populationFitness / populationSize;
+
+        population.setPopulationFitness(populationFitnessAvg);
     }
 
     /**
@@ -110,11 +111,11 @@ public class GeneticAlgorithm {
      * @return boolean True if termination condition met, otherwise, false
      */
     public boolean isTerminationConditionMet(Population population) {
-        for (Individual individual : population.getIndividuals()) {
+        /*for (Individual individual : population.getIndividuals()) {
             if (individual.getFitness() == 1) {
                 return true;
             }
-        }
+        }*/
 
         return false;
     }
@@ -128,7 +129,7 @@ public class GeneticAlgorithm {
      */
     public Individual selectParent(Population population) {
         // Get individuals
-        Individual[] individuals = population.getIndividuals();
+        List<Individual> individuals = population.getIndividuals();
 
         // Spin roulette wheel
         double populationFitness = population.getPopulationFitness();
@@ -142,7 +143,7 @@ public class GeneticAlgorithm {
                 return individual;
             }
         }
-        return individuals[population.size() - 1];
+        return individuals.get(population.size() - 1);
     }
 
     /**
@@ -168,7 +169,7 @@ public class GeneticAlgorithm {
      */
     public Population crossoverPopulation(Population population) {
         // Create new population
-        Population newPopulation = new Population(population.size());
+        Population newPopulation = new Population(population);
 
         // Loop over current population by fitness
         for (int populationIndex = 0; populationIndex < population.size(); populationIndex++) {
@@ -177,7 +178,7 @@ public class GeneticAlgorithm {
             // Apply crossover to this individual?
             if (this.crossoverRate > Math.random() && populationIndex >= this.elitismCount) {
                 // Initialize offspring
-                Individual offspring = new Individual(parent1.getChromosomeLength());
+                Individual offspring = new Individual(parent1.getChromosome());
 
                 // Find second parent
                 Individual parent2 = selectParent(population);
@@ -221,35 +222,98 @@ public class GeneticAlgorithm {
      */
     public Population mutatePopulation(Population population) {
         // Initialize new population
-        Population newPopulation = new Population(this.populationSize);
+        Population newPopulation = new Population(population);
 
+        int maxRandomInt = Population.ARNsN - 1;
         // Loop over current population by fitness
-        for (int populationIndex = 0; populationIndex < population.size(); populationIndex++) {
-            Individual individual = population.getFittest(populationIndex);
-
-            // Skip mutation if this is an elite individual
-            if (populationIndex > this.elitismCount) {
-                // Loop over individual's genes
-                for (int geneIndex = 0; geneIndex < individual.getChromosomeLength(); geneIndex++) {
-
-                    // Does this gene need mutation?
-                    if (this.mutationRate > Math.random()) {
-                        // Get new gene
-                        int newGene = 1;
-                        if (individual.getGene(geneIndex) == 1) {
-                            newGene = 0;
-                        }
-                        // Mutate gene
-                        individual.setGene(geneIndex, newGene);
-                    }
-                }
-            }
-
-            // Add individual to population
-            newPopulation.setIndividual(populationIndex, individual);
+        int mutationARNsN = (int) (Population.ARNsN * this.mutationRate);
+        for (int i = 0; i < mutationARNsN; ++i) {
+            Integer worstPosition = findWorstPositionInPopulation(newPopulation.getIndividuals(), this.populationSize);
+            int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
+            int worstFitness = Population.getWeightOfARN(
+                newPopulation.getIndividuals().get(worstPosition).getChromosome(),
+                Population.stocks, Population.orders, Population.CUT_WIDTH);
+            mutate(newPopulation, newPopulation.getIndividuals().get(randInt).getChromosome(), worstPosition, worstFitness);
         }
 
         // Return mutated population
         return newPopulation;
+    }
+
+    Integer findWorstPositionInPopulation(List<Individual> individuals, int populationSize) {
+        int worstValue = Integer.MIN_VALUE;
+        int worstARNPosition = 0;
+
+        for (int i = 0; i < populationSize; ++i) {
+            int currValue = Population.getWeightOfARN(individuals.get(i).getChromosome(), Population.stocks, Population.orders, Population.CUT_WIDTH);
+            if (currValue > worstValue) {
+                worstARNPosition = i;
+                worstValue = currValue;
+            }
+        }
+
+        return worstARNPosition;
+    }
+
+    public static int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    void mutate(Population newPopulation, List<Integer> ARN, int worstPosition, int worstValue) {
+        List<Integer> stockTemp = Population.computeStockRemain(ARN, Population.stocks, Population.orders, Population.CUT_WIDTH);
+        //todo thinking bestGapOfAll for what?
+        int bestGapOfAll = Integer.MAX_VALUE;
+        //todo thinking finalMoveTo for what?
+        int finalMoveTo = -1;
+        //todo thinking finalFromPosition for what?
+        int finalFromPosition = -1;
+
+        for (int i = 0; i < Population.orders.size(); ++i) {
+            int bestGap = Integer.MAX_VALUE;
+            int moveTo = -1;
+            int fromPosition = -1;
+            for (int j = 0; j < Population.stocks.size(); ++j) {
+                if (j == ARN.get(i)) {
+                    continue;
+                }
+                if (stockTemp.get(j) >= Population.orders.get(i)) {
+                    if (stockTemp.get(j).equals(Population.orders.get(i))) {
+                        if (bestGap > -stockTemp.get(ARN.get(i))) {
+                            bestGap = -stockTemp.get(ARN.get(i));
+                            moveTo = j;
+                            fromPosition = i;
+                        }
+                    }
+                    if (stockTemp.get(j) >= Population.orders.get(i) + Population.CUT_WIDTH) {
+                        int number = (stockTemp.get(j) - (Population.orders.get(i) + Population.CUT_WIDTH)) - stockTemp.get(ARN.get(i));
+                        if (bestGap > number) {
+                            bestGap = number;
+                            moveTo = j;
+                            fromPosition = i;
+                        }
+                    }
+                }
+            }
+
+            if (bestGapOfAll > bestGap) {
+                bestGapOfAll = bestGap;
+                finalMoveTo = moveTo;
+                finalFromPosition = fromPosition;
+            }
+        }
+
+        if (finalFromPosition < 0 || finalMoveTo < 0) {
+            return;
+        }
+
+        ARN.set(finalFromPosition, finalMoveTo);
+
+        // mutant individual
+        Individual mutant = new Individual(ARN);
+        mutant.setFitness(Population.getWeightOfARN(ARN, Population.stocks, Population.orders, Population.CUT_WIDTH));
+
+        if (mutant.getFitness() < worstValue) {
+            newPopulation.getIndividuals().set(worstPosition, mutant);
+        }
     }
 }
