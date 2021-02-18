@@ -1,8 +1,7 @@
 package com.duykypaul.steel;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import org.javatuples.Triplet;
-
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 public class GeneticAlgorithm {
@@ -30,11 +29,17 @@ public class GeneticAlgorithm {
      */
     private int elitismCount;
 
-    public GeneticAlgorithm(int populationSize, double mutationRate, double crossoverRate, int elitismCount) {
+    /**
+     * limits the running time of the algorithm
+     */
+    private int runningTimeLimit;
+
+    public GeneticAlgorithm(int populationSize, double mutationRate, double crossoverRate, int elitismCount, int runningTimeLimit) {
         this.populationSize = populationSize;
         this.mutationRate = mutationRate;
         this.crossoverRate = crossoverRate;
         this.elitismCount = elitismCount;
+        this.runningTimeLimit = runningTimeLimit;
     }
 
     /**
@@ -42,11 +47,12 @@ public class GeneticAlgorithm {
      *
      * @param stocks
      * @param orders
-     * @param CUT_WIDTH
+     * @param cutWidth
+     * @param generationLimit
      * @return population The initial population generated
      */
-    public Population initPopulation(List<Integer> stocks, List<Integer> orders, int CUT_WIDTH) {
-        return new Population(this.populationSize, stocks, orders, CUT_WIDTH);
+    public Population initPopulation(List<Integer> stocks, List<Integer> orders, int cutWidth, int generationLimit) {
+        return new Population(this.populationSize, stocks, orders, cutWidth, generationLimit);
     }
 
     /**
@@ -89,8 +95,8 @@ public class GeneticAlgorithm {
      */
     public void evalPopulation(Population population) {
         double populationFitness = 0;
-
-        // Loop over population evaluating individuals and suming population
+        this.setPopulationSize(population.getIndividuals().size());
+        // Loop over population evaluating individuals and summing population
         // fitness
         for (Individual individual : population.getIndividuals()) {
             populationFitness += calcFitness(individual, Population.stocks, Population.orders, Population.CUT_WIDTH);
@@ -108,16 +114,17 @@ public class GeneticAlgorithm {
      * we can simply stop evolving once we've reached a fitness of one.
      *
      * @param population
+     * @param start
      * @return boolean True if termination condition met, otherwise, false
      */
-    public boolean isTerminationConditionMet(Population population) {
+    public boolean isTerminationConditionMet(Population population, Instant start) {
         /*for (Individual individual : population.getIndividuals()) {
             if (individual.getFitness() == 1) {
                 return true;
             }
         }*/
 
-        return false;
+        return Duration.between(start, Instant.now()).getSeconds() > this.runningTimeLimit;
     }
 
     /**
@@ -315,5 +322,37 @@ public class GeneticAlgorithm {
         if (mutant.getFitness() < worstValue) {
             newPopulation.getIndividuals().set(worstPosition, mutant);
         }
+    }
+
+    public int getPopulationSize() {
+        return populationSize;
+    }
+
+    public void setPopulationSize(int populationSize) {
+        this.populationSize = populationSize;
+    }
+
+    public double getMutationRate() {
+        return mutationRate;
+    }
+
+    public void setMutationRate(double mutationRate) {
+        this.mutationRate = mutationRate;
+    }
+
+    public double getCrossoverRate() {
+        return crossoverRate;
+    }
+
+    public void setCrossoverRate(double crossoverRate) {
+        this.crossoverRate = crossoverRate;
+    }
+
+    public int getElitismCount() {
+        return elitismCount;
+    }
+
+    public void setElitismCount(int elitismCount) {
+        this.elitismCount = elitismCount;
     }
 }

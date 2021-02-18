@@ -32,7 +32,7 @@ public class ARN {
 
     public static void main(String[] args) {
         String inputMessage = "7000,5000,13000,13000,6000|5000,5000,5000,10000|5";
-        String inputMessage1 = "2220,2220,2534,7093,7093,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|3303,3303,3303,3303,3303,3303,31803180,3180,4080,4080,4080,4080,4180,4180,990|5";
+        String inputMessage1 = "2220,2220,2534,7093,7093,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|3303,3303,3303,3303,3303,3303,3180,3180,3180,4080,4080,4080,4080,4180,4180,990|5";
         ARN arn = new ARN();
         Instant start = Instant.now();
         System.out.println(arn.algorithm_task(inputMessage1));
@@ -59,10 +59,14 @@ public class ARN {
         orders = Arrays.stream(parts.get(1).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
         CUT_WIDTH = Integer.parseInt(parts.get(2));
 
+        System.out.println("sum stocks: " + stocks.stream().reduce(0, Integer::sum));
+        System.out.println("sum orders: " + orders.stream().reduce(0, Integer::sum));
+
         stocksN = stocks.size();
         ordersN = orders.size();
 
         Pair<Integer, Integer> chromosomeSimulateVal = chromosomeSimulate();
+
         int bestValue = chromosomeSimulateVal.getKey(),
             bestPosition = chromosomeSimulateVal.getValue();
 
@@ -100,11 +104,11 @@ public class ARN {
         List<Integer> stockState = new ArrayList<>(stocks);
 
         start_gen = Instant.now();
-//        isFinishedGen = false;
+        isFinishedGen = false;
         generateARN(ARN, stockState);
 
         System.out.println(105);
-        ARNs.forEach(item -> System.out.println(Arrays.toString(item.toArray())));
+//        ARNs.forEach(item -> System.out.println(Arrays.toString(item.toArray())));
 
         ARNs.sort(Comparator.comparingInt(this::getWeightOfARN));
 
@@ -138,6 +142,7 @@ public class ARN {
                 int randInt = getRandomNumber(secondARNPosition + 1, maxRandomInt);
                 mutate(ARNs.get(randInt), worstARNPosition, getWeightOfARN(ARNs.get(worstARNPosition)));
             }
+            System.out.println("Best Value" + genCount + " = " + getWeightOfARN(ARNs.get(maxARNPosition)));
 
             Instant stop = Instant.now();
             long duration = Duration.between(start, stop).getSeconds();
