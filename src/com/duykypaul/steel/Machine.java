@@ -1,7 +1,6 @@
 package com.duykypaul.steel;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Machine {
     /**
@@ -11,16 +10,16 @@ public class Machine {
     /**
      * free days
      */
-    private Date date;
+    private LocalDate freeDate;
 
     /**
      * number of free minutes left for the day
      */
     private int minutesRemaining;
 
-    public Machine(int frequency, Date date, int minutesRemaining) {
+    public Machine(int frequency, LocalDate date, int minutesRemaining) {
         this.frequency = frequency;
-        this.date = date;
+        this.freeDate = date;
         this.minutesRemaining = minutesRemaining;
     }
 
@@ -32,12 +31,36 @@ public class Machine {
         this.frequency = frequency;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getDate() {
+        return freeDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(LocalDate date) {
+        this.freeDate = date;
+    }
+
+    public int getYearFreeDate() {
+        return freeDate.getYear();
+    }
+
+    public void plusYear() {
+        this.freeDate = this.freeDate.plusYears(1);
+    }
+
+    public int getMonthDate() {
+        return freeDate.getMonthValue();
+    }
+
+    public void plusMonth() {
+        this.freeDate = this.freeDate.plusMonths(1);
+    }
+
+    public int getDateOfFreeDate() {
+        return freeDate.getDayOfMonth();
+    }
+
+    public void plusDay() {
+        this.freeDate = this.freeDate.plusDays(1);
     }
 
     public int getMinutesRemaining() {

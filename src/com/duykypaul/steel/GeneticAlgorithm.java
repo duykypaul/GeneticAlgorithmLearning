@@ -2,6 +2,7 @@ package com.duykypaul.steel;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 public class GeneticAlgorithm {
@@ -354,5 +355,10 @@ public class GeneticAlgorithm {
 
     public void setElitismCount(int elitismCount) {
         this.elitismCount = elitismCount;
+    }
+
+    public Population initPopulation(List<Integer> stocks, List<LocalDate> stocksDate, List<Integer> orders,
+                                     List<LocalDate> ordersDate, List<Machine> machines, int cutWidth, int generationLimit) {
+        return new Population(this.populationSize, stocks, stocksDate, orders, ordersDate, machines, cutWidth, generationLimit);
     }
 }

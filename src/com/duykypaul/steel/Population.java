@@ -2,6 +2,7 @@ package com.duykypaul.steel;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -20,7 +21,10 @@ import java.util.stream.Collectors;
 public class Population {
     static int ARNsN = 0;
     static List<Integer> stocks;
+    static List<LocalDate> stocksDate;
     static List<Integer> orders;
+    static List<LocalDate> ordersDate;
+    static List<Machine> machines;
     static int CUT_WIDTH;
     static long GENERATION_LIMIT;
     Instant start_gen;
@@ -58,6 +62,29 @@ public class Population {
         this.population = new ArrayList<>();
         stocks = new ArrayList<>(stocksInit);
         orders = new ArrayList<>(ordersInit);
+        CUT_WIDTH = cutWidth;
+        GENERATION_LIMIT = generationLimit;
+        List<Integer> ARN = new ArrayList<>();
+        List<Integer> stockState = new ArrayList<>(stocksInit);
+
+        start_gen = Instant.now();
+        generateARN(ARN, stockState);
+
+        if (ARNsN > populationSize) {
+            this.population = this.population.subList(0, populationSize);
+            ARNsN = populationSize;
+        }
+    }
+
+    public Population(int populationSize, List<Integer> stocksInit, List<LocalDate> stocksDateInit, List<Integer> ordersInit,
+                      List<LocalDate> ordersDateInit, List<Machine> machinesInit, int cutWidth, int generationLimit) {
+        // Initialize the population as an array of individuals
+        this.population = new ArrayList<>();
+        stocks = new ArrayList<>(stocksInit);
+        stocksDate = new ArrayList<>(stocksDateInit);
+        orders = new ArrayList<>(ordersInit);
+        ordersDate = new ArrayList<>(ordersDateInit);
+        machines = new ArrayList<>(machinesInit);
         CUT_WIDTH = cutWidth;
         GENERATION_LIMIT = generationLimit;
         List<Integer> ARN = new ArrayList<>();
