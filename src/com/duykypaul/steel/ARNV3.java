@@ -17,21 +17,31 @@ public class ARNV3 {
     private static final String COMMA = ",";
 
     public static void main(String[] args) {
+        List<Stack> listStack1 = new ArrayList<>();
+        listStack1.add(new Stack(3, 5000, LocalDate.parse("2021-02-28")));
+        listStack1.add(new Stack(1, 10000, LocalDate.parse("2021-02-28")));
+
         String inputStocks = "7000,5000,13000,13000,6000";
-        String inputStocksDate = "2021-02-12,2021-02-15,2021-02-15,2021-02-15,2021-02-15";
-        String inputOrders = "5000,5000,5000,10000";
-        String inputOrdersDate = "2021-02-28,2021-02-28,2021-02-28,2021-02-28";
+        String inputStocksDate = "2021-02-12,2021-02-12,2021-02-15,2021-02-15,2021-02-15";
+        /*String inputOrders = "5000,5000,5000,10000";
+        String inputOrdersDate = "2021-02-28,2021-02-28,2021-02-28,2021-02-28";*/
 
         final List<Integer> stocks = Arrays.stream(inputStocks.split(COMMA)).map(Integer::parseInt).collect(Collectors.toList());
         final List<LocalDate> stocksDate = Arrays.stream(inputStocksDate.split(COMMA)).map(LocalDate::parse).collect(Collectors.toList());
-        final List<Integer> orders = Arrays.stream(inputOrders.split(COMMA)).map(Integer::parseInt).collect(Collectors.toList());
-        final List<LocalDate> ordersDate = Arrays.stream(inputOrdersDate.split(COMMA)).map(LocalDate::parse).collect(Collectors.toList());
+        /*final List<Integer> orders = Arrays.stream(inputOrders.split(COMMA)).map(Integer::parseInt).collect(Collectors.toList());
+        final List<LocalDate> ordersDate = Arrays.stream(inputOrdersDate.split(COMMA)).map(LocalDate::parse).collect(Collectors.toList());*/
+        final List<Integer> orders = new ArrayList<>();
+        final List<LocalDate> ordersDate = new ArrayList<>();
+        listStack1.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
+        });
         final int CUT_WIDTH = 5;
 
         final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
 
         Instant start = Instant.now();
 

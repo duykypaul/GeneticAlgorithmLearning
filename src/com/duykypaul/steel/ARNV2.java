@@ -21,7 +21,7 @@ public class ARNV2 {
         String inputContent2 = "2220,2220,2534,7093,7093,2220,2534,7093,7093,13000,13000,13000,13000,13000,13000|3303,3303,3303,3303,3303,3303,3180,3180,3180,3180,3180,3180,4080,4080,4080,4080,4180,4180,990,990,990,990,990,990,2385,2385,2385,2385,2185,2185|5";
         String inputContent3 = "13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|158,158,158,158,158,158,158,158,158,158,158,158,158,158,158,158,3098,5051,3682,3682,3682,3682,3682,3682,217,218,3767,3916,1049,2628,1097,1097,1097,1097,1097,1097,1097,2578,2578,2578,2578,2578,2578,2578|5";
 
-        List<String> parts = Arrays.asList(inputContent2.split("\\|").clone());
+        List<String> parts = Arrays.asList(inputContent.split("\\|").clone());
 
         final List<Integer> stocks = Arrays.stream(parts.get(0).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
         final List<Integer> orders = Arrays.stream(parts.get(1).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
