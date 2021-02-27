@@ -1,4 +1,4 @@
-package com.duykypaul.steel;
+package com.duykypaul.kltn;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -23,24 +23,20 @@ public class ARNV3 {
 
         String inputStocks = "7000,5000,13000,13000,6000";
         String inputStocksDate = "2021-02-12,2021-02-12,2021-02-15,2021-02-15,2021-02-15";
-        /*String inputOrders = "5000,5000,5000,10000";
-        String inputOrdersDate = "2021-02-28,2021-02-28,2021-02-28,2021-02-28";*/
 
         final List<Integer> stocks = Arrays.stream(inputStocks.split(COMMA)).map(Integer::parseInt).collect(Collectors.toList());
         final List<LocalDate> stocksDate = Arrays.stream(inputStocksDate.split(COMMA)).map(LocalDate::parse).collect(Collectors.toList());
-        /*final List<Integer> orders = Arrays.stream(inputOrders.split(COMMA)).map(Integer::parseInt).collect(Collectors.toList());
-        final List<LocalDate> ordersDate = Arrays.stream(inputOrdersDate.split(COMMA)).map(LocalDate::parse).collect(Collectors.toList());*/
+
         final List<Integer> orders = new ArrayList<>();
         final List<LocalDate> ordersDate = new ArrayList<>();
         listStack1.forEach(item -> {
             orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
             ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
         });
-        final int CUT_WIDTH = 5;
 
         final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(6,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(6,1, LocalDate.parse("2021-02-20"), 240));
         machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
 
         Instant start = Instant.now();
@@ -50,7 +46,7 @@ public class ARNV3 {
             CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
 
         // Initialize population
-        Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, CUT_WIDTH, GENERATION_LIMIT);
+        Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, GENERATION_LIMIT);
 
         if(Population.ARNsN == 0) {
             System.out.println("can't resolve");
@@ -62,7 +58,7 @@ public class ARNV3 {
 
         Set<String> stringSet = new HashSet<>();
 
-        /*while (!ga.isTerminationConditionMet(population, start)) {
+        while (!ga.isTerminationConditionMet(population, start)) {
             // Print fittest individual from population
             stringSet.add(population.getFittest(0).toString());
             System.out.println("Best solution: " + population.getFittest(0).toString());
@@ -80,7 +76,7 @@ public class ARNV3 {
 
             // Increment the current generation
             generation++;
-        }*/
+        }
 
         System.out.println("Found solution in " + generation + " generations");
         System.out.println("Best solution final: " + population.getFittest(0).toString());
