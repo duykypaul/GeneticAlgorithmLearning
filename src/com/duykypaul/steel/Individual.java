@@ -1,5 +1,6 @@
 package com.duykypaul.steel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
  */
 public class Individual {
     private List<Integer> chromosome;
-    private List<Integer> chromosomeMachine;
     private double fitness = -1;
 
     /**
@@ -38,35 +38,12 @@ public class Individual {
     }
 
     /**
-     * Initializes individual with specific chromosome and chromosomeMachine
-     *
-     * @param chromosome
-     *            The chromosome to give individual
-     * @param chromosomeMachine
-     *            The chromosomeMachine to give individual
-     */
-    public Individual(List<Integer> chromosome, List<Integer> chromosomeMachine) {
-        // Create individual chromosome
-        this.chromosome = chromosome;
-        this.chromosomeMachine = chromosomeMachine;
-    }
-
-    /**
      * Gets individual's chromosome
      *
      * @return The individual's chromosome
      */
     public List<Integer> getChromosome() {
         return this.chromosome;
-    }
-
-    /**
-     * Gets individual's chromosomeMachine
-     *
-     * @return The individual's chromosomeMachine
-     */
-    public List<Integer> getChromosomeMachine() {
-        return this.chromosomeMachine;
     }
 
     /**
@@ -127,10 +104,6 @@ public class Individual {
     public String toString() {
         return this.chromosome.stream()
             .map(String::valueOf)
-            .collect(Collectors.joining(","))
-            .concat(" | ")
-            .concat(this.chromosomeMachine.stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(",")));
+            .collect(Collectors.joining(","));
     }
 }

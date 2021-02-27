@@ -1,6 +1,7 @@
 package com.duykypaul.steel;
 
-import java.awt.event.ItemEvent;
+import com.duykypaul.kltn.Machine;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -22,7 +23,6 @@ public class Population {
     static List<LocalDate> stocksDate;
     static List<Integer> orders;
     static List<LocalDate> ordersDate;
-    static List<Machine> machines;
     static int CUT_WIDTH;
     static long GENERATION_LIMIT;
     Instant start_gen;
@@ -67,38 +67,6 @@ public class Population {
 
         start_gen = Instant.now();
         generateARN(ARN, stockState);
-
-        if (ARNsN > populationSize) {
-            this.population = this.population.subList(0, populationSize);
-            ARNsN = populationSize;
-        }
-    }
-
-    public Population(int populationSize, List<Integer> stocksInit, List<LocalDate> stocksDateInit, List<Integer> ordersInit,
-                      List<LocalDate> ordersDateInit, List<Machine> machinesInit, int cutWidth, int generationLimit) {
-        // Initialize the population as an array of individuals
-        this.population = new ArrayList<>();
-        stocks = new ArrayList<>(stocksInit);
-        stocksDate = new ArrayList<>(stocksDateInit);
-        orders = new ArrayList<>(ordersInit);
-        ordersDate = new ArrayList<>(ordersDateInit);
-        machines = new ArrayList<>(machinesInit);
-        CUT_WIDTH = cutWidth;
-        GENERATION_LIMIT = generationLimit;
-
-        /**
-         * stores a list of index of material used to cut the product
-         */
-        List<Integer> ARNStocks = new ArrayList<>();
-        /**
-         * stores a list of index of machine used to cut the product
-         */
-        List<Integer> ARNMachines = new ArrayList<>();
-        List<Integer> stockState = new ArrayList<>(stocksInit);
-        List<Machine> machinesState = new ArrayList<>(machinesInit);
-
-        start_gen = Instant.now();
-        generateARNV2(ARNStocks, ARNMachines, stockState, machinesState);
 
         if (ARNsN > populationSize) {
             this.population = this.population.subList(0, populationSize);
@@ -295,88 +263,5 @@ public class Population {
                 return;
             }*/
         }
-    }
-
-    void generateARNV2(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<Integer> stockState, List<Machine> machinesState) {
-        // Population limit reached!
-        if (isFinishedGen) {
-            return;
-        }
-        long duration = Duration.between(start_gen, Instant.now()).getSeconds();
-        if (duration > GENERATION_LIMIT) {
-            isFinishedGen = true;
-            return;
-        }
-
-        // Get a complete ARN
-        if (currentARNStocks.size() == orders.size()) {
-            Individual individual = new Individual(new ArrayList<>(currentARNStocks), new ArrayList<>(currentARNMachines));
-            int weight = getWeightOfARN(currentARNStocks, stocks, orders, CUT_WIDTH);
-            individual.setFitness(weight);
-            this.population.add(individual);
-            ARNsN++;
-            return;
-        }
-        // Next Node
-        for (int i = 0; i < stockState.size(); i++) {
-            int idx = currentARNStocks.size();
-            int indexMostFree = getMostFreeIndexForCurrentState(machinesState, i, idx);
-            if(indexMostFree == -1) {
-                return;
-            }
-            if (orders.get(idx).equals(stockState.get(i))) {
-                List<Integer> stocksTemp = new ArrayList<>(stockState);
-                List<Machine> machinesTemp = new ArrayList<>(machinesState);
-                // update stocks
-                stocksTemp.set(i, stocksTemp.get(i) - orders.get(idx));
-
-                currentARNStocks.add(i);
-                currentARNMachines.add(indexMostFree);
-
-                generateARNV2(currentARNStocks, currentARNMachines, stocksTemp, machinesTemp);
-
-                currentARNStocks.remove(currentARNStocks.size() - 1);
-                currentARNMachines.remove(currentARNMachines.size() - 1);
-            } else {
-                int cutWidth = machinesState.get(indexMostFree).getBladeThickness();
-                if (orders.get(idx) + cutWidth <= stockState.get(i)) {
-                    List<Integer> stocksTemp = new ArrayList<>(stockState);
-                    List<Machine> machinesTemp = new ArrayList<>(machinesState);
-                    // update stocks state
-                    stocksTemp.set(i, stocksTemp.get(i) - orders.get(idx) - cutWidth);
-
-                    // update machines state
-                    Machine currentMachine = machinesTemp.get(indexMostFree);
-                    int minutesRemain = currentMachine.getMinutesRemaining() - currentMachine.getFrequency();
-                    if(minutesRemain > Machine.MIN_MINUTES_REMAINING) {
-                        currentMachine.setMinutesRemaining(minutesRemain);
-                    } else {
-                        currentMachine.setMinutesRemaining(Machine.MAX_MINUTES_REMAINING);
-                        currentMachine.plusDay();
-                    }
-
-                    // add to ARN
-                    currentARNStocks.add(i);
-                    currentARNMachines.add(indexMostFree);
-
-                    generateARNV2(currentARNStocks, currentARNMachines, stocksTemp, machinesTemp);
-
-                    // redo add to ARN
-                    currentARNStocks.remove(currentARNStocks.size() - 1);
-                    currentARNMachines.remove(currentARNMachines.size() - 1);
-                }
-            }
-        }
-    }
-
-    private int getMostFreeIndexForCurrentState(List<Machine> machinesState, int stockIndex, int orderIndex) {
-        Optional<Machine> machines = machinesState.stream()
-            .sorted(Comparator
-                .comparing(Machine::getFreeDate)
-                .thenComparingInt(Machine::getMinutesRemaining).reversed()
-            )
-            .filter(o -> o.getFreeDate().compareTo(ordersDate.get(orderIndex)) < 0 && stocksDate.get(stockIndex).compareTo(ordersDate.get(orderIndex)) < 0)
-            .findFirst();
-        return machinesState.indexOf(machines.get());
     }
 }

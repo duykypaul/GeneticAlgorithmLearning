@@ -357,8 +357,11 @@ public class GeneticAlgorithm {
         this.elitismCount = elitismCount;
     }
 
-    public Population initPopulation(List<Integer> stocks, List<LocalDate> stocksDate, List<Integer> orders,
-                                     List<LocalDate> ordersDate, List<Machine> machines, int cutWidth, int generationLimit) {
-        return new Population(this.populationSize, stocks, stocksDate, orders, ordersDate, machines, cutWidth, generationLimit);
+    public int getRunningTimeLimit() {
+        return runningTimeLimit;
+    }
+
+    public void setRunningTimeLimit(int runningTimeLimit) {
+        this.runningTimeLimit = runningTimeLimit;
     }
 }
