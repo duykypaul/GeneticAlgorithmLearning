@@ -2,7 +2,6 @@ package com.duykypaul.steel;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.List;
 
 public class GeneticAlgorithm {
