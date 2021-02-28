@@ -33,10 +33,10 @@ public class Individual {
      * @param chromosome
      *            The chromosome to give individual
      */
-    public Individual(List<Integer> chromosome) {
+    /*public Individual(List<Integer> chromosome) {
         // Create individual chromosome
         this.chromosome = chromosome;
-    }
+    }*/
 
     /**
      * Initializes individual with specific chromosome and chromosomeMachine

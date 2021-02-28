@@ -1,7 +1,6 @@
 package com.duykypaul.kltn;
 
-import com.duykypaul.ARN;
-
+import javax.xml.transform.Source;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -187,7 +186,7 @@ public class GeneticAlgorithm {
             // Apply crossover to this individual?
             if (this.crossoverRate > Math.random() && populationIndex >= this.elitismCount) {
                 // Initialize offspring
-                Individual offspring = new Individual(parent1.getChromosome());
+                Individual offspring = new Individual(parent1.getChromosome(), parent1.getChromosomeMachine());
 
                 // Find second parent
                 Individual parent2 = selectParent(population);
@@ -238,11 +237,11 @@ public class GeneticAlgorithm {
         int mutationARNsN = (int) (Population.ARNsN * this.mutationRate);
         for (int i = 0; i < mutationARNsN; ++i) {
             Integer worstPosition = findWorstPositionInPopulation(newPopulation.getIndividuals(), this.populationSize);
-            Individual worstIndividual = newPopulation.getIndividuals().get(worstPosition);
+            Individual worstIndividual = newPopulation.getIndividual(worstPosition);
             int worstFitness = Population.getWeightOfARNV3(worstIndividual.getChromosome(), worstIndividual.getChromosomeMachine(), Population.stocks, Population.orders);
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
-            Individual randIndividual = newPopulation.getIndividuals().get(randInt);
+            Individual randIndividual = newPopulation.getIndividual(randInt);
             mutate(newPopulation, randIndividual.getChromosome(), randIndividual.getChromosomeMachine(), worstPosition, worstFitness);
         }
 
@@ -321,7 +320,7 @@ public class GeneticAlgorithm {
         ARNStocks.set(finalFromPosition, finalMoveTo);
 
         // mutant individual
-        Individual mutant = new Individual(ARNStocks);
+        Individual mutant = new Individual(ARNStocks, ARNMachines);
         mutant.setFitness(Population.getWeightOfARNV3(ARNStocks, ARNMachines, Population.stocks, Population.orders));
 
         if (mutant.getFitness() < worstValue) {

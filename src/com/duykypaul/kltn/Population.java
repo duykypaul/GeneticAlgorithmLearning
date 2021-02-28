@@ -285,6 +285,9 @@ public class Population {
             )
             .filter(o -> o.getFreeDate().compareTo(ordersDate.get(orderIndex)) < 0 && stocksDate.get(stockIndex).compareTo(ordersDate.get(orderIndex)) < 0)
             .findFirst();
-        return machinesState.indexOf(machines.get());
+        if(machines.isPresent()) {
+            return machinesState.indexOf(machines.get());
+        }
+        return -1;
     }
 }

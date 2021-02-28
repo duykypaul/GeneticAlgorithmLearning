@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ARNV3 {
     private static final int DEFAULT_POPULATION_SIZE = 5000;
@@ -17,26 +16,34 @@ public class ARNV3 {
     private static final String COMMA = ",";
 
     public static void main(String[] args) {
-        List<Stack> listStack1 = new ArrayList<>();
-        listStack1.add(new Stack(3, 5000, LocalDate.parse("2021-02-28")));
-        listStack1.add(new Stack(1, 10000, LocalDate.parse("2021-02-28")));
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(2, 3000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(3, 2000, LocalDate.parse("2021-02-28")));
 
-        String inputStocks = "7000,5000,13000,13000,6000";
-        String inputStocksDate = "2021-02-12,2021-02-12,2021-02-15,2021-02-15,2021-02-15";
+        listStack.add(new Stack(3, 5000, LocalDate.parse("2021-03-05")));
+        listStack.add(new Stack(4, 7000, LocalDate.parse("2021-03-05")));
 
-        final List<Integer> stocks = Arrays.stream(inputStocks.split(COMMA)).map(Integer::parseInt).collect(Collectors.toList());
-        final List<LocalDate> stocksDate = Arrays.stream(inputStocksDate.split(COMMA)).map(LocalDate::parse).collect(Collectors.toList());
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(20, 13000, LocalDate.parse("2021-02-12")));
+        listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
 
         final List<Integer> orders = new ArrayList<>();
         final List<LocalDate> ordersDate = new ArrayList<>();
-        listStack1.forEach(item -> {
+        listStack.forEach(item -> {
             orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
             ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
         });
 
+        final List<Integer> stocks = new ArrayList<>();
+        final List<LocalDate> stocksDate = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
+        });
+
         final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(6,1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(6,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
         machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
 
         Instant start = Instant.now();
