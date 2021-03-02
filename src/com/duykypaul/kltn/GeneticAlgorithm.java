@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.TreeMap;
 
 public class GeneticAlgorithm {
     private int populationSize;
@@ -114,16 +115,18 @@ public class GeneticAlgorithm {
      * For this simple problem, we know what a perfect solution looks like, so
      * we can simply stop evolving once we've reached a fitness of one.
      *
+     *
      * @param population
      * @param start
+     * @param resultSet
      * @return boolean True if termination condition met, otherwise, false
      */
-    public boolean isTerminationConditionMet(Population population, Instant start) {
-        /*for (Individual individual : population.getIndividuals()) {
-            if (individual.getFitness() == 1) {
-                return true;
-            }
-        }*/
+    public boolean isTerminationConditionMet(Population population, Instant start, TreeMap<Double, Integer> resultSet) {
+        double fitness = population.getFittest(0).getFitness();
+        resultSet.merge(fitness, 1, Integer::sum);
+        if (resultSet.firstEntry().getValue() >= Population.GENERATION_SAME_LIMIT) {
+            return true;
+        }
 
         return Duration.between(start, Instant.now()).getSeconds() > this.runningTimeLimit;
     }

@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  * @author bkanber
  */
 public class Population {
+    static int GENERATION_SAME_LIMIT = 30;
     static int ARNsN = 0;
     static List<Integer> stocks;
     static List<LocalDate> stocksDate;

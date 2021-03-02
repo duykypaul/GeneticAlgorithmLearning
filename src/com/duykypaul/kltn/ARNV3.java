@@ -10,7 +10,7 @@ public class ARNV3 {
     private static final double MUTATION_RATE =  0.01;
     private static final double CROSSOVER_RATE = 0.95;
     private static final int ELITISM_COUNT =  3;
-    private static final int RUNNING_TIME_LIMIT = 100;
+    private static final int RUNNING_TIME_LIMIT = 20;
     private static final int GENERATION_LIMIT = 1;
 
     public static void main(String[] args) {
@@ -64,19 +64,14 @@ public class ARNV3 {
         ga.evalPopulation(population);
         int generation = 1;
 
-        Map<Double, Integer> resultSet = new HashMap<>();
+        TreeMap<Double, Integer> resultSet = new TreeMap<>();
 
-        while (!ga.isTerminationConditionMet(population, start)) {
-            double fitness = population.getFittest(0).getFitness();
-            if(!resultSet.containsKey(fitness)) {
-                resultSet.put(fitness, 1);
-            } else {
-                resultSet.put(fitness, resultSet.get(fitness) + 1);
-            }
+        while (!ga.isTerminationConditionMet(population, start, resultSet)) {
 
             // Print fittest individual from population
-            System.out.println("Best solution: " + population.getFittest(0).toString());
-            System.out.println("Best value: " + population.getFittest(0).getFitness());
+            Individual best = population.getFittest(0);
+            System.out.println("Best solution: " + best.toString());
+            System.out.println("Best value: " + best.getFitness());
             System.out.println();
 
             // Apply crossover
@@ -93,17 +88,10 @@ public class ARNV3 {
         }
 
         System.out.println("Found solution in " + generation + " generations");
-        System.out.println("Best solution final: " + population.getFittest(0).toString());
-        System.out.println("Best value final: " + population.getFittest(0).getFitness());
-        double fitness = population.getFittest(0).getFitness();
-        if(!resultSet.containsKey(fitness)) {
-            resultSet.put(fitness, 1);
-        } else {
-            resultSet.put(fitness, resultSet.get(fitness) + 1);
-        }
-        System.out.println("set size: " + resultSet.size());
-//        resultSet.forEach((K,V) -> System.out.println(K + ", times : " + V));
-        System.out.println(resultSet);
+        Individual finalBest = population.getFittest(0);
+        System.out.println("Final best solution: " + finalBest.toString());
+        System.out.println("Final best value: " + finalBest.getFitness());
+        System.out.println("resultSet size: " + resultSet.size());
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
     }
