@@ -73,6 +73,7 @@ public class ARNV3 {
             } else {
                 resultSet.put(fitness, resultSet.get(fitness) + 1);
             }
+
             // Print fittest individual from population
             System.out.println("Best solution: " + population.getFittest(0).toString());
             System.out.println("Best value: " + population.getFittest(0).getFitness());
