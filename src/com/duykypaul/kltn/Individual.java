@@ -1,6 +1,5 @@
 package com.duykypaul.kltn;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,31 +24,20 @@ import java.util.stream.Collectors;
 public class Individual {
     private List<Integer> chromosome;
     private List<Integer> chromosomeMachine;
+    private List<String> chromosomeTime;
     private double fitness = -1;
-
-    /**
-     * Initializes individual with specific chromosome
-     *
-     * @param chromosome
-     *            The chromosome to give individual
-     */
-    /*public Individual(List<Integer> chromosome) {
-        // Create individual chromosome
-        this.chromosome = chromosome;
-    }*/
 
     /**
      * Initializes individual with specific chromosome and chromosomeMachine
      *
-     * @param chromosome
-     *            The chromosome to give individual
-     * @param chromosomeMachine
-     *            The chromosomeMachine to give individual
+     * @param chromosome        The chromosome to give individual
+     * @param chromosomeMachine The chromosomeMachine to give individual
      */
-    public Individual(List<Integer> chromosome, List<Integer> chromosomeMachine) {
+    public Individual(List<Integer> chromosome, List<Integer> chromosomeMachine, List<String> chromosomeTime) {
         // Create individual chromosome
         this.chromosome = chromosome;
         this.chromosomeMachine = chromosomeMachine;
+        this.chromosomeTime = chromosomeTime;
     }
 
     /**
@@ -68,6 +56,15 @@ public class Individual {
      */
     public List<Integer> getChromosomeMachine() {
         return this.chromosomeMachine;
+    }
+
+    /**
+     * Gets individual's chromosomeTime
+     *
+     * @return The individual's chromosomeTime
+     */
+    public List<String> getChromosomeTime() {
+        return this.chromosomeTime;
     }
 
     /**
@@ -126,9 +123,6 @@ public class Individual {
      * @return string representation of the chromosome
      */
     public String toString() {
-        if(null == this.chromosomeMachine) {
-            this.chromosomeMachine = new ArrayList<>();
-        }
         return this.chromosome.stream()
             .map(String::valueOf)
             .collect(Collectors.joining(","))

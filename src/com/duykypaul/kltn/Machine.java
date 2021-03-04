@@ -1,8 +1,9 @@
 package com.duykypaul.kltn;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class Machine {
+public class Machine implements Cloneable {
     public static int MAX_MINUTES_REMAINING = 480;
     public static int MIN_MINUTES_REMAINING = 0;
 
@@ -29,6 +30,10 @@ public class Machine {
         this.frequency = frequency;
         this.freeDate = date;
         this.minutesRemaining = minutesRemaining;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240).getRealTime());
     }
 
     public int getBladeThickness() {
@@ -87,6 +92,29 @@ public class Machine {
         this.minutesRemaining = minutesRemaining;
     }
 
+    public String getRealTime() {
+        LocalDate myDateObj = this.freeDate;
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String formattedDate = myDateObj.format(dateFormat);
+        int minutes = MAX_MINUTES_REMAINING - this.minutesRemaining;
+        int hour = minutes / 60 + 8;
+        if (hour == 12) hour++;
+        int minute = minutes - (minutes / 60) * 60;
+        return formattedDate + " " + String.format("%02d", hour) + ":" + String.format("%02d", minute);
+    }
+
+    public Machine clone() {
+
+        Machine emp = null;
+        try {
+            emp = (Machine) super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.out.println(e);
+        }
+        return emp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -107,5 +135,15 @@ public class Machine {
         result = 31 * result + freeDate.hashCode();
         result = 31 * result + minutesRemaining;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Machine{" +
+            "bladeThickness=" + bladeThickness +
+            ", frequency=" + frequency +
+            ", freeDate=" + freeDate +
+            ", minutesRemaining=" + minutesRemaining +
+            '}';
     }
 }

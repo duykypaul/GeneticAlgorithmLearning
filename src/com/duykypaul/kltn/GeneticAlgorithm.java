@@ -1,6 +1,7 @@
 package com.duykypaul.kltn;
 
-import javax.xml.transform.Source;
+import org.javatuples.Triplet;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -189,7 +190,7 @@ public class GeneticAlgorithm {
             // Apply crossover to this individual?
             if (this.crossoverRate > Math.random() && populationIndex >= this.elitismCount) {
                 // Initialize offspring
-                Individual offspring = new Individual(parent1.getChromosome(), parent1.getChromosomeMachine());
+                Individual offspring = new Individual(parent1.getChromosome(), parent1.getChromosomeMachine(), parent1.getChromosomeTime());
 
                 // Find second parent
                 Individual parent2 = selectParent(population);
@@ -245,7 +246,7 @@ public class GeneticAlgorithm {
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
             Individual randIndividual = newPopulation.getIndividual(randInt);
-            mutate(newPopulation, randIndividual.getChromosome(), randIndividual.getChromosomeMachine(), worstPosition, worstFitness);
+            mutate(newPopulation, randIndividual.getChromosome(), randIndividual.getChromosomeMachine(), randIndividual.getChromosomeTime(), worstPosition, worstFitness);
         }
 
         // Return mutated population
@@ -271,7 +272,7 @@ public class GeneticAlgorithm {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    void mutate(Population newPopulation, List<Integer> ARNStocks, List<Integer> ARNMachines, int worstPosition, int worstValue) {
+    void mutate(Population newPopulation, List<Integer> ARNStocks, List<Integer> ARNMachines, List<String> ARNTimes, int worstPosition, int worstValue) {
         List<Integer> stockTemp = Population.computeStockRemainV3(ARNStocks, ARNMachines, Population.stocks, Population.orders);
         //todo thinking bestGapOfAll for what?
         int bestGapOfAll = Integer.MAX_VALUE;
@@ -322,8 +323,14 @@ public class GeneticAlgorithm {
 
         ARNStocks.set(finalFromPosition, finalMoveTo);
 
+        Triplet<Boolean, List<Integer>, List<String>> triplet = Population.reRenderARN(ARNStocks, Population.machines);
+        if (triplet.getValue0()) {
+            ARNMachines = triplet.getValue1();
+            ARNTimes = triplet.getValue2();
+        }
+
         // mutant individual
-        Individual mutant = new Individual(ARNStocks, ARNMachines);
+        Individual mutant = new Individual(ARNStocks, ARNMachines, ARNTimes);
         mutant.setFitness(Population.getWeightOfARNV3(ARNStocks, ARNMachines, Population.stocks, Population.orders));
 
         if (mutant.getFitness() < worstValue) {

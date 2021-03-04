@@ -3,14 +3,18 @@ package com.duykypaul.kltn;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
-public class ARNV3 {
+public class ASave {
     private static final int DEFAULT_POPULATION_SIZE = 5000;
-    private static final double MUTATION_RATE =  0.01;
+    private static final double MUTATION_RATE = 0.01;
     private static final double CROSSOVER_RATE = 0.95;
-    private static final int ELITISM_COUNT =  3;
-    private static final int RUNNING_TIME_LIMIT = 20;
+    private static final int ELITISM_COUNT = 3;
+    private static final int RUNNING_TIME_LIMIT = 100;
     private static final int GENERATION_LIMIT = 1;
 
     public static void main(String[] args) {
@@ -43,20 +47,20 @@ public class ARNV3 {
         });
 
         final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(5,1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240));
 
         Instant start = Instant.now();
 
         // create GA Object
-        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE,  MUTATION_RATE,
+        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE,
             CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
 
         // Initialize population
         Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, GENERATION_LIMIT);
 
-        if(Population.ARNsN == 0) {
+        if (Population.ARNsN == 0) {
             System.out.println("can't resolve");
             return;
         }
@@ -66,12 +70,8 @@ public class ARNV3 {
 
         TreeMap<Double, Integer> resultSet = new TreeMap<>();
 
-        while (!ga.isTerminationConditionMet(population, start, resultSet)) {
-
-            // Print fittest individual from population
-            Individual best = population.getFittest(0);
-            System.out.println("Best solution: " + best.toString());
-            System.out.println("Best value: " + best.getFitness());
+        while (!ga.isTerminationConditionMet(population, start)) {
+            outputReport(population);
             System.out.println();
 
             // Apply crossover
@@ -88,11 +88,22 @@ public class ARNV3 {
         }
 
         System.out.println("Found solution in " + generation + " generations");
-        Individual finalBest = population.getFittest(0);
-        System.out.println("Final best solution: " + finalBest.toString());
-        System.out.println("Final best value: " + finalBest.getFitness());
-        System.out.println("resultSet size: " + resultSet.size());
+        outputReport(population);
+        System.out.println("Number of kings: " + resultSet.size());
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
+    }
+
+    /**
+     * Print fittest individual from population
+     *
+     * @param population
+     */
+    private static void outputReport(Population population) {
+        Individual best = population.getFittest(0);
+        System.out.println("Best solution stocks index: " + best.getChromosome().stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("Best solution machines index: " + best.getChromosomeMachine().stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("Best solution datetime cut product: " + best.getChromosomeTime().stream().map(String::valueOf).collect(Collectors.joining(",")));
+        System.out.println("Best value remain: " + best.getFitness());
     }
 }

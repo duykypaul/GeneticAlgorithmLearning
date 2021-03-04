@@ -1,5 +1,7 @@
 package com.duykypaul.kltn;
 
+import org.javatuples.Triplet;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -50,12 +52,12 @@ public class Population {
     /**
      * Initializes population of individuals
      *
-     * @param populationSize The number of individuals in the population
-     * @param stocksInit stock input
-     * @param stocksDateInit stock input date
-     * @param ordersInit order input
-     * @param ordersDateInit order input date
-     * @param machinesInit machines date
+     * @param populationSize  The number of individuals in the population
+     * @param stocksInit      stock input
+     * @param stocksDateInit  stock input date
+     * @param ordersInit      order input
+     * @param ordersDateInit  order input date
+     * @param machinesInit    machines date
      * @param generationLimit population creation time
      */
     public Population(int populationSize, List<Integer> stocksInit, List<LocalDate> stocksDateInit, List<Integer> ordersInit,
@@ -77,18 +79,27 @@ public class Population {
          * stores a list of index of machine used to cut the product
          */
         List<Integer> ARNMachines = new ArrayList<>();
+
+        /**
+         * stores datetime cut the product
+         */
+        List<String> ARNTimes = new ArrayList<>();
+
         List<Integer> stockState = new ArrayList<>(stocksInit);
-        List<Machine> machinesState = new ArrayList<>(machinesInit);
+        List<Machine> machinesState = new ArrayList<>();
+        for (Machine machine : machinesInit) {
+            machinesState.add(machine.clone());
+        }
 
         start_gen = Instant.now();
-        generateARNV3(ARNStocks, ARNMachines, stockState, machinesState);
+        generatePopulation(ARNStocks, ARNMachines, ARNTimes, stockState, machinesState);
 
         if (ARNsN > populationSize) {
             this.population = this.population.subList(0, populationSize);
             ARNsN = populationSize;
         }
     }
-    
+
     public static int getWeightOfARNV3(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<Integer> stocks, List<Integer> orders) {
         List<Integer> uniqueStocks = currentARNStocks.stream().distinct().sorted().collect(Collectors.toList());
         List<Integer> stockTemp = computeStockRemainV3(currentARNStocks, currentARNMachines, stocks, orders);
@@ -206,7 +217,7 @@ public class Population {
         }
     }
 
-    void generateARNV3(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<Integer> stockState, List<Machine> machinesState) {
+    void generatePopulation(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<String> currentARNTimes, List<Integer> stockState, List<Machine> machinesState) {
         // Population limit reached!
         if (isFinishedGen) {
             return;
@@ -219,7 +230,7 @@ public class Population {
 
         // Get a complete ARN
         if (currentARNStocks.size() == orders.size()) {
-            Individual individual = new Individual(new ArrayList<>(currentARNStocks), new ArrayList<>(currentARNMachines));
+            Individual individual = new Individual(new ArrayList<>(currentARNStocks), new ArrayList<>(currentARNMachines), new ArrayList<>(currentARNTimes));
             int weight = getWeightOfARNV3(currentARNStocks, currentARNMachines, stocks, orders);
             individual.setFitness(weight);
             this.population.add(individual);
@@ -229,8 +240,8 @@ public class Population {
         // Next Node
         for (int i = 0; i < stockState.size(); i++) {
             int idx = currentARNStocks.size();
-            int indexMostFree = getMostFreeIndexForCurrentState(machinesState, i, idx);
-            if(indexMostFree == -1) {
+            int indexMostFree = getMostFreeIndexForCurrentState(machinesState, i, idx, currentARNStocks, currentARNMachines);
+            if (indexMostFree == -1) {
                 return;
             }
             if (orders.get(idx).equals(stockState.get(i))) {
@@ -241,11 +252,13 @@ public class Population {
 
                 currentARNStocks.add(i);
                 currentARNMachines.add(indexMostFree);
+                currentARNTimes.add(machinesTemp.get(indexMostFree).getRealTime());
 
-                generateARNV3(currentARNStocks, currentARNMachines, stocksTemp, machinesTemp);
+                generatePopulation(currentARNStocks, currentARNMachines, currentARNTimes, stocksTemp, machinesTemp);
 
                 currentARNStocks.remove(currentARNStocks.size() - 1);
                 currentARNMachines.remove(currentARNMachines.size() - 1);
+                currentARNTimes.remove(currentARNTimes.size() - 1);
             } else {
                 int cutWidth = machinesState.get(indexMostFree).getBladeThickness();
                 if (orders.get(idx) + cutWidth <= stockState.get(i)) {
@@ -257,7 +270,7 @@ public class Population {
                     // update machines state
                     Machine currentMachine = machinesTemp.get(indexMostFree);
                     int minutesRemain = currentMachine.getMinutesRemaining() - currentMachine.getFrequency();
-                    if(minutesRemain > Machine.MIN_MINUTES_REMAINING) {
+                    if (minutesRemain > Machine.MIN_MINUTES_REMAINING) {
                         currentMachine.setMinutesRemaining(minutesRemain);
                     } else {
                         currentMachine.setMinutesRemaining(Machine.MAX_MINUTES_REMAINING);
@@ -267,18 +280,20 @@ public class Population {
                     // add to ARN
                     currentARNStocks.add(i);
                     currentARNMachines.add(indexMostFree);
+                    currentARNTimes.add(machinesTemp.get(indexMostFree).getRealTime());
 
-                    generateARNV3(currentARNStocks, currentARNMachines, stocksTemp, machinesTemp);
+                    generatePopulation(currentARNStocks, currentARNMachines, currentARNTimes, stocksTemp, machinesTemp);
 
                     // redo add to ARN
                     currentARNStocks.remove(currentARNStocks.size() - 1);
                     currentARNMachines.remove(currentARNMachines.size() - 1);
+                    currentARNTimes.remove(currentARNTimes.size() - 1);
                 }
             }
         }
     }
 
-    private int getMostFreeIndexForCurrentState(List<Machine> machinesState, int stockIndex, int orderIndex) {
+    private static int getMostFreeIndexForCurrentState(List<Machine> machinesState, int stockIndex, int orderIndex, List<Integer> currentARNStocks, List<Integer> currentARNMachines) {
         Optional<Machine> machines = machinesState.stream()
             .sorted(Comparator
                 .comparing(Machine::getFreeDate)
@@ -286,9 +301,59 @@ public class Population {
             )
             .filter(o -> o.getFreeDate().compareTo(ordersDate.get(orderIndex)) < 0 && stocksDate.get(stockIndex).compareTo(ordersDate.get(orderIndex)) < 0)
             .findFirst();
-        if(machines.isPresent()) {
-            return machinesState.indexOf(machines.get());
+        int indexStockOfARN = currentARNStocks.indexOf(stockIndex);
+        if (indexStockOfARN == -1) {
+            return machines.map(machinesState::indexOf).orElse(-1);
+        } else {
+            return currentARNMachines.get(indexStockOfARN);
         }
-        return -1;
+    }
+
+    public static Triplet<Boolean, List<Integer>, List<String>> reRenderARN(List<Integer> arnStocks, List<Machine> machines) {
+        boolean aBoolean = true;
+        List<Integer> stockState = new ArrayList<>(stocks);
+        List<Integer> currentARNMachines = new ArrayList<>();
+        List<String> currentARNTimes = new ArrayList<>();
+        List<Integer> currentARNStocks = new ArrayList<>();
+        List<Machine> machinesState = new ArrayList<>();
+        for (Machine machine : machines) {
+            machinesState.add(machine.clone());
+        }
+        for (int orderIndex = 0; orderIndex < arnStocks.size(); orderIndex++) {
+            int stockIndex = arnStocks.get(orderIndex);
+            int indexMostFree = getMostFreeIndexForCurrentState(machinesState, stockIndex, orderIndex, currentARNStocks, currentARNMachines);
+            if (indexMostFree == -1) {
+                aBoolean = false;
+            }
+            if (orders.get(orderIndex).equals(stockState.get(stockIndex))) {
+                // update stocks
+                stockState.set(stockIndex, stockState.get(stockIndex) - orders.get(orderIndex));
+                currentARNStocks.add(stockIndex);
+                currentARNMachines.add(indexMostFree);
+                currentARNTimes.add(machinesState.get(indexMostFree).getRealTime());
+            } else {
+                int cutWidth = machinesState.get(indexMostFree).getBladeThickness();
+                if (orders.get(orderIndex) + cutWidth <= stockState.get(stockIndex)) {
+                    // update stocks state
+                    stockState.set(stockIndex, stockState.get(stockIndex) - orders.get(orderIndex) - cutWidth);
+                    currentARNStocks.add(stockIndex);
+                    currentARNMachines.add(indexMostFree);
+                    currentARNTimes.add(machinesState.get(indexMostFree).getRealTime());
+
+                    // update machines state
+                    Machine currentMachine = machinesState.get(indexMostFree);
+                    int minutesRemain = currentMachine.getMinutesRemaining() - currentMachine.getFrequency();
+                    if (minutesRemain > Machine.MIN_MINUTES_REMAINING) {
+                        currentMachine.setMinutesRemaining(minutesRemain);
+                    } else {
+                        currentMachine.setMinutesRemaining(Machine.MAX_MINUTES_REMAINING);
+                        currentMachine.plusDay();
+                    }
+
+                }
+            }
+        }
+
+        return new Triplet<>(aBoolean, currentARNMachines, currentARNTimes);
     }
 }
