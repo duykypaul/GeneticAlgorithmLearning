@@ -45,8 +45,7 @@ public class Population {
         this.start_gen = populationClone.start_gen;
         /*this.ARNsN = Population.ARNsN;
         this.stocks = Population.stocks;
-        this.orders = Population.orders;
-        this.CUT_WIDTH = Population.CUT_WIDTH;*/
+        this.orders = Population.orders;*/
     }
 
     /**
