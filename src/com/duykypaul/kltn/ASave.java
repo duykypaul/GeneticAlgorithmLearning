@@ -14,7 +14,7 @@ public class ASave {
     private static final double MUTATION_RATE = 0.01;
     private static final double CROSSOVER_RATE = 0.95;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 100;
+    private static final int RUNNING_TIME_LIMIT = 200;
     private static final int GENERATION_LIMIT = 1;
 
     public static void main(String[] args) {
@@ -70,9 +70,8 @@ public class ASave {
 
         TreeMap<Double, Integer> resultSet = new TreeMap<>();
 
-        while (!ga.isTerminationConditionMet(population, start)) {
+        while (!ga.isTerminationConditionMet(population, start, resultSet)) {
             outputReport(population);
-            System.out.println();
 
             // Apply crossover
             //population = ga.crossoverPopulation(population);
@@ -105,5 +104,6 @@ public class ASave {
         System.out.println("Best solution machines index: " + best.getChromosomeMachine().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best solution datetime cut product: " + best.getChromosomeTime().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best value remain: " + best.getFitness());
+        System.out.println();
     }
 }
