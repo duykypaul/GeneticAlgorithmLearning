@@ -236,9 +236,10 @@ public class GeneticAlgorithm {
         // Initialize new population
         Population newPopulation = new Population(population);
 
-        int maxRandomInt = Population.ARNsN - 1;
+        int maxRandomInt = this.populationSize - 1;
+
         // Loop over current population by fitness
-        int mutationARNsN = (int) (Population.ARNsN * this.mutationRate);
+        int mutationARNsN = (int) (this.populationSize * this.mutationRate);
         for (int i = 0; i < mutationARNsN; ++i) {
             Integer worstPosition = findWorstPositionInPopulation(newPopulation.getIndividuals(), this.populationSize);
             Individual worstIndividual = newPopulation.getIndividual(worstPosition);

@@ -32,10 +32,6 @@ public class Machine implements Cloneable {
         this.minutesRemaining = minutesRemaining;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240).getRealTime());
-    }
-
     public int getBladeThickness() {
         return bladeThickness;
     }
