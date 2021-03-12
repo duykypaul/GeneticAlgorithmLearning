@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
  *
  */
 public class Individual {
-    private List<Integer> chromosome;
-    private List<Integer> chromosomeMachine;
-    private List<String> chromosomeTime;
+    private final List<Integer> chromosome;
+    private final List<Integer> chromosomeMachine;
+    private final List<String> chromosomeTime;
     private double fitness = -1;
 
     /**
@@ -79,9 +79,8 @@ public class Individual {
     /**
      * Set gene at offset
      *
-     * @param gene
-     * @param offset
-     * @return gene
+     * @param gene gene
+     * @param offset offset
      */
     public void setGene(int offset, int gene) {
         this.chromosome.set(offset, gene);
@@ -90,7 +89,7 @@ public class Individual {
     /**
      * Get gene at offset
      *
-     * @param offset
+     * @param offset offset
      * @return gene
      */
     public int getGene(int offset) {

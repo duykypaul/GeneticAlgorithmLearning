@@ -4,8 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Machine implements Cloneable {
-    public static int MAX_MINUTES_REMAINING = 480;
-    public static int MIN_MINUTES_REMAINING = 0;
+    public static final int MAX_MINUTES_REMAINING = 480;
+    public static final int MIN_MINUTES_REMAINING = 0;
 
     /**
      * blade thickness

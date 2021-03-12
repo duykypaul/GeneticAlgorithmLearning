@@ -16,7 +16,7 @@ public class GeneticAlgorithm {
      * mutate randomly in a given generation. The range is 0.0-1.0, but is
      * generally small (on the order of 0.1 or less).
      */
-    private double mutationRate;
+    private final double mutationRate;
 
     /**
      * Crossover rate is the fractional probability that two individuals will
@@ -24,19 +24,19 @@ public class GeneticAlgorithm {
      * offspring with traits of each of the parents. Like mutation rate the
      * rance is 0.0-1.0 but small.
      */
-    private double crossoverRate;
+    private final double crossoverRate;
 
     /**
      * Elitism is the concept that the strongest members of the population
      * should be preserved from generation to generation. If an individual is
      * one of the elite, it will not be mutated or crossover.
      */
-    private int elitismCount;
+    private final int elitismCount;
 
     /**
      * limits the running time of the algorithm
      */
-    private int runningTimeLimit;
+    private final int runningTimeLimit;
 
     public GeneticAlgorithm(int populationSize, double mutationRate, double crossoverRate, int elitismCount, int runningTimeLimit) {
         this.populationSize = populationSize;
@@ -49,9 +49,9 @@ public class GeneticAlgorithm {
     /**
      * Initialize population
      *
-     * @param stocks
-     * @param orders
-     * @param generationLimit
+     * @param stocks stocks
+     * @param orders orders
+     * @param generationLimit generationLimit
      * @return population The initial population generated
      */
     public Population initPopulation(List<Integer> stocks, List<LocalDate> stocksDate, List<Integer> orders,
@@ -71,8 +71,8 @@ public class GeneticAlgorithm {
      *
      * @param individual
      *            the individual to evaluate
-     * @param stocks
-     * @param orders
+     * @param stocks stocks
+     * @param orders orders
      * @return double The fitness value for individual
      */
     public double calcFitness(Individual individual, List<Integer> stocks, List<Integer> orders) {
@@ -117,9 +117,9 @@ public class GeneticAlgorithm {
      * we can simply stop evolving once we've reached a fitness of one.
      *
      *
-     * @param population
-     * @param start
-     * @param resultSet
+     * @param population population
+     * @param start start
+     * @param resultSet resultSet
      * @return boolean True if termination condition met, otherwise, false
      */
     public boolean isTerminationConditionMet(Population population, Instant start, TreeMap<Double, Integer> resultSet) {
@@ -291,12 +291,10 @@ public class GeneticAlgorithm {
                     continue;
                 }
                 if (stockTemp.get(j) >= Population.orders.get(i)) {
-                    if (stockTemp.get(j).equals(Population.orders.get(i))) {
-                        if (bestGap > -stockTemp.get(ARNStocks.get(i))) {
-                            bestGap = -stockTemp.get(ARNStocks.get(i));
-                            moveTo = j;
-                            fromPosition = i;
-                        }
+                    if (stockTemp.get(j).equals(Population.orders.get(i)) && bestGap > -stockTemp.get(ARNStocks.get(i))) {
+                        bestGap = -stockTemp.get(ARNStocks.get(i));
+                        moveTo = j;
+                        fromPosition = i;
                     }
 
                     int cutWidth = Population.machines.get(ARNMachines.get(i)).getBladeThickness();
@@ -325,7 +323,7 @@ public class GeneticAlgorithm {
         ARNStocks.set(finalFromPosition, finalMoveTo);
 
         Triplet<Boolean, List<Integer>, List<String>> triplet = Population.reRenderARN(ARNStocks, Population.machines);
-        if (triplet.getValue0()) {
+        if (Boolean.TRUE.equals(triplet.getValue0())) {
             ARNMachines = triplet.getValue1();
             ARNTimes = triplet.getValue2();
         }
@@ -345,29 +343,5 @@ public class GeneticAlgorithm {
 
     public void setPopulationSize(int populationSize) {
         this.populationSize = populationSize;
-    }
-
-    public double getMutationRate() {
-        return mutationRate;
-    }
-
-    public void setMutationRate(double mutationRate) {
-        this.mutationRate = mutationRate;
-    }
-
-    public double getCrossoverRate() {
-        return crossoverRate;
-    }
-
-    public void setCrossoverRate(double crossoverRate) {
-        this.crossoverRate = crossoverRate;
-    }
-
-    public int getElitismCount() {
-        return elitismCount;
-    }
-
-    public void setElitismCount(int elitismCount) {
-        this.elitismCount = elitismCount;
     }
 }

@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
  * such as finding the strongest individuals, collecting stats on the population
  * as a whole, and selecting individuals to mutate or crossover.
  *
- * @author bkanber
+ * @author duykypaul
  */
 public class Population {
-    static int GENERATION_SAME_LIMIT = 30;
+    static final int GENERATION_SAME_LIMIT = 30;
     static int ARNsN = 0;
     static List<Integer> stocks;
     static List<LocalDate> stocksDate;
@@ -26,7 +26,7 @@ public class Population {
     static List<LocalDate> ordersDate;
     static List<Machine> machines;
     static long GENERATION_LIMIT;
-    Instant start_gen;
+    Instant startGen;
     Boolean isFinishedGen = false;
 
     private List<Individual> population;
@@ -42,10 +42,7 @@ public class Population {
         this.population = populationClone.population;
         this.populationFitness = populationClone.populationFitness;
         this.isFinishedGen = populationClone.isFinishedGen;
-        this.start_gen = populationClone.start_gen;
-        /*this.ARNsN = Population.ARNsN;
-        this.stocks = Population.stocks;
-        this.orders = Population.orders;*/
+        this.startGen = populationClone.startGen;
     }
 
     /**
@@ -70,16 +67,16 @@ public class Population {
         machines = new ArrayList<>(machinesInit);
         GENERATION_LIMIT = generationLimit;
 
-        /**
+        /*
          * stores a list of index of material used to cut the product
          */
         List<Integer> ARNStocks = new ArrayList<>();
-        /**
+        /*
          * stores a list of index of machine used to cut the product
          */
         List<Integer> ARNMachines = new ArrayList<>();
 
-        /**
+        /*
          * stores datetime cut the product
          */
         List<String> ARNTimes = new ArrayList<>();
@@ -90,7 +87,7 @@ public class Population {
             machinesState.add(machine.clone());
         }
 
-        start_gen = Instant.now();
+        startGen = Instant.now();
         generatePopulation(ARNStocks, ARNMachines, ARNTimes, stockState, machinesState);
 
         if (ARNsN > populationSize) {
@@ -183,8 +180,8 @@ public class Population {
     /**
      * Set individual at offset
      *
-     * @param individual
-     * @param offset
+     * @param individual individual
+     * @param offset offset
      * @return individual
      */
     public Individual setIndividual(int offset, Individual individual) {
@@ -194,34 +191,19 @@ public class Population {
     /**
      * Get individual at offset
      *
-     * @param offset
+     * @param offset offset
      * @return individual
      */
     public Individual getIndividual(int offset) {
         return population.get(offset);
     }
 
-    /**
-     * Shuffles the population in-place
-     *
-     * @return void
-     */
-    public void shuffle() {
-        Random rnd = new Random();
-        for (int i = population.size() - 1; i > 0; i--) {
-            int index = rnd.nextInt(i + 1);
-            Individual a = population.get(index);
-            population.set(index, population.get(i));
-            population.set(i, a);
-        }
-    }
-
     void generatePopulation(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<String> currentARNTimes, List<Integer> stockState, List<Machine> machinesState) {
         // Population limit reached!
-        if (isFinishedGen) {
+        if (Boolean.TRUE.equals(isFinishedGen)) {
             return;
         }
-        long duration = Duration.between(start_gen, Instant.now()).getSeconds();
+        long duration = Duration.between(startGen, Instant.now()).getSeconds();
         if (duration > GENERATION_LIMIT) {
             isFinishedGen = true;
             return;
@@ -348,7 +330,6 @@ public class Population {
                         currentMachine.setMinutesRemaining(Machine.MAX_MINUTES_REMAINING);
                         currentMachine.plusDay();
                     }
-
                 }
             }
         }

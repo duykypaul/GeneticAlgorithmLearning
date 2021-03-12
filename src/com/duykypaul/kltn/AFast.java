@@ -10,6 +10,10 @@ public class AFast {
     private static final String COMMA = ",";
     private static final String STEEL_BLADE_THICKNESS = "5";
 
+    private AFast() {
+        //not called
+    }
+
     /**
      * chon ra phuong phap co phan thua tot nhat trong list danh sach co cung so luong thanh nguyen lieu can dung
      *
@@ -83,7 +87,7 @@ public class AFast {
                 .thenComparing(FastCutBean::getRemain))
             .collect(Collectors.toList());
 
-        if (listArn.size() > 0) {
+        if (!listArn.isEmpty()) {
             messageFromArnAlgorithm = listArn.get(0).getArrIndexStockUsed();
             Map<Integer, Integer> mapOutputArn = new HashMap<>();
             Map<Integer, Integer> mapIndexSortedIndicesOrder = new HashMap<>();
@@ -148,19 +152,18 @@ public class AFast {
              */
             if (Arrays.stream(arrIndexStockUsed).anyMatch(item -> item == -1)) {
                 break;
-            } else {
-                /*
-                 * số lượng thanh sắt cần dùng
-                 */
-                int numberMaterial = (int) Arrays.stream(arrIndexStockUsed).distinct().count();
-                /*
-                 * tổng phần thừa với cách cắt tương ứng
-                 */
-                int remain = IntStream.range(0, arrRemain.length).filter(i -> arrRemain[i] != arrStock[i]).mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
-                listArn.add(new FastCutBean(numberMaterial, remain, arrIndexStockUsed));
-                arrCheckMaterialCanBeCut[numberMaterialRemoved++] = 0;
-                fastCutMain(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder);
             }
+            /*
+             * số lượng thanh sắt cần dùng
+             */
+            int numberMaterial = (int) Arrays.stream(arrIndexStockUsed).distinct().count();
+            /*
+             * tổng phần thừa với cách cắt tương ứng
+             */
+            int remain = IntStream.range(0, arrRemain.length).filter(i -> arrRemain[i] != arrStock[i]).mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
+            listArn.add(new FastCutBean(numberMaterial, remain, arrIndexStockUsed));
+            arrCheckMaterialCanBeCut[numberMaterialRemoved++] = 0;
+            fastCutMain(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder);
         }
     }
 }
