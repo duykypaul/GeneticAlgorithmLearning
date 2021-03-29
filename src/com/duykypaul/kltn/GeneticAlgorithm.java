@@ -184,7 +184,7 @@ public class GeneticAlgorithm {
         Population newPopulation = new Population(population);
 
         // Loop over current population by fitness
-        for (int populationIndex = 0; populationIndex < population.size(); populationIndex++) {
+        /*for (int populationIndex = 0; populationIndex < population.size(); populationIndex++) {
             Individual parent1 = population.getFittest(populationIndex);
 
             // Apply crossover to this individual?
@@ -212,7 +212,7 @@ public class GeneticAlgorithm {
                 newPopulation.setIndividual(populationIndex, parent1);
             }
         }
-
+*/
         return newPopulation;
     }
 
@@ -275,11 +275,8 @@ public class GeneticAlgorithm {
 
     void mutate(Population newPopulation, List<Integer> ARNStocks, List<Integer> ARNMachines, List<String> ARNTimes, int worstPosition, int worstValue) {
         List<Integer> stockTemp = Population.computeStockRemainV3(ARNStocks, ARNMachines, Population.stocks, Population.orders);
-        //todo thinking bestGapOfAll for what?
         int bestGapOfAll = Integer.MAX_VALUE;
-        //todo thinking finalMoveTo for what?
         int finalMoveTo = -1;
-        //todo thinking finalFromPosition for what?
         int finalFromPosition = -1;
 
         for (int i = 0; i < Population.orders.size(); ++i) {

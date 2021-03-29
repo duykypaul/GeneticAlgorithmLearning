@@ -1,7 +1,5 @@
 package com.duykypaul.steel;
 
-import com.duykypaul.kltn.Machine;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -25,7 +23,7 @@ public class Population {
     static List<LocalDate> ordersDate;
     static int CUT_WIDTH;
     static long GENERATION_LIMIT;
-    Instant start_gen;
+    Instant startGen;
     Boolean isFinishedGen = false;
 
     private List<Individual> population;
@@ -37,15 +35,10 @@ public class Population {
      * @param populationClone The population of individuals
      */
     public Population(Population populationClone) {
-        // Initial population
         this.population = populationClone.population;
         this.populationFitness = populationClone.populationFitness;
         this.isFinishedGen = populationClone.isFinishedGen;
-        this.start_gen = populationClone.start_gen;
-        /*this.ARNsN = Population.ARNsN;
-        this.stocks = Population.stocks;
-        this.orders = Population.orders;
-        this.CUT_WIDTH = Population.CUT_WIDTH;*/
+        this.startGen = populationClone.startGen;
     }
 
     /**
@@ -65,7 +58,7 @@ public class Population {
         List<Integer> ARN = new ArrayList<>();
         List<Integer> stockState = new ArrayList<>(stocksInit);
 
-        start_gen = Instant.now();
+        startGen = Instant.now();
         generateARN(ARN, stockState);
 
         if (ARNsN > populationSize) {
@@ -193,10 +186,10 @@ public class Population {
 
     void generateARN(List<Integer> currARN, List<Integer> stockState) {
         // Population limit reached!
-        if (isFinishedGen) {
+        if (Boolean.TRUE.equals(isFinishedGen)) {
             return;
         }
-        long duration = Duration.between(start_gen, Instant.now()).getSeconds();
+        long duration = Duration.between(startGen, Instant.now()).getSeconds();
         if (duration > GENERATION_LIMIT) {
             isFinishedGen = true;
             return;
@@ -213,14 +206,11 @@ public class Population {
         }
         // Next Node
         for (int i = 0; i < stockState.size(); i++) {
-            /*if (isFinishedGen) {
-                return;
-            }
-            duration = Duration.between(start_gen, Instant.now()).getSeconds();
+            duration = Duration.between(startGen, Instant.now()).getSeconds();
             if (duration > GENERATION_LIMIT) {
                 isFinishedGen = true;
                 return;
-            }*/
+            }
 
             int idx = currARN.size();
 
@@ -230,15 +220,12 @@ public class Population {
                 currARN.add(i);
                 generateARN(currARN, stockTemp);
                 currARN.remove(currARN.size() - 1);
-
-                /*if (isFinishedGen) {
-                    return;
-                }
-                duration = Duration.between(start_gen, Instant.now()).getSeconds();
+                
+                duration = Duration.between(startGen, Instant.now()).getSeconds();
                 if (duration > GENERATION_LIMIT) {
                     isFinishedGen = true;
                     return;
-                }*/
+                }
             } else {
                 if (orders.get(idx) + CUT_WIDTH <= stockState.get(i)) {
                     List<Integer> stockTemp = new ArrayList<>(stockState);
@@ -246,22 +233,23 @@ public class Population {
                     currARN.add(i);
                     generateARN(currARN, stockTemp);
                     currARN.remove(currARN.size() - 1);
-                    /*if (isFinishedGen) {
+
+                    if (Boolean.TRUE.equals(isFinishedGen)) {
                         return;
                     }
-                    duration = Duration.between(start_gen, Instant.now()).getSeconds();
+                    duration = Duration.between(startGen, Instant.now()).getSeconds();
                     if (duration > GENERATION_LIMIT) {
                         isFinishedGen = true;
                         return;
-                    }*/
+                    }
                 }
             }
 
-            /*duration = Duration.between(start_gen, Instant.now()).getSeconds();
+            duration = Duration.between(startGen, Instant.now()).getSeconds();
             if (duration > GENERATION_LIMIT) {
                 isFinishedGen = true;
                 return;
-            }*/
+            }
         }
     }
 }

@@ -55,8 +55,7 @@ public class ASave {
         Instant start = Instant.now();
 
         // create GA Object
-        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE,
-            CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
+        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE, CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
 
         // Initialize population
         Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, GENERATION_LIMIT);
@@ -66,7 +65,10 @@ public class ASave {
             return;
         }
         System.out.println("Population.ARNsN: " + Population.ARNsN);
+
+        //Evaluate the whole population
         ga.evalPopulation(population);
+
         int generation = 1;
 
         TreeMap<Double, Integer> resultSet = new TreeMap<>();
@@ -75,7 +77,7 @@ public class ASave {
             outputReport(population);
 
             // Apply crossover
-            //population = ga.crossoverPopulation(population);
+            population = ga.crossoverPopulation(population);
 
             // Apply mutation
             population = ga.mutatePopulation(population);

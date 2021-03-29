@@ -13,8 +13,8 @@ public class ARNV2 {
     private static final double MUTATION_RATE =  0.01;
     private static final double CROSSOVER_RATE = 0.95;
     private static final int ELITISM_COUNT =  3;
-    private static final int RUNNING_TIME_LIMIT = 3;
-    private static final int GENERATION_LIMIT = 1;
+    private static final int RUNNING_TIME_LIMIT = 3000;
+    private static final int GENERATION_LIMIT = 1000;
     public static void main(String[] args) {
         String inputContent = "7000,5000,13000,13000,6000|5000,5000,5000,10000|5";
         String inputContent1 = "2220,2220,2534,7093,7093,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|3303,3303,3303,3303,3303,3303,3180,3180,3180,4080,4080,4080,4080,4180,4180,990|5";
@@ -22,7 +22,7 @@ public class ARNV2 {
         String inputContent3 = "13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|158,158,158,158,158,158,158,158,158,158,158,158,158,158,158,158,3098,5051,3682,3682,3682,3682,3682,3682,217,218,3767,3916,1049,2628,1097,1097,1097,1097,1097,1097,1097,2578,2578,2578,2578,2578,2578,2578|5";
         String inputContent4 = "13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,8000,8000,8000,8000,8000,8000,8000,8000,8000,8000,8000,8000,8000,8000,8000|3000,3000,2000,2000,2000,5000,5000,5000,7000,7000,7000,7000|5";
 
-        List<String> parts = Arrays.asList(inputContent4.split("\\|").clone());
+        List<String> parts = Arrays.asList(inputContent.split("\\|").clone());
 
         final List<Integer> stocks = Arrays.stream(parts.get(0).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
         final List<Integer> orders = Arrays.stream(parts.get(1).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
@@ -30,8 +30,7 @@ public class ARNV2 {
         Instant start = Instant.now();
 
         // create GA Object
-        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE,  MUTATION_RATE,
-            CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
+        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE,  MUTATION_RATE, CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
 
         // Initialize population
         Population population = ga.initPopulation(stocks, orders, CUT_WIDTH, GENERATION_LIMIT);

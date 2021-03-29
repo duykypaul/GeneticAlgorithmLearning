@@ -104,6 +104,6 @@ public class Individual {
     public String toString() {
         return this.chromosome.stream()
             .map(String::valueOf)
-            .collect(Collectors.joining(","));
+            .collect(Collectors.joining(",")) + " | " + this.fitness;
     }
 }
