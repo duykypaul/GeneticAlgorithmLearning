@@ -31,11 +31,12 @@ public class ARN {
     private List<List<Integer>> ARNs = new ArrayList<>();
 
     public static void main(String[] args) {
-        String inputMessage = "7000,5000,13000,13000,6000|5000,5000,5000,10000|5";
+//        String inputMessage = "5623,1009,1640,1640,13000,13000|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";
+        String inputMessage = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025|1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122|5";
         String inputMessage1 = "2220,2220,2534,7093,7093,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000,13000|3303,3303,3303,3303,3303,3303,3180,3180,3180,4080,4080,4080,4080,4180,4180,990|5";
         ARN arn = new ARN();
         Instant start = Instant.now();
-        System.out.println(arn.algorithm_task(inputMessage1));
+        System.out.println(arn.algorithm_task(inputMessage));
         System.out.println("time line: " + Duration.between(start, Instant.now()));
     }
 
