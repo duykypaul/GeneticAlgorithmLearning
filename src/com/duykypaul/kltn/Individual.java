@@ -22,22 +22,36 @@ import java.util.stream.Collectors;
  *
  */
 public class Individual {
-    private final List<Integer> chromosome;
-    private final List<Integer> chromosomeMachine;
-    private final List<String> chromosomeTime;
+    private List<Integer> chromosome;
+    private List<Integer> chromosomeMachine;
+    private List<String> chromosomeTime;
     private double fitness = -1;
 
     /**
-     * Initializes individual with specific chromosome and chromosomeMachine
+     * Initializes individual with specific chromosome and chromosomeMachine and chromosomeTime
      *
      * @param chromosome        The chromosome to give individual
      * @param chromosomeMachine The chromosomeMachine to give individual
+     * @param chromosomeTime The chromosomeTime to give individual
      */
     public Individual(List<Integer> chromosome, List<Integer> chromosomeMachine, List<String> chromosomeTime) {
         // Create individual chromosome
         this.chromosome = chromosome;
         this.chromosomeMachine = chromosomeMachine;
         this.chromosomeTime = chromosomeTime;
+    }
+
+    /**
+     * Initializes individual with specific individual
+     *
+     * @param individual        individual
+     */
+    public Individual(Individual individual) {
+        // Create individual chromosome
+        this.chromosome = individual.getChromosome();
+        this.chromosomeMachine = individual.getChromosomeMachine();
+        this.chromosomeTime = individual.getChromosomeTime();
+        this.fitness = individual.getFitness();
     }
 
     /**
@@ -115,6 +129,17 @@ public class Individual {
         return this.fitness;
     }
 
+    public void setChromosome(List<Integer> chromosome) {
+        this.chromosome = chromosome;
+    }
+
+    public void setChromosomeMachine(List<Integer> chromosomeMachine) {
+        this.chromosomeMachine = chromosomeMachine;
+    }
+
+    public void setChromosomeTime(List<String> chromosomeTime) {
+        this.chromosomeTime = chromosomeTime;
+    }
 
     /**
      * Display the chromosome as a string.

@@ -3,10 +3,7 @@ package com.duykypaul.kltn;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -14,8 +11,9 @@ public class ASave {
     private static final int DEFAULT_POPULATION_SIZE = 5000;
     private static final double MUTATION_RATE = 0.01;
     private static final double CROSSOVER_RATE = 0.95;
+    private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 30;
+    private static final int RUNNING_TIME_LIMIT = 300;
     private static final int GENERATION_LIMIT = 1;
 
     public static void main(String[] args) {
@@ -55,7 +53,7 @@ public class ASave {
         Instant start = Instant.now();
 
         // create GA Object
-        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE, CROSSOVER_RATE, ELITISM_COUNT, RUNNING_TIME_LIMIT);
+        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE, CROSSOVER_RATE, ELITISM_COUNT, WORST_RATE, RUNNING_TIME_LIMIT);
 
         // Initialize population
         Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, GENERATION_LIMIT);
@@ -71,7 +69,7 @@ public class ASave {
 
         int generation = 1;
 
-        TreeMap<Double, Integer> resultSet = new TreeMap<>();
+        SortedMap<Double, Integer> resultSet = new TreeMap<>();
 
         while (!ga.isTerminationConditionMet(population, start, resultSet)) {
             outputReport(population);
