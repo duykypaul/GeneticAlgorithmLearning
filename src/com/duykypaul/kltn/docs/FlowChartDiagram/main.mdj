@@ -37,10 +37,10 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 109.5,
-									"top": 51.5,
-									"width": 27,
-									"height": 23,
+									"left": 114.25,
+									"top": 42.25,
+									"width": 36.5,
+									"height": 36.5,
 									"text": "Bắt đầu",
 									"wordWrap": true
 								}
@@ -48,9 +48,9 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 96,
-							"top": 40,
-							"width": 54,
-							"height": 46,
+							"top": 24,
+							"width": 73,
+							"height": 73,
 							"nameLabel": {
 								"$ref": "AAAAAAF4c9d0XtYGimM="
 							}
@@ -61,6 +61,7 @@
 							"_parent": {
 								"$ref": "AAAAAAF4c9aR99X/PRU="
 							},
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 128,
 							"top": 232,
@@ -86,7 +87,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 74,
-									"top": 234,
+									"top": 314,
 									"width": 106.2216796875,
 									"height": 39,
 									"text": "Đưa thanh nguyên liệu dài nhất lên máy",
@@ -96,7 +97,7 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 64,
-							"top": 224,
+							"top": 304,
 							"width": 126.2216796875,
 							"height": 59,
 							"nameLabel": {
@@ -124,8 +125,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 134,
-									"top": 147,
+									"left": 143,
+									"top": 193,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -135,6 +136,7 @@
 									"edgePosition": 1
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c9o3MdZJH84="
@@ -143,7 +145,7 @@
 								"$ref": "AAAAAAF4c9d0XtYF8uA="
 							},
 							"lineStyle": 2,
-							"points": "120:85;120:224",
+							"points": "128:96;128:304",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c9setNZaZdk="
 							}
@@ -166,8 +168,8 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 92.542236328125,
-									"top": 435.5,
+									"left": 100.542236328125,
+									"top": 483.5,
 									"width": 57.08447265625,
 									"height": 39,
 									"text": "Có thanh đơn hàng ngắn hơn",
@@ -176,8 +178,8 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 64,
-							"top": 416,
+							"left": 72,
+							"top": 464,
 							"width": 114.1689453125,
 							"height": 78,
 							"nameLabel": {
@@ -203,7 +205,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 74,
-									"top": 570,
+									"top": 642,
 									"width": 106.2216796875,
 									"height": 39,
 									"text": "Cắt theo thanh đơn hàng dài nhất có thể",
@@ -213,7 +215,7 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 64,
-							"top": 560,
+							"top": 632,
 							"width": 126.2216796875,
 							"height": 59,
 							"nameLabel": {
@@ -275,7 +277,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 490,
-									"top": 442,
+									"top": 490,
 									"width": 106.2216796875,
 									"height": 26,
 									"text": "Bỏ thanh nguyên liệu ra khỏi máy",
@@ -285,7 +287,7 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 480,
-							"top": 432,
+							"top": 480,
 							"width": 126.2216796875,
 							"height": 46,
 							"nameLabel": {
@@ -310,9 +312,9 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 512.542236328125,
-									"top": 245.5,
-									"width": 65.08447265625,
+									"left": 508.25,
+									"top": 293.5,
+									"width": 72.5,
 									"height": 91,
 									"text": "Đã hết đơn hàng hoặc không còn thanh nguyên liệu đủ dài",
 									"wordWrap": true
@@ -320,9 +322,9 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 480,
-							"top": 200,
-							"width": 130.1689453125,
+							"left": 472,
+							"top": 248,
+							"width": 145,
 							"height": 182,
 							"nameLabel": {
 								"$ref": "AAAAAAF4c91NINadL7Q="
@@ -350,7 +352,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 139,
-									"top": 342,
+									"top": 406,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -360,6 +362,7 @@
 									"edgePosition": 1
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c9v2qtZvOHk="
@@ -368,7 +371,7 @@
 								"$ref": "AAAAAAF4c9o3MdZJH84="
 							},
 							"lineStyle": 2,
-							"points": "125:282;125:416",
+							"points": "125:362;125:464",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c9/7btbQPI8="
 							}
@@ -392,9 +395,10 @@
 									"model": {
 										"$ref": "AAAAAAF4c+AoqdbWzwQ="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 132,
-									"top": 519,
+									"left": 139,
+									"top": 579,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -406,6 +410,7 @@
 									"text": "T"
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c9xfEdZ5ZE0="
@@ -414,7 +419,7 @@
 								"$ref": "AAAAAAF4c9v2qtZvOHk="
 							},
 							"lineStyle": 2,
-							"points": "121:493;121:560",
+							"points": "128:541;128:632",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+AoqdbZ1eM="
 							}
@@ -438,9 +443,10 @@
 									"model": {
 										"$ref": "AAAAAAF4c+BQAtbgeUY="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 325,
-									"top": 419,
+									"left": 329,
+									"top": 483,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -452,6 +458,7 @@
 									"text": "F"
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c91D1daUrl0="
@@ -460,7 +467,7 @@
 								"$ref": "AAAAAAF4c9v2qtZvOHk="
 							},
 							"lineStyle": 2,
-							"points": "177:440;480:440",
+							"points": "185:504;480:504",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+BQAtbjWKM="
 							}
@@ -487,7 +494,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 217,
-									"top": 515,
+									"top": 583,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -497,6 +504,7 @@
 									"edgePosition": 1
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c9v2qtZvOHk="
@@ -505,7 +513,7 @@
 								"$ref": "AAAAAAF4c9xfEdZ5ZE0="
 							},
 							"lineStyle": 2,
-							"points": "189:589;232:589;232:456;177:456",
+							"points": "189:661;232:661;232:520;185:520",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+ZIGdcL4z0="
 							}
@@ -532,7 +540,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 528,
-									"top": 399,
+									"top": 447,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -542,6 +550,7 @@
 									"edgePosition": 1
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c91NINacvwo="
@@ -550,7 +559,7 @@
 								"$ref": "AAAAAAF4c91D1daUrl0="
 							},
 							"lineStyle": 2,
-							"points": "543:432;543:381",
+							"points": "543:480;543:429",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+eG59cXgHk="
 							}
@@ -574,9 +583,10 @@
 									"model": {
 										"$ref": "AAAAAAF4c+e/ZtcdDxw="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 521,
-									"top": 171,
+									"left": 526,
+									"top": 195,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -588,6 +598,7 @@
 									"text": "T"
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c909Y9aMMC4="
@@ -596,7 +607,7 @@
 								"$ref": "AAAAAAF4c91NINacvwo="
 							},
 							"lineStyle": 2,
-							"points": "539:200;539:157",
+							"points": "544:248;544:157",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+e/ZtcgRtY="
 							}
@@ -620,9 +631,10 @@
 									"model": {
 										"$ref": "AAAAAAF4c+feQdcnHXw="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 330,
-									"top": 249,
+									"left": 326,
+									"top": 347,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -634,6 +646,7 @@
 									"text": "F"
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c9o3MdZJH84="
@@ -642,54 +655,9 @@
 								"$ref": "AAAAAAF4c91NINacvwo="
 							},
 							"lineStyle": 2,
-							"points": "480:240;189:240",
+							"points": "472:338;189:338",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+feQdcqMIo="
-							}
-						},
-						{
-							"_type": "FCFlowView",
-							"_id": "AAAAAAF4c+gL8dczEu4=",
-							"_parent": {
-								"$ref": "AAAAAAF4c9aR99X/PRU="
-							},
-							"model": {
-								"$ref": "AAAAAAF4c+gL8dcxEXo="
-							},
-							"subViews": [
-								{
-									"_type": "EdgeLabelView",
-									"_id": "AAAAAAF4c+gL8dc0kGY=",
-									"_parent": {
-										"$ref": "AAAAAAF4c+gL8dczEu4="
-									},
-									"model": {
-										"$ref": "AAAAAAF4c+gL8dcxEXo="
-									},
-									"visible": false,
-									"font": "Arial;13;0",
-									"left": 546,
-									"top": 33,
-									"height": 13,
-									"alpha": 1.5707963267948966,
-									"distance": 15,
-									"hostEdge": {
-										"$ref": "AAAAAAF4c+gL8dczEu4="
-									},
-									"edgePosition": 1
-								}
-							],
-							"font": "Arial;13;0",
-							"head": {
-								"$ref": "AAAAAAF4izg2+PC1BtY="
-							},
-							"tail": {
-								"$ref": "AAAAAAF4c909Y9aMMC4="
-							},
-							"lineStyle": 2,
-							"points": "546:112;546:54;616:54",
-							"nameLabel": {
-								"$ref": "AAAAAAF4c+gL8dc0kGY="
 							}
 						},
 						{
@@ -708,19 +676,21 @@
 									"_parent": {
 										"$ref": "AAAAAAF4izevH/Cn+ng="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 608.25,
-									"top": 38.25,
-									"width": 48.5,
-									"height": 28.5,
+									"left": 522.25,
+									"top": 32.25,
+									"width": 36.5,
+									"height": 32.5,
 									"wordWrap": true
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 584,
-							"top": 24,
-							"width": 97,
-							"height": 57,
+							"left": 504,
+							"top": 16,
+							"width": 73,
+							"height": 65,
 							"nameLabel": {
 								"$ref": "AAAAAAF4izevH/CoBOM="
 							}
@@ -741,22 +711,69 @@
 									"_parent": {
 										"$ref": "AAAAAAF4izg2+PC1BtY="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 623.5,
-									"top": 47.5,
-									"width": 15,
-									"height": 15,
+									"left": 526.25,
+									"top": 36.25,
+									"width": 28.5,
+									"height": 24.5,
 									"text": "Kết thúc",
 									"wordWrap": true
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 616,
-							"top": 40,
-							"width": 30,
-							"height": 30,
+							"left": 512,
+							"top": 24,
+							"width": 57,
+							"height": 49,
 							"nameLabel": {
 								"$ref": "AAAAAAF4izg2+PC22ko="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAF4p7w55j/EuME=",
+							"_parent": {
+								"$ref": "AAAAAAF4c9aR99X/PRU="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p7w55j/Ci84="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF4p7w55j/Fxyc=",
+									"_parent": {
+										"$ref": "AAAAAAF4p7w55j/EuME="
+									},
+									"model": {
+										"$ref": "AAAAAAF4p7w55j/Ci84="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 529,
+									"top": 89,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF4p7w55j/EuME="
+									},
+									"edgePosition": 1
+								}
+							],
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAF4izevH/Cn+ng="
+							},
+							"tail": {
+								"$ref": "AAAAAAF4c909Y9aMMC4="
+							},
+							"lineStyle": 2,
+							"points": "544:112;544:80",
+							"nameLabel": {
+								"$ref": "AAAAAAF4p7w55j/Fxyc="
 							}
 						}
 					]
@@ -878,7 +895,7 @@
 					"ownedElements": [
 						{
 							"_type": "FCFlow",
-							"_id": "AAAAAAF4c+gL8dcxEXo=",
+							"_id": "AAAAAAF4p7w55j/Ci84=",
 							"_parent": {
 								"$ref": "AAAAAAF4c909Y9aKiMI="
 							},
@@ -886,7 +903,7 @@
 								"$ref": "AAAAAAF4c909Y9aKiMI="
 							},
 							"target": {
-								"$ref": "AAAAAAF4izg2+PCz0eE="
+								"$ref": "AAAAAAF4izevHfCld/w="
 							}
 						}
 					]
@@ -1022,42 +1039,6 @@
 							}
 						},
 						{
-							"_type": "FCConnectorView",
-							"_id": "AAAAAAF4c+5NFdeuCtI=",
-							"_parent": {
-								"$ref": "AAAAAAF4c+waY9dC52k="
-							},
-							"model": {
-								"$ref": "AAAAAAF4c+5NFdesmu8="
-							},
-							"subViews": [
-								{
-									"_type": "LabelView",
-									"_id": "AAAAAAF4c+5NFdevp3Y=",
-									"_parent": {
-										"$ref": "AAAAAAF4c+5NFdeuCtI="
-									},
-									"fillColor": "#d8f2ff",
-									"font": "Arial;13;0",
-									"left": 484.25,
-									"top": 60.25,
-									"width": 24.5,
-									"height": 24.5,
-									"text": "Kết thúc",
-									"wordWrap": true
-								}
-							],
-							"fillColor": "#d8f2ff",
-							"font": "Arial;13;0",
-							"left": 472,
-							"top": 48,
-							"width": 49,
-							"height": 49,
-							"nameLabel": {
-								"$ref": "AAAAAAF4c+5NFdevp3Y="
-							}
-						},
-						{
 							"_type": "FCAlternateProcessView",
 							"_id": "AAAAAAF4c+8KstfBugY=",
 							"_parent": {
@@ -1075,8 +1056,8 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 50,
-									"top": 130,
+									"left": 58,
+									"top": 146,
 									"width": 106.2216796875,
 									"height": 26,
 									"text": "Sắp xếp thanh nguyên liệu",
@@ -1085,8 +1066,8 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 40,
-							"top": 120,
+							"left": 48,
+							"top": 136,
 							"width": 126.2216796875,
 							"height": 46,
 							"nameLabel": {
@@ -1147,9 +1128,9 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 68.542236328125,
-									"top": 333.5,
-									"width": 57.08447265625,
+									"left": 70.25,
+									"top": 357.5,
+									"width": 76.5,
 									"height": 91,
 									"text": "Có thanh nguyên liệu dài hơn thanh đơn hàng",
 									"wordWrap": true
@@ -1157,9 +1138,9 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 40,
-							"top": 288,
-							"width": 114.1689453125,
+							"left": 32,
+							"top": 312,
+							"width": 153,
 							"height": 182,
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+9o/9fj6RA="
@@ -1222,8 +1203,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 118,
-									"top": 101,
+									"left": 126,
+									"top": 109,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1242,7 +1223,7 @@
 								"$ref": "AAAAAAF4c+3VM9elLQI="
 							},
 							"lineStyle": 2,
-							"points": "104:96;104:120",
+							"points": "112:96;112:136",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c/DHHtgGkhc="
 							}
@@ -1268,8 +1249,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 118,
-									"top": 183,
+									"left": 126,
+									"top": 191,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1288,7 +1269,7 @@
 								"$ref": "AAAAAAF4c+8KstfBugY="
 							},
 							"lineStyle": 2,
-							"points": "104:165;104:216",
+							"points": "112:181;112:216",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c/DTJNgPd00="
 							}
@@ -1314,8 +1295,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 118,
-									"top": 267,
+									"left": 126,
+									"top": 279,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1334,7 +1315,7 @@
 								"$ref": "AAAAAAF4c+88jtfKGlg="
 							},
 							"lineStyle": 2,
-							"points": "104:261;104:288",
+							"points": "112:261;112:312",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c/DeEdgYpiw="
 							}
@@ -1361,7 +1342,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 303,
-									"top": 335,
+									"top": 351,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": -4.812581408459465,
@@ -1382,55 +1363,9 @@
 								"$ref": "AAAAAAF4c+9o/tfitTc="
 							},
 							"lineStyle": 2,
-							"points": "153:360;496:360;496:181",
+							"points": "184:376;496:376;496:181",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c/FcQdg9FP8="
-							}
-						},
-						{
-							"_type": "FCFlowView",
-							"_id": "AAAAAAF4c/GNR9hGSyM=",
-							"_parent": {
-								"$ref": "AAAAAAF4c+waY9dC52k="
-							},
-							"model": {
-								"$ref": "AAAAAAF4c/GNR9hE8IQ="
-							},
-							"subViews": [
-								{
-									"_type": "EdgeLabelView",
-									"_id": "AAAAAAF4c/GNR9hHKEE=",
-									"_parent": {
-										"$ref": "AAAAAAF4c/GNR9hGSyM="
-									},
-									"model": {
-										"$ref": "AAAAAAF4c/GNR9hE8IQ="
-									},
-									"visible": false,
-									"font": "Arial;13;0",
-									"left": 481,
-									"top": 109,
-									"height": 13,
-									"alpha": 1.5707963267948966,
-									"distance": 15,
-									"hostEdge": {
-										"$ref": "AAAAAAF4c/GNR9hGSyM="
-									},
-									"edgePosition": 1
-								}
-							],
-							"fillColor": "#d8f2ff",
-							"font": "Arial;13;0",
-							"head": {
-								"$ref": "AAAAAAF4c+5NFdeuCtI="
-							},
-							"tail": {
-								"$ref": "AAAAAAF4c+9xKdfq4s8="
-							},
-							"lineStyle": 2,
-							"points": "496:136;496:96",
-							"nameLabel": {
-								"$ref": "AAAAAAF4c/GNR9hHKEE="
 							}
 						},
 						{
@@ -1452,7 +1387,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 439,
-									"top": 490,
+									"top": 530,
 									"width": 112.06982421875,
 									"height": 26,
 									"text": "Tìm phương án cắt",
@@ -1462,7 +1397,7 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 424,
-							"top": 480,
+							"top": 520,
 							"width": 137.06982421875,
 							"height": 46,
 							"nameLabel": {
@@ -1491,7 +1426,7 @@
 									"visible": false,
 									"font": "Arial;13;0",
 									"left": 481,
-									"top": 439,
+									"top": 467,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1501,6 +1436,7 @@
 									"edgePosition": 1
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4iz1OL/D6MFQ="
@@ -1509,55 +1445,9 @@
 								"$ref": "AAAAAAF4fukHN6E2NaA="
 							},
 							"lineStyle": 2,
-							"points": "496:480;496:413",
+							"points": "496:520;496:429",
 							"nameLabel": {
 								"$ref": "AAAAAAF4fulrrqFKPEk="
-							}
-						},
-						{
-							"_type": "FCFlowView",
-							"_id": "AAAAAAF4izzrqPDiZLQ=",
-							"_parent": {
-								"$ref": "AAAAAAF4c+waY9dC52k="
-							},
-							"model": {
-								"$ref": "AAAAAAF4izzrqPDgbtU="
-							},
-							"subViews": [
-								{
-									"_type": "EdgeLabelView",
-									"_id": "AAAAAAF4izzrqPDjpAA=",
-									"_parent": {
-										"$ref": "AAAAAAF4izzrqPDiZLQ="
-									},
-									"model": {
-										"$ref": "AAAAAAF4izzrqPDgbtU="
-									},
-									"font": "Arial;13;0",
-									"left": 93,
-									"top": 475,
-									"width": 7.94091796875,
-									"height": 13,
-									"alpha": 1.5707963267948966,
-									"distance": 15,
-									"hostEdge": {
-										"$ref": "AAAAAAF4izzrqPDiZLQ="
-									},
-									"edgePosition": 1,
-									"text": "T"
-								}
-							],
-							"font": "Arial;13;0",
-							"head": {
-								"$ref": "AAAAAAF4fukHN6E2NaA="
-							},
-							"tail": {
-								"$ref": "AAAAAAF4c+9o/tfitTc="
-							},
-							"lineStyle": 2,
-							"points": "96:469;96:496;424:496",
-							"nameLabel": {
-								"$ref": "AAAAAAF4izzrqPDjpAA="
 							}
 						},
 						{
@@ -1579,7 +1469,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 450,
-									"top": 378,
+									"top": 394,
 									"width": 106.2216796875,
 									"height": 26,
 									"text": "Bỏ thanh nguyên liệu dài nhất",
@@ -1589,7 +1479,7 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 440,
-							"top": 368,
+							"top": 384,
 							"width": 126.2216796875,
 							"height": 46,
 							"nameLabel": {
@@ -1617,8 +1507,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 295,
-									"top": 385,
+									"left": 311,
+									"top": 409,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -1628,6 +1518,7 @@
 									"edgePosition": 1
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4c+9o/tfitTc="
@@ -1636,9 +1527,174 @@
 								"$ref": "AAAAAAF4iz1OL/D6MFQ="
 							},
 							"lineStyle": 2,
-							"points": "440:376;153:376",
+							"points": "440:400;184:400",
 							"nameLabel": {
 								"$ref": "AAAAAAF4iz3IX/EI7xA="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAF4p43a4j9VPoQ=",
+							"_parent": {
+								"$ref": "AAAAAAF4c+waY9dC52k="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p43a4j9Tlsc="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF4p43a4z9WEqw=",
+									"_parent": {
+										"$ref": "AAAAAAF4p43a4j9VPoQ="
+									},
+									"model": {
+										"$ref": "AAAAAAF4p43a4j9Tlsc="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 101,
+									"top": 523,
+									"width": 22.38818359375,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF4p43a4j9VPoQ="
+									},
+									"edgePosition": 1,
+									"text": "    T"
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAF4fukHN6E2NaA="
+							},
+							"tail": {
+								"$ref": "AAAAAAF4c+9o/tfitTc="
+							},
+							"lineStyle": 2,
+							"points": "112:493;112:544;424:544",
+							"nameLabel": {
+								"$ref": "AAAAAAF4p43a4z9WEqw="
+							}
+						},
+						{
+							"_type": "FCConnectorView",
+							"_id": "AAAAAAF4p474Vz9nO9o=",
+							"_parent": {
+								"$ref": "AAAAAAF4c+waY9dC52k="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p474Vz9lTyk="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAF4p474Vz9owZ8=",
+									"_parent": {
+										"$ref": "AAAAAAF4p474Vz9nO9o="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 480.25,
+									"top": 56.25,
+									"width": 32.5,
+									"height": 32.5,
+									"wordWrap": true
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"left": 464,
+							"top": 40,
+							"width": 65,
+							"height": 65,
+							"nameLabel": {
+								"$ref": "AAAAAAF4p474Vz9owZ8="
+							}
+						},
+						{
+							"_type": "FCConnectorView",
+							"_id": "AAAAAAF4p4+qpz+BZpY=",
+							"_parent": {
+								"$ref": "AAAAAAF4c+waY9dC52k="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p4+qpz9/7qk="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAF4p4+qpz+CQOA=",
+									"_parent": {
+										"$ref": "AAAAAAF4p4+qpz+BZpY="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 484.25,
+									"top": 60.25,
+									"width": 24.5,
+									"height": 24.5,
+									"text": "Kết thúc",
+									"wordWrap": true
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"left": 472,
+							"top": 48,
+							"width": 49,
+							"height": 49,
+							"nameLabel": {
+								"$ref": "AAAAAAF4p4+qpz+CQOA="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAF4p5FaWj+lCak=",
+							"_parent": {
+								"$ref": "AAAAAAF4c+waY9dC52k="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p5FaWj+jUeA="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF4p5FaWz+mQIA=",
+									"_parent": {
+										"$ref": "AAAAAAF4p5FaWj+lCak="
+									},
+									"model": {
+										"$ref": "AAAAAAF4p5FaWj+jUeA="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 480,
+									"top": 113,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF4p5FaWj+lCak="
+									},
+									"edgePosition": 1
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAF4p474Vz9nO9o="
+							},
+							"tail": {
+								"$ref": "AAAAAAF4c+9xKdfq4s8="
+							},
+							"lineStyle": 2,
+							"points": "495:136;495:104",
+							"nameLabel": {
+								"$ref": "AAAAAAF4p5FaWz+mQIA="
 							}
 						}
 					]
@@ -1665,14 +1721,6 @@
 							}
 						}
 					]
-				},
-				{
-					"_type": "FCConnector",
-					"_id": "AAAAAAF4c+5NFdesmu8=",
-					"_parent": {
-						"$ref": "AAAAAAF4c+waY9dBSko="
-					},
-					"name": "Kết thúc"
 				},
 				{
 					"_type": "FCAlternateProcess",
@@ -1744,11 +1792,11 @@
 						},
 						{
 							"_type": "FCFlow",
-							"_id": "AAAAAAF4izzrqPDgbtU=",
+							"_id": "AAAAAAF4p43a4j9Tlsc=",
 							"_parent": {
 								"$ref": "AAAAAAF4c+9o/tfgjFw="
 							},
-							"name": "T",
+							"name": "    T",
 							"source": {
 								"$ref": "AAAAAAF4c+9o/tfgjFw="
 							},
@@ -1768,7 +1816,7 @@
 					"ownedElements": [
 						{
 							"_type": "FCFlow",
-							"_id": "AAAAAAF4c/GNR9hE8IQ=",
+							"_id": "AAAAAAF4p5FaWj+jUeA=",
 							"_parent": {
 								"$ref": "AAAAAAF4c+9xKdfo27Q="
 							},
@@ -1776,7 +1824,7 @@
 								"$ref": "AAAAAAF4c+9xKdfo27Q="
 							},
 							"target": {
-								"$ref": "AAAAAAF4c+5NFdesmu8="
+								"$ref": "AAAAAAF4p474Vz9lTyk="
 							}
 						}
 					]
@@ -1826,6 +1874,21 @@
 							}
 						}
 					]
+				},
+				{
+					"_type": "FCConnector",
+					"_id": "AAAAAAF4p474Vz9lTyk=",
+					"_parent": {
+						"$ref": "AAAAAAF4c+waY9dBSko="
+					}
+				},
+				{
+					"_type": "FCConnector",
+					"_id": "AAAAAAF4p4+qpz9/7qk=",
+					"_parent": {
+						"$ref": "AAAAAAF4c+waY9dBSko="
+					},
+					"name": "Kết thúc"
 				}
 			]
 		},
@@ -1863,58 +1926,22 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 294.25,
-									"top": 150.25,
-									"width": 28.5,
-									"height": 28.5,
+									"left": 290.25,
+									"top": 138.25,
+									"width": 36.5,
+									"height": 36.5,
 									"text": "Bắt đầu",
 									"wordWrap": true
 								}
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 280,
-							"top": 136,
-							"width": 57,
-							"height": 57,
+							"left": 272,
+							"top": 120,
+							"width": 73,
+							"height": 73,
 							"nameLabel": {
 								"$ref": "AAAAAAF4eSnaA34bByE="
-							}
-						},
-						{
-							"_type": "FCConnectorView",
-							"_id": "AAAAAAF4eSn0oX4jMIo=",
-							"_parent": {
-								"$ref": "AAAAAAF4eSljM34TzTM="
-							},
-							"model": {
-								"$ref": "AAAAAAF4eSn0oX4hYcE="
-							},
-							"subViews": [
-								{
-									"_type": "LabelView",
-									"_id": "AAAAAAF4eSn0oX4k3Ak=",
-									"_parent": {
-										"$ref": "AAAAAAF4eSn0oX4jMIo="
-									},
-									"fillColor": "#d8f2ff",
-									"font": "Arial;13;0",
-									"left": 582.25,
-									"top": 150.25,
-									"width": 28.5,
-									"height": 28.5,
-									"text": "Kết thúc",
-									"wordWrap": true
-								}
-							],
-							"fillColor": "#d8f2ff",
-							"font": "Arial;13;0",
-							"left": 568,
-							"top": 136,
-							"width": 57,
-							"height": 57,
-							"nameLabel": {
-								"$ref": "AAAAAAF4eSn0oX4k3Ak="
 							}
 						},
 						{
@@ -2250,52 +2277,6 @@
 							}
 						},
 						{
-							"_type": "FCFlowView",
-							"_id": "AAAAAAF4eS7b1X7PKJE=",
-							"_parent": {
-								"$ref": "AAAAAAF4eSljM34TzTM="
-							},
-							"model": {
-								"$ref": "AAAAAAF4eS7b1X7NSDc="
-							},
-							"subViews": [
-								{
-									"_type": "EdgeLabelView",
-									"_id": "AAAAAAF4eS7b1X7QRh8=",
-									"_parent": {
-										"$ref": "AAAAAAF4eS7b1X7PKJE="
-									},
-									"model": {
-										"$ref": "AAAAAAF4eS7b1X7NSDc="
-									},
-									"visible": false,
-									"font": "Arial;13;0",
-									"left": 577,
-									"top": 225,
-									"height": 13,
-									"alpha": 1.5707963267948966,
-									"distance": 15,
-									"hostEdge": {
-										"$ref": "AAAAAAF4eS7b1X7PKJE="
-									},
-									"edgePosition": 1
-								}
-							],
-							"fillColor": "#d8f2ff",
-							"font": "Arial;13;0",
-							"head": {
-								"$ref": "AAAAAAF4eSn0oX4jMIo="
-							},
-							"tail": {
-								"$ref": "AAAAAAF4eSrWpn5aXxY="
-							},
-							"lineStyle": 2,
-							"points": "592:272;592:192",
-							"nameLabel": {
-								"$ref": "AAAAAAF4eS7b1X7QRh8="
-							}
-						},
-						{
 							"_type": "FCPredefinedProcessView",
 							"_id": "AAAAAAF4fvKHC6GM9ZI=",
 							"_parent": {
@@ -2586,6 +2567,123 @@
 							"nameLabel": {
 								"$ref": "AAAAAAF4fvSE36Hg/4Y="
 							}
+						},
+						{
+							"_type": "FCConnectorView",
+							"_id": "AAAAAAF4p+oZVj/vVKs=",
+							"_parent": {
+								"$ref": "AAAAAAF4eSljM34TzTM="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p+oZVj/tI80="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAF4p+oZVj/wutA=",
+									"_parent": {
+										"$ref": "AAAAAAF4p+oZVj/vVKs="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 570.25,
+									"top": 138.25,
+									"width": 36.5,
+									"height": 36.5,
+									"wordWrap": true
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"left": 552,
+							"top": 120,
+							"width": 73,
+							"height": 73,
+							"nameLabel": {
+								"$ref": "AAAAAAF4p+oZVj/wutA="
+							}
+						},
+						{
+							"_type": "FCConnectorView",
+							"_id": "AAAAAAF4p+pNdz/5Sq8=",
+							"_parent": {
+								"$ref": "AAAAAAF4eSljM34TzTM="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p+pNdz/3OII="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAF4p+pNdz/6GuE=",
+									"_parent": {
+										"$ref": "AAAAAAF4p+pNdz/5Sq8="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 574.25,
+									"top": 142.25,
+									"width": 28.5,
+									"height": 28.5,
+									"text": "Kết thúc",
+									"wordWrap": true
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"left": 560,
+							"top": 128,
+							"width": 57,
+							"height": 57,
+							"nameLabel": {
+								"$ref": "AAAAAAF4p+pNdz/6GuE="
+							}
+						},
+						{
+							"_type": "FCFlowView",
+							"_id": "AAAAAAF4p+tQJkAUZ1U=",
+							"_parent": {
+								"$ref": "AAAAAAF4eSljM34TzTM="
+							},
+							"model": {
+								"$ref": "AAAAAAF4p+tQJUASSFA="
+							},
+							"subViews": [
+								{
+									"_type": "EdgeLabelView",
+									"_id": "AAAAAAF4p+tQJkAVC60=",
+									"_parent": {
+										"$ref": "AAAAAAF4p+tQJkAUZ1U="
+									},
+									"model": {
+										"$ref": "AAAAAAF4p+tQJUASSFA="
+									},
+									"visible": false,
+									"font": "Arial;13;0",
+									"left": 573,
+									"top": 225,
+									"height": 13,
+									"alpha": 1.5707963267948966,
+									"distance": 15,
+									"hostEdge": {
+										"$ref": "AAAAAAF4p+tQJkAUZ1U="
+									},
+									"edgePosition": 1
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"head": {
+								"$ref": "AAAAAAF4p+oZVj/vVKs="
+							},
+							"tail": {
+								"$ref": "AAAAAAF4eSrWpn5aXxY="
+							},
+							"lineStyle": 2,
+							"points": "588:272;588:192",
+							"nameLabel": {
+								"$ref": "AAAAAAF4p+tQJkAVC60="
+							}
 						}
 					]
 				},
@@ -2611,14 +2709,6 @@
 							}
 						}
 					]
-				},
-				{
-					"_type": "FCConnector",
-					"_id": "AAAAAAF4eSn0oX4hYcE=",
-					"_parent": {
-						"$ref": "AAAAAAF4eSljMn4SWBs="
-					},
-					"name": "Kết thúc"
 				},
 				{
 					"_type": "FCAlternateProcess",
@@ -2676,7 +2766,7 @@
 					"ownedElements": [
 						{
 							"_type": "FCFlow",
-							"_id": "AAAAAAF4eS7b1X7NSDc=",
+							"_id": "AAAAAAF4p+tQJUASSFA=",
 							"_parent": {
 								"$ref": "AAAAAAF4eSrWpn5YKUg="
 							},
@@ -2684,7 +2774,7 @@
 								"$ref": "AAAAAAF4eSrWpn5YKUg="
 							},
 							"target": {
-								"$ref": "AAAAAAF4eSn0oX4hYcE="
+								"$ref": "AAAAAAF4p+oZVj/tI80="
 							}
 						}
 					]
@@ -2795,6 +2885,21 @@
 							}
 						}
 					]
+				},
+				{
+					"_type": "FCConnector",
+					"_id": "AAAAAAF4p+oZVj/tI80=",
+					"_parent": {
+						"$ref": "AAAAAAF4eSljMn4SWBs="
+					}
+				},
+				{
+					"_type": "FCConnector",
+					"_id": "AAAAAAF4p+pNdz/3OII=",
+					"_parent": {
+						"$ref": "AAAAAAF4eSljMn4SWBs="
+					},
+					"name": "Kết thúc"
 				}
 			]
 		},
@@ -2832,58 +2937,22 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 270.25,
-									"top": 150.25,
-									"width": 28.5,
-									"height": 28.5,
+									"left": 268.25,
+									"top": 138.25,
+									"width": 40.5,
+									"height": 36.5,
 									"text": "Bắt đầu",
 									"wordWrap": true
 								}
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 256,
-							"top": 136,
-							"width": 57,
-							"height": 57,
+							"left": 248,
+							"top": 120,
+							"width": 81,
+							"height": 73,
 							"nameLabel": {
 								"$ref": "AAAAAAF4fpYEU57KrIw="
-							}
-						},
-						{
-							"_type": "FCConnectorView",
-							"_id": "AAAAAAF4fpYEU57Li+8=",
-							"_parent": {
-								"$ref": "AAAAAAF4fpYEU57IymM="
-							},
-							"model": {
-								"$ref": "AAAAAAF4fpYEVJ7v3ho="
-							},
-							"subViews": [
-								{
-									"_type": "LabelView",
-									"_id": "AAAAAAF4fpYEU57M094=",
-									"_parent": {
-										"$ref": "AAAAAAF4fpYEU57Li+8="
-									},
-									"fillColor": "#d8f2ff",
-									"font": "Arial;13;0",
-									"left": 54.25,
-									"top": 438.25,
-									"width": 28.5,
-									"height": 28.5,
-									"text": "Kết thúc",
-									"wordWrap": true
-								}
-							],
-							"fillColor": "#d8f2ff",
-							"font": "Arial;13;0",
-							"left": 40,
-							"top": 424,
-							"width": 57,
-							"height": 57,
-							"nameLabel": {
-								"$ref": "AAAAAAF4fpYEU57M094="
 							}
 						},
 						{
@@ -3521,7 +3590,7 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 155,
+									"left": 167,
 									"top": 463,
 									"width": 22,
 									"height": 13,
@@ -3537,13 +3606,13 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
-								"$ref": "AAAAAAF4fpYEU57Li+8="
+								"$ref": "AAAAAAF4qBYQYEAiJ28="
 							},
 							"tail": {
 								"$ref": "AAAAAAF4fqhgY59iWEI="
 							},
 							"lineStyle": 2,
-							"points": "224:456;96:456",
+							"points": "224:456;120:456",
 							"nameLabel": {
 								"$ref": "AAAAAAF4fsi0lKBHHe4="
 							}
@@ -3957,6 +4026,7 @@
 									"model": {
 										"$ref": "AAAAAAF4fwLViKIO+j8="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 298,
 									"top": 776,
@@ -3971,6 +4041,7 @@
 									"text": "T"
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4fpYEU57VxtI="
@@ -4003,6 +4074,7 @@
 									"model": {
 										"$ref": "AAAAAAF4fwLpTaIYYFk="
 									},
+									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 575,
 									"top": 689,
@@ -4017,6 +4089,7 @@
 									"text": "F"
 								}
 							],
+							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"head": {
 								"$ref": "AAAAAAF4fswITqCGhEk="
@@ -4028,6 +4101,77 @@
 							"points": "352:704;688:704;688:586",
 							"nameLabel": {
 								"$ref": "AAAAAAF4fwLpTaIbnNs="
+							}
+						},
+						{
+							"_type": "FCConnectorView",
+							"_id": "AAAAAAF4qBYQYEAiJ28=",
+							"_parent": {
+								"$ref": "AAAAAAF4fpYEU57IymM="
+							},
+							"model": {
+								"$ref": "AAAAAAF4qBYQX0AgMCI="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAF4qBYQYEAj7F0=",
+									"_parent": {
+										"$ref": "AAAAAAF4qBYQYEAiJ28="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 60.25,
+									"top": 436.25,
+									"width": 40.5,
+									"height": 40.5,
+									"wordWrap": true
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"left": 40,
+							"top": 416,
+							"width": 81,
+							"height": 81,
+							"nameLabel": {
+								"$ref": "AAAAAAF4qBYQYEAj7F0="
+							}
+						},
+						{
+							"_type": "FCConnectorView",
+							"_id": "AAAAAAF4qBd2HEA55U8=",
+							"_parent": {
+								"$ref": "AAAAAAF4fpYEU57IymM="
+							},
+							"model": {
+								"$ref": "AAAAAAF4qBd2HEA3P+4="
+							},
+							"subViews": [
+								{
+									"_type": "LabelView",
+									"_id": "AAAAAAF4qBd2HUA6xck=",
+									"_parent": {
+										"$ref": "AAAAAAF4qBd2HEA55U8="
+									},
+									"fillColor": "#d8f2ff",
+									"font": "Arial;13;0",
+									"left": 64.25,
+									"top": 440.25,
+									"width": 32.5,
+									"height": 32.5,
+									"text": "Kết thúc",
+									"wordWrap": true
+								}
+							],
+							"fillColor": "#d8f2ff",
+							"font": "Arial;13;0",
+							"left": 48,
+							"top": 424,
+							"width": 65,
+							"height": 65,
+							"nameLabel": {
+								"$ref": "AAAAAAF4qBd2HUA6xck="
 							}
 						}
 					]
@@ -4054,14 +4198,6 @@
 							}
 						}
 					]
-				},
-				{
-					"_type": "FCConnector",
-					"_id": "AAAAAAF4fpYEVJ7v3ho=",
-					"_parent": {
-						"$ref": "AAAAAAF4fpYEU57HpZo="
-					},
-					"name": "Kết thúc"
 				},
 				{
 					"_type": "FCAlternateProcess",
@@ -4166,7 +4302,7 @@
 								"$ref": "AAAAAAF4fqhgY59g75A="
 							},
 							"target": {
-								"$ref": "AAAAAAF4fpYEVJ7v3ho="
+								"$ref": "AAAAAAF4qBYQX0AgMCI="
 							}
 						},
 						{
@@ -4759,7 +4895,7 @@
 											"left": 234,
 											"top": 354,
 											"width": 109,
-											"height": 26,
+											"height": 13,
 											"text": "Phương án hiện tại",
 											"wordWrap": true
 										}
@@ -5955,6 +6091,21 @@
 							]
 						}
 					]
+				},
+				{
+					"_type": "FCConnector",
+					"_id": "AAAAAAF4qBYQX0AgMCI=",
+					"_parent": {
+						"$ref": "AAAAAAF4fpYEU57HpZo="
+					}
+				},
+				{
+					"_type": "FCConnector",
+					"_id": "AAAAAAF4qBd2HEA3P+4=",
+					"_parent": {
+						"$ref": "AAAAAAF4fpYEU57HpZo="
+					},
+					"name": "Kết thúc"
 				}
 			]
 		},
@@ -6313,7 +6464,7 @@
 									"left": 514,
 									"top": 530,
 									"width": 106.2216796875,
-									"height": 39,
+									"height": 26,
 									"text": "Khởi tạo các giá trị mục tiêu tạm thời",
 									"wordWrap": true
 								}
@@ -6349,7 +6500,7 @@
 									"left": 506,
 									"top": 266,
 									"width": 106.2216796875,
-									"height": 39,
+									"height": 26,
 									"text": "Khởi tạo giá trị biến lặp nhiễm sắc thể",
 									"wordWrap": true
 								}
@@ -6527,7 +6678,7 @@
 									"left": 770,
 									"top": 530,
 									"width": 106.2216796875,
-									"height": 39,
+									"height": 26,
 									"text": "Khởi tạo giá trị biến lặp nguyên liệu",
 									"wordWrap": true
 								}
@@ -6563,7 +6714,7 @@
 									"left": 978,
 									"top": 858,
 									"width": 106.2216796875,
-									"height": 39,
+									"height": 26,
 									"text": "Cập nhật các giá trị mục tiêu tạm thời",
 									"wordWrap": true
 								}
@@ -8043,7 +8194,7 @@
 											"left": 234,
 											"top": 354,
 											"width": 109,
-											"height": 26,
+											"height": 13,
 											"text": "Phương án hiện tại",
 											"wordWrap": true
 										}
@@ -10844,7 +10995,7 @@
 									"left": 298,
 									"top": 210,
 									"width": 106.2216796875,
-									"height": 39,
+									"height": 26,
 									"text": "Tính lượng nguyên liệu còn lại",
 									"wordWrap": true
 								}
@@ -12138,7 +12289,7 @@
 											"left": 234,
 											"top": 354,
 											"width": 109,
-											"height": 26,
+											"height": 13,
 											"text": "Phương án hiện tại",
 											"wordWrap": true
 										}
