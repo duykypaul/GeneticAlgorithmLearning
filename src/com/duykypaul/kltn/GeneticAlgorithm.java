@@ -218,7 +218,6 @@ public class GeneticAlgorithm {
                     offspring.setChromosomeTime(triplet.getValue2());
 
                     double currentFitness = Population.getWeightOfARNV3(offspring.getChromosome(), offspring.getChromosomeMachine(), Population.stocks, Population.orders);
-                    // mutant individual
 
                     if (currentFitness < offspring.getFitness()) {
                         offspring.setFitness(currentFitness);
