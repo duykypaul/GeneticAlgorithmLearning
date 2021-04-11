@@ -18,12 +18,12 @@ public class SaveCut {
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 60;
+    private static final int RUNNING_TIME_LIMIT = 30;
     private static final int GENERATION_LIMIT = 1;
     private static final int GENERATION_SAME_LIMIT = 300;
 
     public static void main(String[] args) {
-        String inputContent = "5623,1009,1640,1640,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";
+        String inputContent = "5623,1009,1640,1640,13000,13000,13000,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";
         String inputContent1 = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025|1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122|5";
         List<String> parts = Arrays.asList(inputContent1.split("\\|").clone());
 

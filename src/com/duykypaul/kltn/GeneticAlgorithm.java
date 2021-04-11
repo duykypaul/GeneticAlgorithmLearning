@@ -6,6 +6,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 import java.util.SortedMap;
 
 public class GeneticAlgorithm {
@@ -49,7 +50,7 @@ public class GeneticAlgorithm {
     }
 
     public static int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+        return new Random().nextInt(max - min) + min;
     }
 
     /**

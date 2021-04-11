@@ -443,13 +443,13 @@ public class GeneticAlgorithm {
 
                     if (stockTemp.get(geneIndexSpecial).equals(orders.get(geneIndex))) {
                         chromosomeTemp.set(geneIndex, geneIndexSpecial);
-                        stockTemp.set(geneIndexSpecial, stockTemp.get(geneIndexSpecial) - orders.get(geneIndex));
+                        stockTemp = newPopulation.getStockRemain(chromosomeTemp, stocks, orders);
                     }
 
                     int cutWidth = newPopulation.getCutWidth();
                     if (stockTemp.get(geneIndexSpecial) >= orders.get(geneIndex) + cutWidth) {
                         chromosomeTemp.set(geneIndex, geneIndexSpecial);
-                        stockTemp.set(geneIndexSpecial, stockTemp.get(geneIndexSpecial) - orders.get(geneIndex) - cutWidth);
+                        stockTemp = newPopulation.getStockRemain(chromosomeTemp, stocks, orders);
                     }
                 }
             }
