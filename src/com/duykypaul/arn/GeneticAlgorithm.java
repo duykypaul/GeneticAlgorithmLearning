@@ -455,11 +455,6 @@ public class GeneticAlgorithm {
             }
             Individual individual = new Individual(chromosomeTemp);
             int fitness = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
-            if(fitness == 365) {
-                int f = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
-                System.out.println(f);
-                System.out.println(f);
-            }
             individual.setFitness(fitness);
             individuals.add(individual);
         });

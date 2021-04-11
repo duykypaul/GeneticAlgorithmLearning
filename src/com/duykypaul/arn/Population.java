@@ -1,5 +1,7 @@
 package com.duykypaul.arn;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -83,6 +85,12 @@ public class Population {
     public int getFitnessOfChromosome(List<Integer> currentChromosome, List<Integer> stocks, List<Integer> orders) {
         List<Integer> uniqueStocks = currentChromosome.stream().distinct().sorted().collect(Collectors.toList());
         List<Integer> stockTemp = getStockRemain(currentChromosome, stocks, orders);
+
+        boolean isContainNegative = stockTemp.stream().parallel().anyMatch(item -> item < 0);
+        if (isContainNegative) {
+            System.out.println("Negative contain");
+            return Integer.MAX_VALUE;
+        }
 
         int value = 0;
         for (Integer uniqueStock : uniqueStocks) {
