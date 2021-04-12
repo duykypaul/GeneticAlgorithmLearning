@@ -20,7 +20,7 @@ public class SaveCut {
     private static final int ELITISM_COUNT = 3;
     private static final int RUNNING_TIME_LIMIT = 180;
     private static final int GENERATION_LIMIT = 1;
-    private static final int GENERATION_SAME_LIMIT = 1700;
+    private static final int GENERATION_SAME_LIMIT = 700;
 
     public static void main(String[] args) {
         String inputContent = "5623,1009,1640,1640,13000,13000,13000,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";

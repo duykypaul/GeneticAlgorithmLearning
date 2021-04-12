@@ -394,6 +394,7 @@ public class GeneticAlgorithm {
             }
         }
 
+        Individual individualFinal = null;
         if (!storeChangePosition.isEmpty()) {
             List<Integer> newChromosome = changeChromosome(chromosome, storeChangePosition);
             // mutant individual
@@ -402,19 +403,17 @@ public class GeneticAlgorithm {
 
             if (mutant.getFitness() < worstValue && mutant.getFitness() < currentFitness) {
                 if (mutant.getFitness() < individualSpecial.getFitness()) {
-                    newPopulation.getIndividuals().set(worstPosition, mutant);
-                } else {
-                    newPopulation.getIndividuals().set(worstPosition, individualSpecial);
-                }
-            } else {
-                if (individualSpecial.getFitness() < currentFitness) {
-                    newPopulation.getIndividuals().set(worstPosition, individualSpecial);
+                    individualFinal = mutant;
                 }
             }
-        } else {
-            if (individualSpecial.getFitness() < currentFitness) {
-                newPopulation.getIndividuals().set(worstPosition, individualSpecial);
-            }
+        }
+
+        if (individualSpecial.getFitness() < currentFitness) {
+            newPopulation.getIndividuals().set(worstPosition, individualSpecial);
+        }
+
+        if(null != individualFinal) {
+            newPopulation.getIndividuals().set(worstPosition, individualFinal);
         }
     }
 
