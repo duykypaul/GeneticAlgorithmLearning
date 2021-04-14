@@ -260,9 +260,9 @@ public class GeneticAlgorithm {
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
             Individual randIndividual = newPopulation.getIndividual(randInt);
-            /*Individual individualSpecial = mutateV3(newPopulation, randIndividual);
-            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, (int) randIndividual.getFitness(), individualSpecial);*/
-            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, (int) randIndividual.getFitness());
+            Individual individualSpecial = mutateV3(newPopulation, randIndividual);
+            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, (int) randIndividual.getFitness(), individualSpecial);
+//            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, (int) randIndividual.getFitness());
         }
 
         // Return mutated population
