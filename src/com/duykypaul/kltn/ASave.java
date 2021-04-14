@@ -13,11 +13,13 @@ public class ASave {
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 1500;
+    private static final int RUNNING_TIME_LIMIT = 1000;
     private static final int GENERATION_LIMIT = 10;
 
     public static void main(String[] args) {
-        testCase2();
+//        testCase2();
+//        testCase3();
+        testCase4();
     }
 
     private static void testCase1() {
@@ -113,6 +115,160 @@ public class ASave {
         listStock.add(new Stock(1, 5623, LocalDate.parse("2021-02-12")));
         listStock.add(new Stock(1, 1009, LocalDate.parse("2021-02-12")));
         listStock.add(new Stock(2, 1640, LocalDate.parse("2021-02-12")));
+
+
+        final List<Integer> orders = new ArrayList<>();
+        final List<LocalDate> ordersDate = new ArrayList<>();
+        listStack.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
+        });
+
+        final List<Integer> stocks = new ArrayList<>();
+        final List<LocalDate> stocksDate = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
+        });
+
+        final List<Machine> machines = new ArrayList<>();
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+
+        Instant start = Instant.now();
+
+        // create GA Object
+        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE, CROSSOVER_RATE, ELITISM_COUNT, WORST_RATE, RUNNING_TIME_LIMIT);
+
+        // Initialize population
+        Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, GENERATION_LIMIT);
+
+        if (Population.ARNsN == 0) {
+            System.out.println("can't resolve");
+            return;
+        }
+        System.out.println("Population.ARNsN: " + Population.ARNsN);
+
+        //Evaluate the whole population
+        ga.evalPopulation(population);
+
+        int generation = 1;
+
+        SortedMap<Double, Integer> resultSet = new TreeMap<>();
+
+        while (!ga.isTerminationConditionMet(population, start, resultSet)) {
+            outputReport(population);
+
+            // Apply crossover
+            population = ga.crossoverPopulation(population);
+
+            // Apply mutation
+            population = ga.mutatePopulation(population);
+
+            // Evaluate population
+            ga.evalPopulation(population);
+
+            // Increment the current generation
+            generation++;
+        }
+
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start, end));
+        System.out.println();
+        System.out.println("Found solution in " + generation + " generations");
+        outputReport(population);
+        System.out.println("Number of kings: " + resultSet.size());
+        System.out.println();
+
+        outputStatistic(population, machines, listStack);
+    }
+
+    private static void testCase3() {
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(1, 1, 20, 2000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 2, 10, 3000, LocalDate.parse("2021-02-28")));
+
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(10, 11700, LocalDate.parse("2021-02-15")));
+
+
+        final List<Integer> orders = new ArrayList<>();
+        final List<LocalDate> ordersDate = new ArrayList<>();
+        listStack.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
+        });
+
+        final List<Integer> stocks = new ArrayList<>();
+        final List<LocalDate> stocksDate = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
+        });
+
+        final List<Machine> machines = new ArrayList<>();
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+
+        Instant start = Instant.now();
+
+        // create GA Object
+        GeneticAlgorithm ga = new GeneticAlgorithm(DEFAULT_POPULATION_SIZE, MUTATION_RATE, CROSSOVER_RATE, ELITISM_COUNT, WORST_RATE, RUNNING_TIME_LIMIT);
+
+        // Initialize population
+        Population population = ga.initPopulation(stocks, stocksDate, orders, ordersDate, machines, GENERATION_LIMIT);
+
+        if (Population.ARNsN == 0) {
+            System.out.println("can't resolve");
+            return;
+        }
+        System.out.println("Population.ARNsN: " + Population.ARNsN);
+
+        //Evaluate the whole population
+        ga.evalPopulation(population);
+
+        int generation = 1;
+
+        SortedMap<Double, Integer> resultSet = new TreeMap<>();
+
+        while (!ga.isTerminationConditionMet(population, start, resultSet)) {
+            outputReport(population);
+
+            // Apply crossover
+            population = ga.crossoverPopulation(population);
+
+            // Apply mutation
+            population = ga.mutatePopulation(population);
+
+            // Evaluate population
+            ga.evalPopulation(population);
+
+            // Increment the current generation
+            generation++;
+        }
+
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start, end));
+        System.out.println();
+        System.out.println("Found solution in " + generation + " generations");
+        outputReport(population);
+        System.out.println("Number of kings: " + resultSet.size());
+        System.out.println();
+
+        outputStatistic(population, machines, listStack);
+    }
+
+    private static void testCase4() {
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(1, 1, 20, 2000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 2, 10, 3000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 2, 30, 5000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 2, 40, 7000, LocalDate.parse("2021-02-28")));
+
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(100, 11700, LocalDate.parse("2021-02-15")));
 
 
         final List<Integer> orders = new ArrayList<>();
