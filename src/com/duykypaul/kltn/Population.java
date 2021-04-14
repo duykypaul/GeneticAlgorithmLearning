@@ -292,7 +292,7 @@ public class Population {
         }
     }
 
-    private static int getMostFreeIndexForCurrentState(List<Machine> machinesState, int stockIndex, int orderIndex, List<Integer> currentARNStocks, List<Integer> currentARNMachines) {
+    public static int getMostFreeIndexForCurrentState(List<Machine> machinesState, int stockIndex, int orderIndex, List<Integer> currentARNStocks, List<Integer> currentARNMachines) {
         Optional<Machine> machines = machinesState.stream()
             .sorted(Comparator
                 .comparing(Machine::getFreeDate)

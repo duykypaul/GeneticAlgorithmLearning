@@ -19,7 +19,7 @@ public class SaveCut {
     private static final int ELITISM_COUNT = 3;
     private static final int RUNNING_TIME_LIMIT = 500;
     private static final int GENERATION_LIMIT = 10;
-    private static final int GENERATION_SAME_LIMIT = 1700000000;
+    private static final int GENERATION_SAME_LIMIT = 3000;
 
     public static void main(String[] args) {
         String inputContent = "5623,1009,1640,1640,13000,13000,13000,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";
@@ -27,7 +27,7 @@ public class SaveCut {
         String inputContent2 = "1930,2000,1406|560,560,560|5";
         String inputContent4 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000|0";
         String inputContent3 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000|0";
-        List<String> parts = Arrays.asList(inputContent3.split("\\|").clone());
+        List<String> parts = Arrays.asList(inputContent1.split("\\|").clone());
 
         final List<Integer> stocks = Arrays.stream(parts.get(0).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
         final List<Integer> orders = Arrays.stream(parts.get(1).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
@@ -59,7 +59,7 @@ public class SaveCut {
             outputReport(population);
 
             // Apply crossover
-//            population = ga.crossoverPopulation(population);
+            population = ga.crossoverPopulation(population);
 
             // Apply mutation
             population = ga.mutatePopulation(population);
@@ -71,6 +71,7 @@ public class SaveCut {
             generation++;
             Instant endGeneration = Instant.now();
             System.out.println("ONE GENERATION TIME: " + Duration.between(startGeneration, endGeneration));
+            System.out.println();
         }
 
         Instant end = Instant.now();

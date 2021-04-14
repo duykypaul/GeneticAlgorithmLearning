@@ -13,7 +13,7 @@ public class ASave {
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 1000;
+    private static final int RUNNING_TIME_LIMIT = 1500;
     private static final int GENERATION_LIMIT = 10;
 
     public static void main(String[] args) {
@@ -110,6 +110,7 @@ public class ASave {
         System.out.println("Best solution machines index: " + best.getChromosomeMachine().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best solution datetime cut product: " + best.getChromosomeTime().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best value remain: " + best.getFitness());
+        System.out.println("Best number stocks: " + best.getChromosome().stream().distinct().count());
         System.out.println("Best rate remain: " + Population.getRateRemain(best.getChromosome(), best.getChromosomeMachine(), Population.stocks, Population.orders));
         System.out.println();
     }
