@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
  * @author duykypaul
  */
 public class Population {
-    static final int GENERATION_SAME_LIMIT = 30;
+    static final int GENERATION_SAME_LIMIT = 3000;
     static int ARNsN = 0;
     static List<Integer> stocks;
     static List<LocalDate> stocksDate;
@@ -106,6 +106,24 @@ public class Population {
         }
 
         return value;
+    }
+
+    public static String getRateRemain(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<Integer> stocks, List<Integer> orders) {
+        List<Integer> uniqueStocks = currentARNStocks.stream().distinct().sorted().collect(Collectors.toList());
+        List<Integer> stockTemp = computeStockRemainV3(currentARNStocks, currentARNMachines, stocks, orders);
+
+        int valueRemain = 0;
+        for (Integer uniqueStock : uniqueStocks) {
+            valueRemain += stockTemp.get(uniqueStock);
+        }
+
+        int valueInit = 0;
+        for (Integer uniqueStock : uniqueStocks) {
+            valueInit += stocks.get(uniqueStock);
+        }
+
+        double scale = Math.pow(10, 2);
+        return Math.round(((double)valueRemain / valueInit) * scale) + "%";
     }
 
     public static List<Integer> computeStockRemainV3(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<Integer> stocks, List<Integer> orders) {

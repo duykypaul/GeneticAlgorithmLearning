@@ -1,5 +1,6 @@
 package com.duykypaul.kltn;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -9,6 +10,41 @@ public class AFast {
     private static final String BLANK = "";
     private static final String COMMA = ",";
     private static final String STEEL_BLADE_THICKNESS = "5";
+
+    public static void main(String[] args) {
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(1, 1, 10, 3000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 2, 20, 2000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 3, 20, 5000, LocalDate.parse("2021-02-28")));
+
+        listStack.add(new Stack(2, 1, 40, 5000, LocalDate.parse("2021-03-05")));
+        listStack.add(new Stack(2, 2, 50, 7000, LocalDate.parse("2021-03-05")));
+        listStack.add(new Stack(2, 3, 20, 3000, LocalDate.parse("2021-03-05")));
+
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(200, 11700, LocalDate.parse("2021-02-12")));
+        listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(30, 7995, LocalDate.parse("2021-02-15")));
+
+        final List<Integer> orders = new ArrayList<>();
+        final List<LocalDate> ordersDate = new ArrayList<>();
+        listStack.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
+        });
+
+        final List<Integer> stocks = new ArrayList<>();
+        final List<LocalDate> stocksDate = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
+        });
+
+        final List<Machine> machines = new ArrayList<>();
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+    }
 
     private AFast() {
         //not called

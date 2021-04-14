@@ -13,8 +13,8 @@ public class ASave {
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 300;
-    private static final int GENERATION_LIMIT = 1;
+    private static final int RUNNING_TIME_LIMIT = 1000;
+    private static final int GENERATION_LIMIT = 10;
 
     public static void main(String[] args) {
         List<Stack> listStack = new ArrayList<>();
@@ -27,7 +27,7 @@ public class ASave {
         listStack.add(new Stack(2, 3, 20, 3000, LocalDate.parse("2021-03-05")));
 
         List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(200, 13000, LocalDate.parse("2021-02-12")));
+        listStock.add(new Stock(200, 11700, LocalDate.parse("2021-02-12")));
         listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
         listStock.add(new Stock(30, 7995, LocalDate.parse("2021-02-15")));
 
@@ -46,9 +46,9 @@ public class ASave {
         });
 
         final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(5, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
 
         Instant start = Instant.now();
 
@@ -110,6 +110,7 @@ public class ASave {
         System.out.println("Best solution machines index: " + best.getChromosomeMachine().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best solution datetime cut product: " + best.getChromosomeTime().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best value remain: " + best.getFitness());
+        System.out.println("Best rate remain: " + Population.getRateRemain(best.getChromosome(), best.getChromosomeMachine(), Population.stocks, Population.orders));
         System.out.println();
     }
 

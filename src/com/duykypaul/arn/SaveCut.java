@@ -9,24 +9,25 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
- *
  * @author KyLC
  */
 public class SaveCut {
-    private static final int DEFAULT_POPULATION_SIZE = 5000;
+    private static final int DEFAULT_POPULATION_SIZE = 20000;
     private static final double MUTATION_RATE = 0.01;
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 180;
-    private static final int GENERATION_LIMIT = 1;
-    private static final int GENERATION_SAME_LIMIT = 700;
+    private static final int RUNNING_TIME_LIMIT = 500;
+    private static final int GENERATION_LIMIT = 10;
+    private static final int GENERATION_SAME_LIMIT = 1700000000;
 
     public static void main(String[] args) {
         String inputContent = "5623,1009,1640,1640,13000,13000,13000,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";
         String inputContent1 = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025|1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122|5";
         String inputContent2 = "1930,2000,1406|560,560,560|5";
-        List<String> parts = Arrays.asList(inputContent1.split("\\|").clone());
+        String inputContent4 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000|0";
+        String inputContent3 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000|0";
+        List<String> parts = Arrays.asList(inputContent3.split("\\|").clone());
 
         final List<Integer> stocks = Arrays.stream(parts.get(0).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
         final List<Integer> orders = Arrays.stream(parts.get(1).split(",").clone()).map(Integer::parseInt).collect(Collectors.toList());
@@ -58,7 +59,7 @@ public class SaveCut {
             outputReport(population);
 
             // Apply crossover
-            population = ga.crossoverPopulation(population);
+//            population = ga.crossoverPopulation(population);
 
             // Apply mutation
             population = ga.mutatePopulation(population);

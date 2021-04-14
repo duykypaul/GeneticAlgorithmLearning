@@ -88,7 +88,7 @@ public class Population {
 
         boolean isContainNegative = stockTemp.stream().parallel().anyMatch(item -> item < 0);
         if (isContainNegative) {
-            System.out.println("Negative contain");
+//            System.out.println("Negative contain");
             return Integer.MAX_VALUE;
         }
 
