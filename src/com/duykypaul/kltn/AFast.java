@@ -2,6 +2,8 @@ package com.duykypaul.kltn;
 
 import org.javatuples.Triplet;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,10 +17,13 @@ public class AFast {
     private static final String STEEL_BLADE_THICKNESS = "5";
 
     public static void main(String[] args) {
+        Instant start = Instant.now();
 //        testCase1();
 //        testCase2();
 //        testCase3();
         testCase4();
+        Instant end = Instant.now();
+        System.out.println(Duration.between(start, end));
     }
 
     public static void testCase1() {
@@ -144,15 +149,14 @@ public class AFast {
     }
 
     public static void testCase4() {
-        /*"11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000|0"*/
         List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 20, 2000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 10, 3000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 30, 5000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 40, 7000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 1, 2000, 2000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 1000, 3000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 3000, 5000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 4000, 7000, LocalDate.parse("2021-12-28")));
 
         List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(100, 11700, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(10000, 11700, LocalDate.parse("2021-02-15")));
 
         final List<Integer> orders = new ArrayList<>();
         final List<LocalDate> ordersDate = new ArrayList<>();
@@ -241,7 +245,7 @@ public class AFast {
         int[] arrOrder = IntStream.of(arrOrderInit)
             .boxed()
             .sorted(Comparator.reverseOrder())
-            .mapToInt(i -> i)
+            .mapToInt(Integer::intValue)
             .toArray();
 
         /*
@@ -251,7 +255,7 @@ public class AFast {
         int[] sortedIndicesOrder = IntStream.range(0, arrOrderInit.length)
             .boxed()
             .sorted(Comparator.comparing(i -> -arrOrderInit[i]))
-            .mapToInt(ele -> ele)
+            .mapToInt(Integer::intValue)
             .toArray();
 
         int[] arrStockInit = Arrays.stream(stock.split(COMMA))
@@ -264,7 +268,7 @@ public class AFast {
          */
         int[] arrStock = IntStream.of(arrStockInit)
             .boxed().sorted(Comparator.reverseOrder())
-            .mapToInt(i -> i)
+            .mapToInt(Integer::intValue)
             .toArray();
 
         /*
@@ -273,7 +277,7 @@ public class AFast {
         int[] sortedIndicesStock = IntStream.range(0, arrStockInit.length)
             .boxed()
             .sorted(Comparator.comparing(i -> -arrStockInit[i]))
-            .mapToInt(ele -> ele)
+            .mapToInt(Integer::intValue)
             .toArray();
 
         int[] arrCheckMaterialCanBeCut = new int[arrStock.length];
@@ -288,6 +292,7 @@ public class AFast {
             .collect(Collectors.toList());
 
         if (!listArn.isEmpty()) {
+            System.out.println("population size: " + listArn.size());
             for (int arnIndex = 0; arnIndex < listArn.size(); arnIndex++) {
                 messageFromArnAlgorithm = listArn.get(arnIndex).getArrIndexStockUsed();
                 Map<Integer, Integer> mapOutputArn = new HashMap<>();
