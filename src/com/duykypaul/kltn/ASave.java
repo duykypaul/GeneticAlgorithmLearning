@@ -262,14 +262,13 @@ public class ASave {
 
     private static void testCase4() {
         List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 20, 2000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 10, 3000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 30, 5000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 40, 7000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 1, 2000, 2000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 1000, 3000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 3000, 5000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 4000, 7000, LocalDate.parse("2021-12-28")));
 
         List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(100, 11700, LocalDate.parse("2021-02-15")));
-
+        listStock.add(new Stock(5500, 11700, LocalDate.parse("2021-02-15")));
 
         final List<Integer> orders = new ArrayList<>();
         final List<LocalDate> ordersDate = new ArrayList<>();

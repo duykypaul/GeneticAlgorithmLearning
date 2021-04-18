@@ -1,13 +1,12 @@
 package com.duykypaul.arn;
 
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 /**
@@ -74,7 +73,7 @@ public class Population {
         List<Integer> stockState = new ArrayList<>(stocksInit);
 
         startGen = Instant.now();
-        generatePopulation(chromosome, stockState);
+        generatePopulation(chromosome, stockState, populationSize);
 
         if (this.realPopulationSize > populationSize) {
             this.population = this.population.subList(0, populationSize);
@@ -82,22 +81,21 @@ public class Population {
         }
     }
 
-    public int getFitnessOfChromosome(List<Integer> currentChromosome, List<Integer> stocks, List<Integer> orders) {
+    public double getFitnessOfChromosome(List<Integer> currentChromosome, List<Integer> stocks, List<Integer> orders) {
         List<Integer> uniqueStocks = currentChromosome.stream().distinct().sorted().collect(Collectors.toList());
         List<Integer> stockTemp = getStockRemain(currentChromosome, stocks, orders);
 
         boolean isContainNegative = stockTemp.stream().parallel().anyMatch(item -> item < 0);
         if (isContainNegative) {
 //            System.out.println("Negative contain");
-            return Integer.MAX_VALUE;
+            return 1;
         }
 
-        int value = 0;
-        for (Integer uniqueStock : uniqueStocks) {
-            value += stockTemp.get(uniqueStock);
-        }
 
-        return value;
+        int StockUsed = IntStream.range(0, stocks.size()).filter(uniqueStocks::contains).map(stocks::get).sum();
+        int StockRemain = IntStream.range(0, stocks.size()).filter(uniqueStocks::contains).map(stockTemp::get).sum();
+
+        return (double) StockRemain / StockUsed;
     }
 
     public List<Integer> getStockRemain(List<Integer> currentARNStocks, List<Integer> stocks, List<Integer> orders) {
@@ -112,74 +110,82 @@ public class Population {
         return stockTemp;
     }
 
-    void generatePopulation(List<Integer> currentChromosome, List<Integer> stockState) {
-        // Population limit reached!
-        if (Boolean.TRUE.equals(isFinishedGen)) {
-            return;
-        }
-        long duration = Duration.between(startGen, Instant.now()).getSeconds();
-        if (duration > this.generationLimit) {
-            isFinishedGen = true;
-            return;
-        }
-
-        // Get a complete ARN
-        if (currentChromosome.size() == orders.size()) {
-            Individual individual = new Individual(new ArrayList<>(currentChromosome));
-            int weight = getFitnessOfChromosome(currentChromosome, stocks, orders);
-            individual.setFitness(weight);
-            this.population.add(individual);
-            this.realPopulationSize++;
-            return;
-        }
-        // Next Node
-        for (int i = 0; i < stockState.size(); i++) {
-            duration = Duration.between(startGen, Instant.now()).getSeconds();
+    void generatePopulation(List<Integer> currentChromosome, List<Integer> stockState, int populationSize) {
+        try {
+            // Population limit reached!
+            if (Boolean.TRUE.equals(isFinishedGen)) {
+                return;
+            }
+            long duration = Duration.between(startGen, Instant.now()).getSeconds();
             if (duration > this.generationLimit) {
                 isFinishedGen = true;
                 return;
             }
 
-            int idx = currentChromosome.size();
-            if (orders.get(idx).equals(stockState.get(i))) {
-                List<Integer> stocksTemp = new ArrayList<>(stockState);
-                // update stocks
-                stocksTemp.set(i, stocksTemp.get(i) - orders.get(idx));
-
-                currentChromosome.add(i);
-
-                generatePopulation(currentChromosome, stocksTemp);
-                currentChromosome.remove(currentChromosome.size() - 1);
-
+            // Get a complete ARN
+            if (currentChromosome.size() == orders.size()) {
+                Individual individual = new Individual(new ArrayList<>(currentChromosome));
+                double rate = getFitnessOfChromosome(currentChromosome, stocks, orders);
+                individual.setFitness(rate);
+                this.population.add(individual);
+                this.realPopulationSize++;
+                if(this.realPopulationSize >= populationSize) {
+                    isFinishedGen = true;
+                }
+                return;
+            }
+            // Next Node
+            for (int stockIndex = 0; stockIndex < stockState.size(); stockIndex++) {
                 duration = Duration.between(startGen, Instant.now()).getSeconds();
                 if (duration > this.generationLimit) {
                     isFinishedGen = true;
                     return;
                 }
-            } else {
 
-                if (orders.get(idx) + this.cutWidth <= stockState.get(i)) {
+                int idx = currentChromosome.size();
+                if (orders.get(idx).equals(stockState.get(stockIndex))) {
                     List<Integer> stocksTemp = new ArrayList<>(stockState);
-                    // update stocks state
-                    stocksTemp.set(i, stocksTemp.get(i) - orders.get(idx) - this.cutWidth);
+                    // update stocks
+                    stocksTemp.set(stockIndex, stocksTemp.get(stockIndex) - orders.get(idx));
 
-                    // add to ARN
-                    currentChromosome.add(i);
+                    currentChromosome.add(stockIndex);
 
-                    generatePopulation(currentChromosome, stocksTemp);
-                    // redo add to ARN
+                    generatePopulation(currentChromosome, stocksTemp, populationSize);
                     currentChromosome.remove(currentChromosome.size() - 1);
 
-                    if (Boolean.TRUE.equals(isFinishedGen)) {
-                        return;
-                    }
                     duration = Duration.between(startGen, Instant.now()).getSeconds();
                     if (duration > this.generationLimit) {
                         isFinishedGen = true;
                         return;
                     }
+                } else {
+
+                    if (orders.get(idx) + this.cutWidth <= stockState.get(stockIndex)) {
+                        List<Integer> stocksTemp = new ArrayList<>(stockState);
+                        // update stocks state
+                        stocksTemp.set(stockIndex, stocksTemp.get(stockIndex) - orders.get(idx) - this.cutWidth);
+
+                        // add to ARN
+                        currentChromosome.add(stockIndex);
+                        System.out.println("stockIndex:" + stockIndex);
+                        System.out.println("idx:" + idx);
+                        generatePopulation(currentChromosome, stocksTemp, populationSize);
+                        // redo add to ARN
+                        currentChromosome.remove(currentChromosome.size() - 1);
+
+                        if (Boolean.TRUE.equals(isFinishedGen)) {
+                            return;
+                        }
+                        duration = Duration.between(startGen, Instant.now()).getSeconds();
+                        if (duration > this.generationLimit) {
+                            isFinishedGen = true;
+                            return;
+                        }
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 

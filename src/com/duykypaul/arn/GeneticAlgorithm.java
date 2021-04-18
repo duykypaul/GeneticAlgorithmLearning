@@ -179,6 +179,7 @@ public class GeneticAlgorithm {
      * @return The new population
      */
     public Population crossoverPopulation(Population population) {
+        System.out.println("===========IN THE PROCESS OF CROSSOVER===========");
         // Create new population
         Population newPopulation = new Population(population);
 
@@ -247,6 +248,7 @@ public class GeneticAlgorithm {
      * @return The mutated population
      */
     public Population mutatePopulation(Population population) {
+        System.out.println("===========IN THE PROCESS OF MUTATION===========");
         // Initialize new population
         Population newPopulation = new Population(population);
 
@@ -260,9 +262,9 @@ public class GeneticAlgorithm {
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
             Individual randIndividual = newPopulation.getIndividual(randInt);
-            Individual individualSpecial = mutateV3(newPopulation, randIndividual);
-            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, (int) randIndividual.getFitness(), individualSpecial);
-//            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, (int) randIndividual.getFitness());
+            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
+            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);
+//            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
         }
 
         // Return mutated population
@@ -273,11 +275,11 @@ public class GeneticAlgorithm {
         List<Integer> orders = newPopulation.getOrders();
         List<Integer> stocks = newPopulation.getStocks();
 
-        int worstValue = Integer.MIN_VALUE;
+        double worstValue = 1;
         int worstARNPosition = 0;
 
         for (int i = 0; i < populationSize; ++i) {
-            int currValue = newPopulation.getFitnessOfChromosome(individuals.get(i).getChromosome(), stocks, orders);
+            double currValue = newPopulation.getFitnessOfChromosome(individuals.get(i).getChromosome(), stocks, orders);
             if (currValue > worstValue) {
                 worstARNPosition = i;
                 worstValue = currValue;
@@ -287,17 +289,17 @@ public class GeneticAlgorithm {
         return worstARNPosition;
     }
 
-    void mutate(Population newPopulation, List<Integer> chromosome, int worstPosition, int worstValue, int currentFitness) {
+    void mutate(Population newPopulation, List<Integer> chromosome, int worstPosition, int worstValue, double currentFitness) {
         List<Integer> orders = newPopulation.getOrders();
         List<Integer> stocks = newPopulation.getStocks();
 
         List<Integer> stockTemp = newPopulation.getStockRemain(chromosome, stocks, orders);
-        int bestGapOfAll = Integer.MAX_VALUE;
+        double bestGapOfAll = 1;
         int finalMoveTo = -1;
         int finalFromPosition = -1;
 
         for (int i = 0; i < orders.size(); ++i) {
-            int bestGap = Integer.MAX_VALUE;
+            double bestGap = 1;
             int moveTo = -1;
             int fromPosition = -1;
             for (int j = 0; j < stocks.size(); ++j) {
@@ -307,16 +309,16 @@ public class GeneticAlgorithm {
                 if (stockTemp.get(j) >= orders.get(i)) {
                     List<Integer> chromosomeTemp = new ArrayList<>(chromosome);
                     chromosomeTemp.set(i, j);
-                    int sumRemain = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
-                    if (stockTemp.get(j).equals(orders.get(i)) && bestGap > sumRemain) {
-                        bestGap = sumRemain;
+                    double rateRemain = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
+                    if (stockTemp.get(j).equals(orders.get(i)) && bestGap > rateRemain) {
+                        bestGap = rateRemain;
                         moveTo = j;
                         fromPosition = i;
                     }
 
                     int cutWidth = newPopulation.getCutWidth();
-                    if (stockTemp.get(j) >= orders.get(i) + cutWidth && bestGap > sumRemain) {
-                        bestGap = sumRemain;
+                    if (stockTemp.get(j) >= orders.get(i) + cutWidth && bestGap > rateRemain) {
+                        bestGap = rateRemain;
                         moveTo = j;
                         fromPosition = i;
                     }
@@ -353,7 +355,7 @@ public class GeneticAlgorithm {
      * @param currentFitness    currentFitness
      * @param individualSpecial
      */
-    void mutateV2(Population newPopulation, List<Integer> chromosome, int worstPosition, int worstValue, int currentFitness, Individual individualSpecial) {
+    void mutateV2(Population newPopulation, List<Integer> chromosome, int worstPosition, int worstValue, double currentFitness, Individual individualSpecial) {
         List<Integer> orders = newPopulation.getOrders();
         List<Integer> stocks = newPopulation.getStocks();
 
@@ -362,7 +364,7 @@ public class GeneticAlgorithm {
         Map<Integer, Integer> storeChangePosition = new HashMap<>();
 
         for (int i = 0; i < orders.size(); ++i) {
-            int bestGap = Integer.MAX_VALUE;
+            double bestGap = Integer.MAX_VALUE;
             int moveTo = -1;
             int fromPosition = -1;
             for (int j = 0; j < stockTemp.size(); ++j) {
@@ -372,16 +374,16 @@ public class GeneticAlgorithm {
                 if (stockTemp.get(j) >= orders.get(i)) {
                     List<Integer> chromosomeTemp = new ArrayList<>(chromosome);
                     chromosomeTemp.set(i, j);
-                    int sumRemain = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
-                    if (stockTemp.get(j).equals(orders.get(i)) && bestGap > sumRemain) {
-                        bestGap = sumRemain;
+                    double rateRemain = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
+                    if (stockTemp.get(j).equals(orders.get(i)) && bestGap > rateRemain) {
+                        bestGap = rateRemain;
                         moveTo = j;
                         fromPosition = i;
                     }
 
                     int cutWidth = newPopulation.getCutWidth();
-                    if (stockTemp.get(j) >= orders.get(i) + cutWidth && bestGap > sumRemain) {
-                        bestGap = sumRemain;
+                    if (stockTemp.get(j) >= orders.get(i) + cutWidth && bestGap > rateRemain) {
+                        bestGap = rateRemain;
                         moveTo = j;
                         fromPosition = i;
                     }
@@ -421,7 +423,7 @@ public class GeneticAlgorithm {
     /**
      *
      */
-    Individual mutateV3(Population newPopulation, Individual individualInit) {
+    Individual mutateSpecial(Population newPopulation, Individual individualInit) {
 
         List<Integer> chromosome = individualInit.getChromosome();
         int currentFitness = (int) individualInit.getFitness();
@@ -454,7 +456,7 @@ public class GeneticAlgorithm {
                 }
             }
             Individual individual = new Individual(chromosomeTemp);
-            int fitness = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
+            double fitness = newPopulation.getFitnessOfChromosome(chromosomeTemp, stocks, orders);
             individual.setFitness(fitness);
             individuals.add(individual);
         });

@@ -2,12 +2,12 @@ package com.duykypaul.kltn;
 
 public class FastCutBean {
     private Integer numberMaterial;
-    private Integer remain;
+    private Double rateRemain;
     private int[] arrIndexStockUsed;
 
-    public FastCutBean(Integer numberMaterial, Integer remain, int[] arrIndexStockUsed) {
+    public FastCutBean(Integer numberMaterial, Double rateRemain, int[] arrIndexStockUsed) {
         this.numberMaterial = numberMaterial;
-        this.remain = remain;
+        this.rateRemain = rateRemain;
         this.arrIndexStockUsed = arrIndexStockUsed;
     }
 
@@ -19,12 +19,12 @@ public class FastCutBean {
         this.numberMaterial = numberMaterial;
     }
 
-    public Integer getRemain() {
-        return remain;
+    public Double getRateRemain() {
+        return rateRemain;
     }
 
-    public void setRemain(Integer remain) {
-        this.remain = remain;
+    public void setRateRemain(Double rateRemain) {
+        this.rateRemain = rateRemain;
     }
 
     public int[] getArrIndexStockUsed() {

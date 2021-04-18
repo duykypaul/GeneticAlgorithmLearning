@@ -14,14 +14,17 @@ public class AFast {
 
     private static final String BLANK = "";
     private static final String COMMA = ",";
-    private static final String STEEL_BLADE_THICKNESS = "5";
+    private static final String STEEL_BLADE_THICKNESS = "0";
 
     public static void main(String[] args) {
         Instant start = Instant.now();
 //        testCase1();
 //        testCase2();
 //        testCase3();
-        testCase4();
+//        testCase4();
+        String order = "20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80";
+        String stock = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99";
+        System.out.println(getMessageFromFastCut(order, stock));
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
     }
@@ -288,7 +291,7 @@ public class AFast {
 
         listArn = listArn.stream()
             .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
-                .thenComparing(FastCutBean::getRemain))
+                .thenComparing(FastCutBean::getRateRemain))
             .collect(Collectors.toList());
 
         if (!listArn.isEmpty()) {
@@ -429,19 +432,19 @@ public class AFast {
     /**
      * chon ra phuong phap co phan thua tot nhat trong list danh sach co cung so luong thanh nguyen lieu can dung
      *
-     * @param order danh sach san pham yeu cau
-     * @param stock danh sach nguyen lieu co the dung
+     * @param orders danh sach san pham yeu cau
+     * @param stocks danh sach nguyen lieu co the dung
      * @return String
      */
-    public static String getMessageFromFastCut(String order, String stock) {
-        if (stock.trim().equals(BLANK)) return BLANK;
+    public static String getMessageFromFastCut(String orders, String stocks) {
+        if (stocks.trim().equals(BLANK)) return BLANK;
 
         List<FastCutBean> listArn = new ArrayList<>();
         int[] messageFromArnAlgorithm;
         /*
          * arrOrderInit = 2000, 3000, 5000, 1500, 7000
          */
-        int[] arrOrderInit = Arrays.stream(order.split(COMMA))
+        int[] arrOrderInit = Arrays.stream(orders.split(COMMA))
             .map(s -> Integer.parseInt(s.trim()))
             .mapToInt(Integer::intValue)
             .toArray();
@@ -466,7 +469,7 @@ public class AFast {
             .mapToInt(ele -> ele)
             .toArray();
 
-        int[] arrStockInit = Arrays.stream(stock.split(COMMA))
+        int[] arrStockInit = Arrays.stream(stocks.split(COMMA))
             .map(s -> Integer.parseInt(s.trim()))
             .mapToInt(Integer::intValue)
             .toArray();
@@ -476,7 +479,7 @@ public class AFast {
          */
         int[] arrStock = IntStream.of(arrStockInit)
             .boxed().sorted(Comparator.reverseOrder())
-            .mapToInt(i -> i)
+            .mapToInt(Integer::intValue)
             .toArray();
 
         /*
@@ -485,7 +488,7 @@ public class AFast {
         int[] sortedIndicesStock = IntStream.range(0, arrStockInit.length)
             .boxed()
             .sorted(Comparator.comparing(i -> -arrStockInit[i]))
-            .mapToInt(ele -> ele)
+            .mapToInt(Integer::intValue)
             .toArray();
 
         int[] arrCheckMaterialCanBeCut = new int[arrStock.length];
@@ -494,12 +497,12 @@ public class AFast {
 
         fastCutMain(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder);
 
-        listArn = listArn.stream()
-            .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
-                .thenComparing(FastCutBean::getRemain))
-            .collect(Collectors.toList());
-
         if (!listArn.isEmpty()) {
+            listArn = listArn.stream()
+                .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
+                    .thenComparing(FastCutBean::getRateRemain))
+                .collect(Collectors.toList());
+            
             messageFromArnAlgorithm = listArn.get(0).getArrIndexStockUsed();
             Map<Integer, Integer> mapOutputArn = new HashMap<>();
             Map<Integer, Integer> mapIndexSortedIndicesOrder = new HashMap<>();
@@ -569,11 +572,17 @@ public class AFast {
              * số lượng thanh sắt cần dùng
              */
             int numberMaterial = (int) Arrays.stream(arrIndexStockUsed).distinct().count();
+
+            IntStream otherRemainStock = IntStream.range(0, arrRemain.length).filter(i -> arrRemain[i] != arrStock[i]);
             /*
              * tổng phần thừa với cách cắt tương ứng
              */
-            int remain = IntStream.range(0, arrRemain.length).filter(i -> arrRemain[i] != arrStock[i]).mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
-            listArn.add(new FastCutBean(numberMaterial, remain, arrIndexStockUsed));
+            int remain = otherRemainStock.mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
+            int stockUsed = otherRemainStock.mapToObj(i -> arrStock[i]).mapToInt(Integer::intValue).sum();
+
+            double rateRemain = (double)remain / stockUsed;
+
+            listArn.add(new FastCutBean(numberMaterial, rateRemain, arrIndexStockUsed));
             arrCheckMaterialCanBeCut[numberMaterialRemoved++] = 0;
             fastCutMain(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder);
         }
