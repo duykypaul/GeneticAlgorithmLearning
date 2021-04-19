@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,7 +15,7 @@ public class AFast {
 
     private static final String BLANK = "";
     private static final String COMMA = ",";
-    private static final String STEEL_BLADE_THICKNESS = "0";
+    private static final String STEEL_BLADE_THICKNESS = "5";
 
     public static void main(String[] args) {
         Instant start = Instant.now();
@@ -22,8 +23,10 @@ public class AFast {
 //        testCase2();
 //        testCase3();
 //        testCase4();
-        String order = "20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80";
-        String stock = "0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99";
+        /*String order = "1250,1250,1250,1200,1200,1000,1000,1000,1000";
+        String stock = "5623,1009,1640,1640,13000,13000,13000";*/
+        String order = "1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122";
+        String stock = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025";
         System.out.println(getMessageFromFastCut(order, stock));
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
@@ -65,7 +68,7 @@ public class AFast {
 
         Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
 
-        if(!triplet.getValue0().isEmpty()) {
+        if (!triplet.getValue0().isEmpty()) {
             outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
         } else {
             System.out.println("can't resolve");
@@ -107,7 +110,7 @@ public class AFast {
 
         Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
 
-        if(!triplet.getValue0().isEmpty()) {
+        if (!triplet.getValue0().isEmpty()) {
             outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
         } else {
             System.out.println("can't resolve");
@@ -144,7 +147,7 @@ public class AFast {
 
         Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
 
-        if(!triplet.getValue0().isEmpty()) {
+        if (!triplet.getValue0().isEmpty()) {
             outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
         } else {
             System.out.println("can't resolve");
@@ -182,7 +185,7 @@ public class AFast {
 
         Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
 
-        if(!triplet.getValue0().isEmpty()) {
+        if (!triplet.getValue0().isEmpty()) {
             outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
         } else {
             System.out.println("can't resolve");
@@ -206,7 +209,7 @@ public class AFast {
             for (int indexMachine = 0; indexMachine < machines.size(); indexMachine++) {
                 int finalIndexMachine = indexMachine;
                 long mount = subListIndexMachine.stream().filter(item -> item.equals(finalIndexMachine)).count();
-                if(mount > 0) {
+                if (mount > 0) {
                     System.out.println("Machine " + (indexMachine + 1) + " cuts " + mount + "/" + stack.getQuantity()
                             + " of this, starting from the moment " + subListIndexTime.get(subListIndexMachine.indexOf(finalIndexMachine)));
                 }
@@ -237,51 +240,51 @@ public class AFast {
          * arrOrderInit = 2000, 3000, 5000, 1500, 7000
          */
         int[] arrOrderInit = Arrays.stream(order.split(COMMA))
-            .map(s -> Integer.parseInt(s.trim()))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .map(s -> Integer.parseInt(s.trim()))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * sắp xếp mảng order theo thứ tự từ cao đến thấp
          * arrOrder = 7000, 5000, 3000, 2000, 1500
          */
         int[] arrOrder = IntStream.of(arrOrderInit)
-            .boxed()
-            .sorted(Comparator.reverseOrder())
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * sắp xếp lại chỉ số index trong mảng order ban đầu theo thứ tự từ cao đến thấp (của giá trị)
          * sortedIndicesOrder = 4, 2, 1, 0, 3
          */
         int[] sortedIndicesOrder = IntStream.range(0, arrOrderInit.length)
-            .boxed()
-            .sorted(Comparator.comparing(i -> -arrOrderInit[i]))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .boxed()
+                .sorted(Comparator.comparing(i -> -arrOrderInit[i]))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         int[] arrStockInit = Arrays.stream(stock.split(COMMA))
-            .map(s -> Integer.parseInt(s.trim()))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .map(s -> Integer.parseInt(s.trim()))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * sắp xếp mảng stock theo thứ tự từ cao đến thấp
          */
         int[] arrStock = IntStream.of(arrStockInit)
-            .boxed().sorted(Comparator.reverseOrder())
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .boxed().sorted(Comparator.reverseOrder())
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * chỉ số index trong mảng stock theo thứ tự từ cao đến thấp
          */
         int[] sortedIndicesStock = IntStream.range(0, arrStockInit.length)
-            .boxed()
-            .sorted(Comparator.comparing(i -> -arrStockInit[i]))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .boxed()
+                .sorted(Comparator.comparing(i -> -arrStockInit[i]))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         int[] arrCheckMaterialCanBeCut = new int[arrStock.length];
         int numberMaterialRemoved = 0;
@@ -290,9 +293,9 @@ public class AFast {
         fastCutMain(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder);
 
         listArn = listArn.stream()
-            .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
-                .thenComparing(FastCutBean::getRateRemain))
-            .collect(Collectors.toList());
+                .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
+                        .thenComparing(FastCutBean::getRateRemain))
+                .collect(Collectors.toList());
 
         if (!listArn.isEmpty()) {
             System.out.println("population size: " + listArn.size());
@@ -314,7 +317,7 @@ public class AFast {
                 }
                 List<Integer> arnStocks = Arrays.stream(arrMessageConvertForStock).boxed().collect(Collectors.toList());
                 Triplet<Boolean, List<Integer>, List<String>> triplet = computeDetails(arnStocks, machines, stocks, orders, ordersDate, stocksDate);
-                if(Boolean.TRUE.equals(triplet.getValue0())) {
+                if (Boolean.TRUE.equals(triplet.getValue0())) {
 //                    return Arrays.stream(arrMessageConvertForStock).mapToObj(String::valueOf).collect(Collectors.joining(COMMA));
                     return Triplet.with(arnStocks, triplet.getValue1(), triplet.getValue2());
                 }
@@ -338,7 +341,7 @@ public class AFast {
         }
 
         double scale = Math.pow(10, 2);
-        return Math.round(((double)valueRemain / valueInit) * scale) + "%";
+        return Math.round(((double) valueRemain / valueInit) * scale) + "%";
     }
 
     public static int getWeightOfARN(List<Integer> currentARNStocks, List<Integer> currentARNMachines, List<Integer> stocks, List<Integer> orders, List<Machine> machines) {
@@ -382,7 +385,7 @@ public class AFast {
         }
     }
 
-    public static Triplet<Boolean, List<Integer>, List<String>> computeDetails(List<Integer> arnStocks, List<Machine> machines, List<Integer> stocks, List<Integer> orders, List<LocalDate> ordersDate, List<LocalDate> stocksDate ) {
+    public static Triplet<Boolean, List<Integer>, List<String>> computeDetails(List<Integer> arnStocks, List<Machine> machines, List<Integer> stocks, List<Integer> orders, List<LocalDate> ordersDate, List<LocalDate> stocksDate) {
         boolean aBoolean = true;
         List<Integer> stockState = new ArrayList<>(stocks);
         List<Integer> currentARNMachines = new ArrayList<>();
@@ -445,51 +448,51 @@ public class AFast {
          * arrOrderInit = 2000, 3000, 5000, 1500, 7000
          */
         int[] arrOrderInit = Arrays.stream(orders.split(COMMA))
-            .map(s -> Integer.parseInt(s.trim()))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .map(s -> Integer.parseInt(s.trim()))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * sắp xếp mảng order theo thứ tự từ cao đến thấp
          * arrOrder = 7000, 5000, 3000, 2000, 1500
          */
         int[] arrOrder = IntStream.of(arrOrderInit)
-            .boxed()
-            .sorted(Comparator.reverseOrder())
-            .mapToInt(i -> i)
-            .toArray();
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .mapToInt(i -> i)
+                .toArray();
 
         /*
          * sắp xếp lại chỉ số index trong mảng order ban đầu theo thứ tự từ cao đến thấp (của giá trị)
          * sortedIndicesOrder = 4, 2, 1, 0, 3
          */
         int[] sortedIndicesOrder = IntStream.range(0, arrOrderInit.length)
-            .boxed()
-            .sorted(Comparator.comparing(i -> -arrOrderInit[i]))
-            .mapToInt(ele -> ele)
-            .toArray();
+                .boxed()
+                .sorted(Comparator.comparing(i -> -arrOrderInit[i]))
+                .mapToInt(ele -> ele)
+                .toArray();
 
         int[] arrStockInit = Arrays.stream(stocks.split(COMMA))
-            .map(s -> Integer.parseInt(s.trim()))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .map(s -> Integer.parseInt(s.trim()))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * sắp xếp mảng stock theo thứ tự từ cao đến thấp
          */
         int[] arrStock = IntStream.of(arrStockInit)
-            .boxed().sorted(Comparator.reverseOrder())
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .boxed().sorted(Comparator.reverseOrder())
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         /*
          * chỉ số index trong mảng stock theo thứ tự từ cao đến thấp
          */
         int[] sortedIndicesStock = IntStream.range(0, arrStockInit.length)
-            .boxed()
-            .sorted(Comparator.comparing(i -> -arrStockInit[i]))
-            .mapToInt(Integer::intValue)
-            .toArray();
+                .boxed()
+                .sorted(Comparator.comparing(i -> -arrStockInit[i]))
+                .mapToInt(Integer::intValue)
+                .toArray();
 
         int[] arrCheckMaterialCanBeCut = new int[arrStock.length];
         int numberMaterialRemoved = 0;
@@ -499,10 +502,10 @@ public class AFast {
 
         if (!listArn.isEmpty()) {
             listArn = listArn.stream()
-                .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
-                    .thenComparing(FastCutBean::getRateRemain))
-                .collect(Collectors.toList());
-            
+                    .sorted(Comparator.comparing(FastCutBean::getNumberMaterial)
+                            .thenComparing(FastCutBean::getRateRemain))
+                    .collect(Collectors.toList());
+
             messageFromArnAlgorithm = listArn.get(0).getArrIndexStockUsed();
             Map<Integer, Integer> mapOutputArn = new HashMap<>();
             Map<Integer, Integer> mapIndexSortedIndicesOrder = new HashMap<>();
@@ -518,7 +521,12 @@ public class AFast {
             for (int i = 0; i < arrMessageConvertByOrder.length; i++) {
                 arrMessageConvertForStock[i] = sortedIndicesStock[arrMessageConvertByOrder[i]];
             }
-            return Arrays.stream(arrMessageConvertForStock).mapToObj(String::valueOf).collect(Collectors.joining(COMMA));
+            String arn = Arrays.stream(arrMessageConvertForStock).mapToObj(String::valueOf).collect(Collectors.joining(COMMA));
+            System.out.println("Best solution: " + arn);
+            System.out.println("Best value rate: " + listArn.get(0).getRateRemain());
+            System.out.println("Best value remain: " + listArn.get(0).getRemain());
+            System.out.println("Best value stockUsed: " + listArn.get(0).getStockUsed());
+            return arn;
         } else {
             return BLANK;
         }
@@ -573,16 +581,17 @@ public class AFast {
              */
             int numberMaterial = (int) Arrays.stream(arrIndexStockUsed).distinct().count();
 
-            IntStream otherRemainStock = IntStream.range(0, arrRemain.length).filter(i -> arrRemain[i] != arrStock[i]);
+            Supplier<IntStream> otherRemainStock = () -> IntStream.range(0, arrRemain.length)
+                    .filter(i -> arrRemain[i] != arrStock[i] && Arrays.stream(arrIndexStockUsed).anyMatch(index -> index == i));
             /*
              * tổng phần thừa với cách cắt tương ứng
              */
-            int remain = otherRemainStock.mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
-            int stockUsed = otherRemainStock.mapToObj(i -> arrStock[i]).mapToInt(Integer::intValue).sum();
+            int remain = otherRemainStock.get().mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
+            int stockUsed = otherRemainStock.get().mapToObj(i -> arrStock[i]).mapToInt(Integer::intValue).sum();
 
-            double rateRemain = (double)remain / stockUsed;
+            double rateRemain = (double) remain / stockUsed;
 
-            listArn.add(new FastCutBean(numberMaterial, rateRemain, arrIndexStockUsed));
+            listArn.add(new FastCutBean(numberMaterial, rateRemain, arrIndexStockUsed, remain, stockUsed));
             arrCheckMaterialCanBeCut[numberMaterialRemoved++] = 0;
             fastCutMain(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder);
         }

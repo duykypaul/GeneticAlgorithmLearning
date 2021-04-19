@@ -14,8 +14,8 @@ public class SaveCut {
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 180;
-    private static final int GENERATION_LIMIT = 100;
+    private static final int RUNNING_TIME_LIMIT = 60;
+    private static final int GENERATION_LIMIT = 1;
     private static final int GENERATION_SAME_LIMIT = 300;
     private static final int BLADE_THICKNESS = 5;
     private static final String COMMA = ",";

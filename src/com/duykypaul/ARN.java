@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 
 public class ARN {
     public static final int POPULATION_LIMIT = 5000;
-    public static final int AMOUNT_OF_SECOND = 100;
-    public static final int AMOUNT_OF_SECOND_GEN = 10;
+    public static final int AMOUNT_OF_SECOND = 30;
+    public static final int AMOUNT_OF_SECOND_GEN = 1;
 
     public static final long TIME_LIMIT = AMOUNT_OF_SECOND;
     public static final long GEN_LIMIT = AMOUNT_OF_SECOND_GEN;
@@ -40,7 +40,7 @@ public class ARN {
 
         ARN arn = new ARN();
         Instant start = Instant.now();
-        System.out.println(arn.algorithm_task(inputMessageS));
+        System.out.println(arn.algorithm_task(inputMessage));
         System.out.println("time line: " + Duration.between(start, Instant.now()));
     }
 

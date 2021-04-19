@@ -38,6 +38,8 @@ public class GeneticAlgorithm {
 
     private final int generationSameLimit;
 
+    private static final Random randomNumber = new Random();
+
     public GeneticAlgorithm(int populationSize, double mutationRate, double crossoverRate, int elitismCount, double worstRate, int runningTimeLimit, int generationSameLimit) {
         this.populationSize = populationSize;
         this.mutationRate = mutationRate;
@@ -49,7 +51,7 @@ public class GeneticAlgorithm {
     }
 
     public static int getRandomNumber(int min, int max) {
-        return new Random().nextInt(max - min) + min;
+        return randomNumber.nextInt(max - min) + min;
     }
 
     /**
@@ -258,13 +260,13 @@ public class GeneticAlgorithm {
         for (int i = 0; i < mutationSize; ++i) {
             Integer worstPosition = findWorstPositionInPopulation(newPopulation, newPopulation.getIndividuals(), this.populationSize);
             Individual worstIndividual = newPopulation.getIndividual(worstPosition);
-            int worstFitness = (int) worstIndividual.getFitness();
+            double worstFitness = worstIndividual.getFitness();
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
             Individual randIndividual = newPopulation.getIndividual(randInt);
-            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
-            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);
-//            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
+            /*Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
+            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);*/
+            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
         }
 
         // Return mutated population
@@ -289,7 +291,7 @@ public class GeneticAlgorithm {
         return worstARNPosition;
     }
 
-    void mutate(Population newPopulation, List<Integer> chromosome, int worstPosition, int worstValue, double currentFitness) {
+    void mutate(Population newPopulation, List<Integer> chromosome, int worstPosition, double worstValue, double currentFitness) {
         List<Integer> orders = newPopulation.getOrders();
         List<Integer> stocks = newPopulation.getStocks();
 
@@ -355,7 +357,7 @@ public class GeneticAlgorithm {
      * @param currentFitness    currentFitness
      * @param individualSpecial
      */
-    void mutateV2(Population newPopulation, List<Integer> chromosome, int worstPosition, int worstValue, double currentFitness, Individual individualSpecial) {
+    void mutateV2(Population newPopulation, List<Integer> chromosome, int worstPosition, double worstValue, double currentFitness, Individual individualSpecial) {
         List<Integer> orders = newPopulation.getOrders();
         List<Integer> stocks = newPopulation.getStocks();
 
@@ -426,7 +428,7 @@ public class GeneticAlgorithm {
     Individual mutateSpecial(Population newPopulation, Individual individualInit) {
 
         List<Integer> chromosome = individualInit.getChromosome();
-        int currentFitness = (int) individualInit.getFitness();
+        double currentFitness = individualInit.getFitness();
 
         List<Integer> orders = newPopulation.getOrders();
         List<Integer> stocks = newPopulation.getStocks();
