@@ -14,8 +14,8 @@ public class SaveCut {
     private static final double CROSSOVER_RATE = 0.95;
     private static final double WORST_RATE = 0.01;
     private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 60;
-    private static final int GENERATION_LIMIT = 1;
+    private static final int RUNNING_TIME_LIMIT = 180;
+    private static final int GENERATION_LIMIT = 10;
     private static final int GENERATION_SAME_LIMIT = 300;
     private static final int BLADE_THICKNESS = 5;
     private static final String COMMA = ",";
@@ -31,8 +31,8 @@ public class SaveCut {
 //        testCase1();
 //        testCase2();
 //        testCase3();
-//        testCase4();
-        testCase5();
+        testCase4();
+//        testCase5();
     }
 
     public static void testCase1() {
@@ -81,13 +81,13 @@ public class SaveCut {
 
     public static void testCase4() {
         List<Material> listStack = new ArrayList<>();
-        listStack.add(new Material(2, 2000));
-        listStack.add(new Material(1, 3000));
-        listStack.add(new Material(3, 5000));
-        listStack.add(new Material(4, 7000));
+        listStack.add(new Material(2000, 2000));
+        listStack.add(new Material(1000, 3000));
+        listStack.add(new Material(3000, 5000));
+        listStack.add(new Material(4000, 7000));
 
         List<Material> listStock = new ArrayList<>();
-        listStock.add(new Material(10, 11700));
+        listStock.add(new Material(10000, 11700));
 
         run(listStack, listStock);
     }
