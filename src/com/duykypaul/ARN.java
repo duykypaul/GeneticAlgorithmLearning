@@ -14,12 +14,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class ARN {
     public static final int POPULATION_LIMIT = 5000;
     public static final int AMOUNT_OF_SECOND = 100;
-    public static final int AMOUNT_OF_SECOND_GEN = 1000;
+    public static final int AMOUNT_OF_SECOND_GEN = 10;
 
     public static final long TIME_LIMIT = AMOUNT_OF_SECOND;
     public static final long GEN_LIMIT = AMOUNT_OF_SECOND_GEN;
@@ -46,7 +47,7 @@ public class ARN {
         StringBuilder contentBuilder = new StringBuilder();
 
         String workingDir = System.getProperty("user.dir");
-        try (Stream<String> stream = Files.lines(Paths.get(workingDir, "./src/com/duykypaul/testcase5.txt"), StandardCharsets.UTF_8)) {
+        try (Stream<String> stream = Files.lines(Paths.get(workingDir, "./src/com/duykypaul/testcase4.txt"), StandardCharsets.UTF_8)) {
             stream.forEach(contentBuilder::append);
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,10 +86,10 @@ public class ARN {
         stocksN = stocks.size();
         ordersN = orders.size();
 
-        Pair<Integer, Integer> chromosomeSimulateVal = chromosomeSimulate();
+        Pair<Double, Integer> chromosomeSimulateVal = chromosomeSimulate();
 
-        int bestValue = chromosomeSimulateVal.getKey(),
-                bestPosition = chromosomeSimulateVal.getValue();
+        double bestValue = chromosomeSimulateVal.getKey();
+        int bestPosition = chromosomeSimulateVal.getValue();
 
         if (bestValue < 0 && bestPosition < 0) {
             return "0";
@@ -107,7 +108,17 @@ public class ARN {
         return content;
     }
 
-    public int getWeightOfARN(List<Integer> ARN) {
+    public double getWeightOfARN(List<Integer> ARN) {
+        List<Integer> uniqueStocks = ARN.stream().distinct().sorted().collect(Collectors.toList());
+        List<Integer> stockTemp = computeStockRemain(ARN);
+
+        int StockUsed = IntStream.range(0, stocks.size()).filter(uniqueStocks::contains).map(stocks::get).sum();
+        int StockRemain = IntStream.range(0, stocks.size()).filter(uniqueStocks::contains).map(stockTemp::get).sum();
+
+        return (double) StockRemain / StockUsed;
+    }
+
+    public int getWeightOfARNOld(List<Integer> ARN) {
         List<Integer> uniqueStocks = ARN.stream().distinct().sorted().collect(Collectors.toList());
         List<Integer> stockTemp = computeStockRemain(ARN);
 
@@ -119,7 +130,7 @@ public class ARN {
         return value;
     }
 
-    public Pair<Integer, Integer> chromosomeSimulate() {
+    public Pair<Double, Integer> chromosomeSimulate() {
         List<Integer> ARN = new ArrayList<>();
         List<Integer> stockState = new ArrayList<>(stocks);
 
@@ -127,10 +138,10 @@ public class ARN {
         isFinishedGen = false;
         generateARN(ARN, stockState);
 
-        System.out.println(105);
 //        ARNs.forEach(item -> System.out.println(Arrays.toString(item.toArray())));
 
-        ARNs.sort(Comparator.comparingInt(this::getWeightOfARN));
+//        ARNs.sort(Comparator.comparingInt(this::getWeightOfARN));
+        ARNs.sort(Comparator.comparingDouble(this::getWeightOfARN));
 
         if (ARNsN > POPULATION_LIMIT) {
             ARNs = ARNs.subList(0, POPULATION_LIMIT);
@@ -140,7 +151,7 @@ public class ARN {
         System.out.println("POPULATION = " + ARNsN);
 
         if (ARNsN == 0) {
-            return new Pair<>(-1, -1);
+            return new Pair<>(-1d, -1);
         }
 
         int maxRandomInt = ARNsN - 1;
@@ -176,17 +187,17 @@ public class ARN {
     }
 
     Triplet<Integer, Integer, Integer> findBestInPopulation(List<List<Integer>> population, int populationSize) {
-        int maxValue = Integer.MAX_VALUE;
+        double maxValue = Integer.MAX_VALUE;
         int maxARNPosition = 0;
 
-        int secondValue = Integer.MAX_VALUE;
+        double secondValue = Integer.MAX_VALUE;
         int secondARNPosition = 0;
 
-        int worstValue = Integer.MIN_VALUE;
+        double worstValue = Integer.MIN_VALUE;
         int worstARNPosition = 0;
 
         for (int i = 0; i < populationSize; ++i) {
-            int currValue = getWeightOfARN(population.get(i));
+            double currValue = getWeightOfARN(population.get(i));
             if (currValue < maxValue) {
                 secondValue = maxValue;
                 secondARNPosition = maxARNPosition;
@@ -256,8 +267,7 @@ public class ARN {
                     isFinishedGen = true;
                     return;
                 }
-            } else {
-                if (orders.get(idx) + CUT_WIDTH <= currStockState.get(i)) {
+            } else if (orders.get(idx) + CUT_WIDTH <= currStockState.get(i)) {
                     /*List<Integer> stockTemp = new ArrayList<>(currStockState);
                     stockTemp.set(i, stockTemp.get(i) - orders.get(idx) - CUT_WIDTH);*/
 
@@ -277,7 +287,7 @@ public class ARN {
                         isFinishedGen = true;
                         return;
                     }
-                }
+
             }
 
             duration = Duration.between(start_gen, Instant.now()).getSeconds();
@@ -288,7 +298,7 @@ public class ARN {
         }
     }
 
-    void mutate(List<Integer> ARN, int worstPosition, int worstValue) {
+    void mutate(List<Integer> ARN, int worstPosition, double worstValue) {
         List<Integer> stockTemp = computeStockRemain(ARN);
         //todo thinking bestGapOfAll for what?
         int bestGapOfAll = Integer.MAX_VALUE;
