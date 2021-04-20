@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 public class ARN {
     public static final int POPULATION_LIMIT = 5000;
-    public static final int AMOUNT_OF_SECOND = 100;
+    public static final int AMOUNT_OF_SECOND = 1000;
     public static final int AMOUNT_OF_SECOND_GEN = 10;
 
     public static final long TIME_LIMIT = AMOUNT_OF_SECOND;

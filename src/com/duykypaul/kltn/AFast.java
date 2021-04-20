@@ -23,11 +23,13 @@ public class AFast {
 //        testCase2();
 //        testCase3();
 //        testCase4();
+
         /*String order = "1250,1250,1250,1200,1200,1000,1000,1000,1000";
         String stock = "5623,1009,1640,1640,13000,13000,13000";*/
-        String order = "1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122";
+       /* String order = "1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122";
         String stock = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025";
-        System.out.println(getMessageFromFastCut(order, stock));
+        System.out.println(getMessageFromFastCut(order, stock));*/
+        testCase11();
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
     }
@@ -190,6 +192,56 @@ public class AFast {
         } else {
             System.out.println("can't resolve");
         }
+    }
+
+    public static void testCase5() {
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(1, 1, 2, 2000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 1, 3000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 3, 5000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 4, 7000, LocalDate.parse("2021-12-28")));
+
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(10, 11700, LocalDate.parse("2021-02-15")));
+
+        final List<Integer> orders = new ArrayList<>();
+        listStack.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+        });
+
+        final List<Integer> stocks = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+        });
+        System.out.println(getMessageFromFastCut(orders.stream().map(String::valueOf).collect(Collectors.joining(COMMA)),
+            stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
+    }
+
+    public static void testCase11() {
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(1, 1, 10, 3000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 20, 2000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 30, 5000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 40, 5000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 50, 7000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 20, 3000, LocalDate.parse("2021-12-28")));
+
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(200, 11700, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(30, 7995, LocalDate.parse("2021-02-15")));
+
+        final List<Integer> orders = new ArrayList<>();
+        listStack.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+        });
+
+        final List<Integer> stocks = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+        });
+        System.out.println(getMessageFromFastCut(orders.stream().map(String::valueOf).collect(Collectors.joining(COMMA)),
+            stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
     }
 
     private static void outputStatistic(List<Integer> chromosome, List<Integer> chromosomeMachine, List<String> chromosomeTime, List<Machine> machines, List<Stack> stacks, List<Integer> orders, List<Integer> stocks) {

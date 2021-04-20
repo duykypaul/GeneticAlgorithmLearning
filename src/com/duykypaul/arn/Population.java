@@ -1,12 +1,16 @@
 package com.duykypaul.arn;
 
+import com.duykypaul.kltn.FastCutBean;
+import org.javatuples.Triplet;
+
 import java.time.Duration;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import static com.duykypaul.arn.SaveCut.COMMA;
 
 
 /**
@@ -73,11 +77,150 @@ public class Population {
         List<Integer> stockState = new ArrayList<>(stocksInit);
 
         startGen = Instant.now();
-        generatePopulation(chromosome, stockState, populationSize);
+        if(stockState.stream().distinct().count() == 1) {
+            generatePopulationApFast(stocksInit, ordersInit, cutWidth, generationLimit);
+        } else {
+            generatePopulation(chromosome, stockState, populationSize);
+        }
+
 
         if (this.realPopulationSize > populationSize) {
             this.population = this.population.subList(0, populationSize);
             this.realPopulationSize = populationSize;
+        }
+    }
+
+    private void generatePopulationApFast(List<Integer> stocksInit, List<Integer> ordersInit, int cutWidth, int generationLimit) {
+        List<Individual> listArn = new ArrayList<>();
+        int[] messageFromArnAlgorithm;
+        /*
+         * arrOrderInit = 2000, 3000, 5000, 1500, 7000
+         */
+        int[] arrOrderInit = ordersInit.stream().mapToInt(Integer::intValue).toArray();
+
+        /*
+         * sắp xếp mảng order theo thứ tự từ cao đến thấp
+         * arrOrder = 7000, 5000, 3000, 2000, 1500
+         */
+        int[] arrOrder = IntStream.of(arrOrderInit)
+            .boxed()
+            .sorted(Comparator.reverseOrder())
+            .mapToInt(i -> i)
+            .toArray();
+
+        /*
+         * sắp xếp lại chỉ số index trong mảng order ban đầu theo thứ tự từ cao đến thấp (của giá trị)
+         * sortedIndicesOrder = 4, 2, 1, 0, 3
+         */
+        int[] sortedIndicesOrder = IntStream.range(0, arrOrderInit.length)
+            .boxed()
+            .sorted(Comparator.comparing(i -> -arrOrderInit[i]))
+            .mapToInt(ele -> ele)
+            .toArray();
+
+        int[] arrStockInit = stocksInit.stream().mapToInt(Integer::intValue).toArray();
+
+        /*
+         * sắp xếp mảng stock theo thứ tự từ cao đến thấp
+         */
+        int[] arrStock = IntStream.of(arrStockInit)
+            .boxed().sorted(Comparator.reverseOrder())
+            .mapToInt(Integer::intValue)
+            .toArray();
+
+        /*
+         * chỉ số index trong mảng stock theo thứ tự từ cao đến thấp
+         */
+        int[] sortedIndicesStock = IntStream.range(0, arrStockInit.length)
+            .boxed()
+            .sorted(Comparator.comparing(i -> -arrStockInit[i]))
+            .mapToInt(Integer::intValue)
+            .toArray();
+
+        int[] arrCheckMaterialCanBeCut = new int[arrStock.length];
+        int numberMaterialRemoved = 0;
+        Arrays.fill(arrCheckMaterialCanBeCut, 1);
+
+        findSolution(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder, cutWidth);
+
+        if (!listArn.isEmpty()) {
+            listArn = listArn.stream()
+                .sorted(Comparator.comparing(Individual::getFitness))
+                .collect(Collectors.toList());
+
+            for (Individual individualCurrent : listArn) {
+                messageFromArnAlgorithm = individualCurrent.getChromosome().stream().mapToInt(Integer::intValue).toArray();
+                Map<Integer, Integer> mapOutputArn = new HashMap<>();
+                Map<Integer, Integer> mapIndexSortedIndicesOrder = new HashMap<>();
+                for (int i = 0; i < arrOrder.length; i++) {
+                    mapOutputArn.put(i, messageFromArnAlgorithm[i]);
+                    mapIndexSortedIndicesOrder.put(sortedIndicesOrder[i], i);
+                }
+                int[] arrMessageConvertByOrder = new int[arrOrder.length];
+                for (int i = 0; i < arrOrder.length; i++) {
+                    arrMessageConvertByOrder[i] = mapOutputArn.get(mapIndexSortedIndicesOrder.get(i));
+                }
+                int[] arrMessageConvertForStock = new int[arrMessageConvertByOrder.length];
+                for (int i = 0; i < arrMessageConvertByOrder.length; i++) {
+                    arrMessageConvertForStock[i] = sortedIndicesStock[arrMessageConvertByOrder[i]];
+                }
+                individualCurrent.setChromosome(IntStream.of(arrMessageConvertForStock).boxed().collect(Collectors.toList()));
+                this.population.add(individualCurrent);
+                this.realPopulationSize++;
+            }
+        }
+    }
+
+    private void findSolution(List<Individual> listArn, int[] arrCheckMaterialCanBeCut, int numberMaterialRemoved, int[] arrStock, int[] arrOrder, int cutWidth) {
+
+        while (true) {
+            int[] arrRemain = new int[arrStock.length];
+            OptionalInt minOder = Arrays.stream(arrOrder).min();
+            /*
+             * mảng lưu cách cắt toriai
+             */
+            int[] arrIndexStockUsed = new int[arrOrder.length];
+            Arrays.fill(arrIndexStockUsed, -1);
+            for (int i = 0; i < arrStock.length; i++) {
+                if (arrCheckMaterialCanBeCut[i] == 1) {
+                    int remaining = arrStock[i];
+                    for (int j = 0; j < arrOrder.length; j++) {
+                        if (remaining < minOder.getAsInt()) break;
+                        if (remaining >= arrOrder[j] && arrIndexStockUsed[j] == -1) {
+                            arrIndexStockUsed[j] = i;
+                            remaining -= (arrOrder[j] + cutWidth);
+                            if (remaining < 0) {
+                                remaining = 0;
+                            }
+                        }
+                    }
+                    arrRemain[i] = remaining;
+                }
+            }
+            /*
+             * kiểm tra nếu không thể cắt được nữa thì dừng lại
+             */
+            if (Arrays.stream(arrIndexStockUsed).anyMatch(item -> item == -1)) {
+                break;
+            }
+            /*
+             * số lượng thanh sắt cần dùng
+             */
+
+            Supplier<IntStream> otherRemainStock = () -> IntStream.range(0, arrRemain.length)
+                .filter(i -> arrRemain[i] != arrStock[i] && Arrays.stream(arrIndexStockUsed).anyMatch(index -> index == i));
+            /*
+             * tổng phần thừa với cách cắt tương ứng
+             */
+            int remain = otherRemainStock.get().mapToObj(i -> arrRemain[i]).mapToInt(Integer::intValue).sum();
+            int stockUsed = otherRemainStock.get().mapToObj(i -> arrStock[i]).mapToInt(Integer::intValue).sum();
+
+            double rateRemain = (double) remain / stockUsed;
+            Individual individual = new Individual(Arrays.stream(arrIndexStockUsed).boxed().collect(Collectors.toList()));
+            individual.setFitness(rateRemain);
+            listArn.add(individual);
+            arrCheckMaterialCanBeCut[numberMaterialRemoved++] = 0;
+            findSolution(listArn, arrCheckMaterialCanBeCut, numberMaterialRemoved, arrStock, arrOrder, cutWidth);
         }
     }
 

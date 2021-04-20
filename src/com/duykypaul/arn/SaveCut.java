@@ -9,17 +9,17 @@ import java.util.stream.Collectors;
  * @author KyLC
  */
 public class SaveCut {
-    private static final int DEFAULT_POPULATION_SIZE = 5000;
-    private static final double MUTATION_RATE = 0.01;
-    private static final double CROSSOVER_RATE = 0.95;
-    private static final double WORST_RATE = 0.01;
-    private static final int ELITISM_COUNT = 3;
-    private static final int RUNNING_TIME_LIMIT = 100;
-    private static final int GENERATION_LIMIT = 10;
-    private static final int GENERATION_SAME_LIMIT = 300;
-    private static final int BLADE_THICKNESS = 5;
-    private static final String COMMA = ",";
-    private static final String DIVIDER = "|";
+    public static final int DEFAULT_POPULATION_SIZE = 5000;
+    public static final double MUTATION_RATE = 0.01;
+    public static final double CROSSOVER_RATE = 0.95;
+    public static final double WORST_RATE = 0.01;
+    public static final int ELITISM_COUNT = 3;
+    public static final int RUNNING_TIME_LIMIT = 1000;
+    public static final int GENERATION_LIMIT = 10;
+    public static final int GENERATION_SAME_LIMIT = 300;
+    public static final int BLADE_THICKNESS = 5;
+    public static final String COMMA = ",";
+    public static final String DIVIDER = "|";
 
     public static void main(String[] args) {
         String inputContent = "5623,1009,1640,1640,13000,13000,13000,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";
@@ -28,10 +28,10 @@ public class SaveCut {
         String inputContent4 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000|0";
         String inputContent3 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000|0";
 
-//        testCase1();
+        testCase1();
 //        testCase2();
 //        testCase3();
-        testCase4();
+//        testCase4();
 //        testCase5();
     }
 
@@ -40,10 +40,9 @@ public class SaveCut {
         listStack.add(new Material(10, 3000));
         listStack.add(new Material(20, 2000));
         listStack.add(new Material(30, 5000));
-
-        listStack.add(new Material( 40, 5000));
-        listStack.add(new Material( 50, 7000));
-        listStack.add(new Material( 20, 3000));
+        listStack.add(new Material(40, 5000));
+        listStack.add(new Material(50, 7000));
+        listStack.add(new Material(20, 3000));
 
         List<Material> listStock = new ArrayList<>();
         listStock.add(new Material(200, 11700));
@@ -81,10 +80,10 @@ public class SaveCut {
 
     public static void testCase4() {
         List<Material> listStack = new ArrayList<>();
-        listStack.add(new Material(2000, 2000));
-        listStack.add(new Material(1000, 3000));
-        listStack.add(new Material(3000, 5000));
-        listStack.add(new Material(4000, 7000));
+        listStack.add(new Material(200, 2000));
+        listStack.add(new Material(100, 3000));
+        listStack.add(new Material(300, 5000));
+        listStack.add(new Material(400, 7000));
 
         List<Material> listStock = new ArrayList<>();
         listStock.add(new Material(1000, 11700));
@@ -101,7 +100,6 @@ public class SaveCut {
         List<Material> listStock = new ArrayList<>();
         listStock.add(new Material(1, 1313));
         listStock.add(new Material(1, 910));
-
 
         run(listStack, listStock);
     }

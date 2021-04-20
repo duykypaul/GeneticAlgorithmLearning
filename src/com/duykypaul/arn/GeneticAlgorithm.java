@@ -250,7 +250,7 @@ public class GeneticAlgorithm {
      * @param population The population to apply mutation to
      * @return The mutated population
      */
-    public Population mutatePopulation(Population population) {
+    public Population mutatePopulationOld(Population population) {
         System.out.println("===========IN THE PROCESS OF MUTATION===========");
         // Initialize new population
         Population newPopulation = new Population(population);
@@ -322,7 +322,7 @@ public class GeneticAlgorithm {
                 });
     }
 
-    public Population mutatePopulationOld(Population population) {
+    public Population mutatePopulation(Population population) {
         System.out.println("===========IN THE PROCESS OF MUTATION===========");
         // Initialize new population
         Population newPopulation = new Population(population);
