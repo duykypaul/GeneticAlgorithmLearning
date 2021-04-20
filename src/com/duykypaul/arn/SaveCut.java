@@ -81,10 +81,10 @@ public class SaveCut {
 
     public static void testCase4() {
         List<Material> listStack = new ArrayList<>();
-        listStack.add(new Material(200, 2000));
-        listStack.add(new Material(100, 3000));
-        listStack.add(new Material(300, 5000));
-        listStack.add(new Material(400, 7000));
+        listStack.add(new Material(2000, 2000));
+        listStack.add(new Material(1000, 3000));
+        listStack.add(new Material(3000, 5000));
+        listStack.add(new Material(4000, 7000));
 
         List<Material> listStock = new ArrayList<>();
         listStock.add(new Material(1000, 11700));
@@ -93,6 +93,20 @@ public class SaveCut {
     }
 
     public static void testCase5() {
+        //1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025|1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122|5
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(2, 115));
+        listStack.add(new Material(6, 122));
+
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(1, 1313));
+        listStock.add(new Material(1, 910));
+
+
+        run(listStack, listStock);
+    }
+
+    public static void testCase6() {
         //1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025|1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122|5
         List<Material> listStack = new ArrayList<>();
         listStack.add(new Material(3, 1250));

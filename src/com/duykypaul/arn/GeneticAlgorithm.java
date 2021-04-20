@@ -4,6 +4,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class GeneticAlgorithm {
     private int populationSize;
@@ -254,6 +255,78 @@ public class GeneticAlgorithm {
         // Initialize new population
         Population newPopulation = new Population(population);
 
+        // Loop over current population by fitness
+        for (int populationIndex = 0; populationIndex < population.size(); populationIndex++) {
+            Individual individual = population.getFittest(populationIndex);
+
+            // Skip mutation if this is an elite individual
+            if (populationIndex >= this.elitismCount) {
+                // System.out.println("Mutating population member "+populationIndex);
+                // Loop over individual's genes
+                mutateIndividual(newPopulation, individual);
+
+            }
+
+            // Add individual to population
+            newPopulation.setIndividual(populationIndex, individual);
+        }
+
+        // Return mutated population
+        return newPopulation;
+    }
+
+    private void mutateIndividual(Population newPopulation, Individual individualInit) {
+        List<Integer> chromosome = individualInit.getChromosome();
+
+        List<Integer> orders = newPopulation.getOrders();
+        List<Integer> stocks = newPopulation.getStocks();
+
+        int minOrder = orders.stream().min(Integer::compare).orElse(0);
+
+        final List<Integer>[] stocksRemain = new List[]{newPopulation.getStockRemain(chromosome, stocks, orders)};
+
+        Set<Integer> uniqueStocks = new HashSet<>(chromosome);
+
+        for (Integer stockIndex : uniqueStocks) {
+            if (this.mutationRate > Math.random()) {
+                final Integer[] remainValue = {stocksRemain[0].get(stockIndex)};
+                if (remainValue[0] >= minOrder) {
+                    Set<Integer> uniqueStocksAnother = uniqueStocks.stream().filter(item -> !item.equals(stockIndex)).collect(Collectors.toSet());
+                    for (Integer stockAnotherIndex : uniqueStocksAnother) {
+                        int sumCurrentOrder = getTotalOrderByStockIndex(stockAnotherIndex, chromosome, orders, newPopulation.getCutWidth());
+
+                        if (remainValue[0] >= sumCurrentOrder) {
+                            chromosome.replaceAll(gene -> gene.equals(stockAnotherIndex) ? stockIndex : gene);
+                            remainValue[0] -= sumCurrentOrder;
+//                            uniqueStocks.remove(stockAnotherIndex);
+                        }
+                    }
+                    stocksRemain[0] = newPopulation.getStockRemain(chromosome, stocks, orders);
+                }
+            }
+        }
+        double fitness = newPopulation.getFitnessOfChromosome(chromosome, stocks, orders);
+        individualInit.setFitness(fitness);
+    }
+
+    private int getTotalOrderByStockIndex(Integer stockAnotherIndex, List<Integer> chromosome, List<Integer> orders, int cutWidth) {
+        final Boolean[] check = {false};
+        return IntStream.range(0, chromosome.size()).filter(geneIndex -> chromosome.get(geneIndex).equals(stockAnotherIndex))
+                .reduce(0, (a, b) -> {
+                    if (!check[0]) {
+                        check[0] = true;
+                        return a + orders.get(b);
+                    } else {
+                        return a + orders.get(b) + cutWidth;
+                    }
+                });
+    }
+
+    public Population mutatePopulationOld(Population population) {
+        System.out.println("===========IN THE PROCESS OF MUTATION===========");
+        // Initialize new population
+        Population newPopulation = new Population(population);
+
         int maxRandomInt = this.populationSize - 1;
         // Loop over current population by fitness
         int mutationSize = (int) (this.populationSize * this.mutationRate);
@@ -264,14 +337,15 @@ public class GeneticAlgorithm {
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
             Individual randIndividual = newPopulation.getIndividual(randInt);
-            /*Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
-            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);*/
-            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
+            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
+            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);
+//            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
         }
 
         // Return mutated population
         return newPopulation;
     }
+
 
     Integer findWorstPositionInPopulation(Population newPopulation, List<Individual> individuals, int populationSize) {
         List<Integer> orders = newPopulation.getOrders();
@@ -417,7 +491,7 @@ public class GeneticAlgorithm {
             newPopulation.getIndividuals().set(worstPosition, individualSpecial);
         }
 
-        if(null != individualFinal) {
+        if (null != individualFinal) {
             newPopulation.getIndividuals().set(worstPosition, individualFinal);
         }
     }
