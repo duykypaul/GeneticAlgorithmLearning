@@ -190,7 +190,7 @@ public class GeneticAlgorithm {
         List<Integer> stocks = newPopulation.getStocks();
 
         // Loop over current population by fitness
-        for (int populationIndex = this.elitismCount; populationIndex < population.size() * (1 - this.worstRate); populationIndex++) {
+        for (int populationIndex = this.elitismCount; populationIndex < population.size(); populationIndex++) {
             Individual parent1 = population.getFittest(populationIndex);
 
             // Apply crossover to this individual?
@@ -207,6 +207,7 @@ public class GeneticAlgorithm {
                     // Use half of parent1's genes and half of parent2's genes
                     int gene1 = offspring.getGene(geneIndex);
                     int gene2 = parent2.getGene(geneIndex);
+                    // The father's genes are different from the mother's, and the mother's genes are qualified for replacement
                     if (gene1 != gene2 && stockRemain.get(gene2) >= orders.get(geneIndex)) {
                         if (stockRemain.get(gene2).equals(orders.get(geneIndex))) {
                             stockRemain.set(gene2, 0);
@@ -337,13 +338,59 @@ public class GeneticAlgorithm {
 
             int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
             Individual randIndividual = newPopulation.getIndividual(randInt);
-            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
+//            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
+            Individual individualSpecial = mutateIndividualV2(newPopulation, randIndividual);
             mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);
 //            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
         }
 
         // Return mutated population
         return newPopulation;
+    }
+
+    private Individual mutateIndividualV2(Population newPopulation, Individual individualInit) {
+        List<Integer> chromosome = new ArrayList<>(individualInit.getChromosome());
+
+        List<Integer> orders = newPopulation.getOrders();
+        List<Integer> stocks = newPopulation.getStocks();
+
+        double fitnessBefore = individualInit.getFitness();
+
+        int minOrder = orders.stream().min(Integer::compare).orElse(0);
+
+        final List<Integer>[] stocksRemain = new List[]{newPopulation.getStockRemain(chromosome, stocks, orders)};
+
+        Set<Integer> uniqueStocksInit = IntStream.range(0, stocks.size()).boxed().collect(Collectors.toSet());
+        Set<Integer> uniqueStocks = new HashSet<>(chromosome);
+
+        for (Integer stockIndex : uniqueStocksInit) {
+//            if (this.mutationRate > Math.random()) {
+                final Integer[] remainValue = {stocksRemain[0].get(stockIndex)};
+                if (remainValue[0] >= minOrder) {
+                    Set<Integer> uniqueStocksAnother = uniqueStocks.stream().filter(item -> !item.equals(stockIndex)).collect(Collectors.toSet());
+                    for (Integer stockAnotherIndex : uniqueStocksAnother) {
+                        int sumCurrentOrder = getTotalOrderByStockIndex(stockAnotherIndex, chromosome, orders, newPopulation.getCutWidth());
+
+                        if (remainValue[0] >= sumCurrentOrder) {
+                            chromosome.replaceAll(gene -> gene.equals(stockAnotherIndex) ? stockIndex : gene);
+                            remainValue[0] -= sumCurrentOrder;
+//                            uniqueStocks.remove(stockAnotherIndex);
+                        }
+                    }
+                    stocksRemain[0] = newPopulation.getStockRemain(chromosome, stocks, orders);
+                }
+//            }
+        }
+        double fitnessAfter = newPopulation.getFitnessOfChromosome(chromosome, stocks, orders);
+        if(fitnessAfter < fitnessBefore) {
+            System.out.println(" mutateIndividualV2 success!");
+            System.out.println("fitnessBefore: " + fitnessBefore);
+            System.out.println("fitnessAfter: " + fitnessAfter);
+            Individual individual = new Individual(chromosome);
+            individual.setFitness(fitnessAfter);
+            return individual;
+        }
+        return individualInit;
     }
 
 

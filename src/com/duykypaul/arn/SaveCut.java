@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  */
 public class SaveCut {
     public static final int DEFAULT_POPULATION_SIZE = 5000;
-    public static final double MUTATION_RATE = 0.01;
+    public static final double MUTATION_RATE = 0.001;
     public static final double CROSSOVER_RATE = 0.95;
     public static final double WORST_RATE = 0.01;
     public static final int ELITISM_COUNT = 3;
