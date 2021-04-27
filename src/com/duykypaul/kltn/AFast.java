@@ -29,7 +29,7 @@ public class AFast {
        /* String order = "1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122";
         String stock = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025";
         System.out.println(getMessageFromFastCut(order, stock));*/
-        testCase11();
+        testCase12();
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
     }
@@ -230,6 +230,31 @@ public class AFast {
         listStock.add(new Stock(200, 11700, LocalDate.parse("2021-02-15")));
         listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
         listStock.add(new Stock(30, 7995, LocalDate.parse("2021-02-15")));
+
+        final List<Integer> orders = new ArrayList<>();
+        listStack.forEach(item -> {
+            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+        });
+
+        final List<Integer> stocks = new ArrayList<>();
+        listStock.forEach(item -> {
+            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
+        });
+        System.out.println(getMessageFromFastCut(orders.stream().map(String::valueOf).collect(Collectors.joining(COMMA)),
+            stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
+    }
+
+    public static void testCase12() {
+        List<Stack> listStack = new ArrayList<>();
+        listStack.add(new Stack(1, 1, 300, 1250, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 2, 200, 1200, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 3, 400, 1000, LocalDate.parse("2021-02-28")));
+
+        List<Stock> listStock = new ArrayList<>();
+        listStock.add(new Stock(600, 11700, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(100, 5623, LocalDate.parse("2021-02-12")));
+        listStock.add(new Stock(100, 1009, LocalDate.parse("2021-02-12")));
+        listStock.add(new Stock(200, 1640, LocalDate.parse("2021-02-12")));
 
         final List<Integer> orders = new ArrayList<>();
         listStack.forEach(item -> {
@@ -576,6 +601,7 @@ public class AFast {
             String arn = Arrays.stream(arrMessageConvertForStock).mapToObj(String::valueOf).collect(Collectors.joining(COMMA));
             System.out.println("Best solution: " + arn);
             System.out.println("Best value rate: " + listArn.get(0).getRateRemain());
+            System.out.println("Best value number stocks: " + listArn.get(0).getNumberMaterial());
             System.out.println("Best value remain: " + listArn.get(0).getRemain());
             System.out.println("Best value stockUsed: " + listArn.get(0).getStockUsed());
             return arn;
