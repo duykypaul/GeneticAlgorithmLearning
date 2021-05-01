@@ -30,6 +30,7 @@ public class AFast {
         String stock = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025";
         System.out.println(getMessageFromFastCut(order, stock));*/
         testCase12();
+//        testCase4();
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
     }
@@ -158,13 +159,13 @@ public class AFast {
 
     public static void testCase4() {
         List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 2000, 2000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 1000, 3000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 3000, 5000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 4000, 7000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 1, 200, 2000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 100, 3000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 300, 5000, LocalDate.parse("2021-12-28")));
+        listStack.add(new Stack(1, 2, 400, 7000, LocalDate.parse("2021-12-28")));
 
         List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(10000, 11700, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(1000, 11700, LocalDate.parse("2021-02-15")));
 
         final List<Integer> orders = new ArrayList<>();
         final List<LocalDate> ordersDate = new ArrayList<>();
@@ -249,9 +250,11 @@ public class AFast {
         listStack.add(new Stack(1, 1, 300, 1250, LocalDate.parse("2021-02-28")));
         listStack.add(new Stack(1, 2, 200, 1200, LocalDate.parse("2021-02-28")));
         listStack.add(new Stack(1, 3, 400, 1000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 3, 500, 5000, LocalDate.parse("2021-02-28")));
+        listStack.add(new Stack(1, 3, 600, 7000, LocalDate.parse("2021-02-28")));
 
         List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(600, 11700, LocalDate.parse("2021-02-15")));
+        listStock.add(new Stock(800, 11700, LocalDate.parse("2021-02-15")));
         listStock.add(new Stock(100, 5623, LocalDate.parse("2021-02-12")));
         listStock.add(new Stock(100, 1009, LocalDate.parse("2021-02-12")));
         listStock.add(new Stock(200, 1640, LocalDate.parse("2021-02-12")));
