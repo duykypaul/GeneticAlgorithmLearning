@@ -61,11 +61,10 @@ public class SaveCut {
         listStack.add(new Material(600, 7000));
 
         List<Material> listStock = new ArrayList<>();
-        listStock.add(new Material(800, 11700));
-        listStock.add(new Material(100, 5623));
+        listStock.add(new Material(1200, 11700));
+        listStock.add(new Material(300, 5623));
         listStock.add(new Material(100, 1009));
         listStock.add(new Material(200, 1640));
-
         run(listStack, listStock);
     }
 
