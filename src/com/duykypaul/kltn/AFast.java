@@ -1,5 +1,6 @@
 package com.duykypaul.kltn;
 
+import com.duykypaul.arn.Material;
 import org.javatuples.Triplet;
 
 import java.time.Duration;
@@ -22,189 +23,87 @@ public class AFast {
 //        testCase1();
 //        testCase2();
 //        testCase3();
-//        testCase4();
-
-        /*String order = "1250,1250,1250,1200,1200,1000,1000,1000,1000";
-        String stock = "5623,1009,1640,1640,13000,13000,13000";*/
-       /* String order = "1250,1250,1250,115,115,122,122,122,122,122,122,122,122,122,122";
-        String stock = "1313,910,1188,2185,2545,2545,2900,2900,3285,4329,4329,4329,8594,1025";
-        System.out.println(getMessageFromFastCut(order, stock));*/
-        testCase12();
+        testCase33();
 //        testCase4();
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end));
     }
 
     public static void testCase1() {
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 10, 3000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 20, 2000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 3, 20, 5000, LocalDate.parse("2021-02-28")));
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(2000, 2000));
+        listStack.add(new Material(1000, 3000));
 
-        listStack.add(new Stack(2, 1, 40, 5000, LocalDate.parse("2021-03-05")));
-        listStack.add(new Stack(2, 2, 50, 7000, LocalDate.parse("2021-03-05")));
-        listStack.add(new Stack(2, 3, 20, 3000, LocalDate.parse("2021-03-05")));
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(1000, 11700));
 
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(200, 11700, LocalDate.parse("2021-02-12")));
-        listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
-        listStock.add(new Stock(30, 7995, LocalDate.parse("2021-02-15")));
-
-        final List<Integer> orders = new ArrayList<>();
-        final List<LocalDate> ordersDate = new ArrayList<>();
-        listStack.forEach(item -> {
-            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
-        });
-
-        final List<Integer> stocks = new ArrayList<>();
-        final List<LocalDate> stocksDate = new ArrayList<>();
-        listStock.forEach(item -> {
-            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
-        });
-
-        final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-
-        Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
-
-        if (!triplet.getValue0().isEmpty()) {
-            outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
-        } else {
-            System.out.println("can't resolve");
-        }
-    }
-
-    public static void testCase3() {
-        /*"5623,1009,1640,1640,13000,13000,13000,13000,13000,13000,|1250,1250,1250,1200,1200,1000,1000,1000,1000|5";*/
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 3, 1250, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 2, 1200, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 3, 4, 1000, LocalDate.parse("2021-02-28")));
-
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(6, 11700, LocalDate.parse("2021-02-15")));
-        listStock.add(new Stock(1, 5623, LocalDate.parse("2021-02-12")));
-        listStock.add(new Stock(1, 1009, LocalDate.parse("2021-02-12")));
-        listStock.add(new Stock(2, 1640, LocalDate.parse("2021-02-12")));
-
-
-        final List<Integer> orders = new ArrayList<>();
-        final List<LocalDate> ordersDate = new ArrayList<>();
-        listStack.forEach(item -> {
-            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
-        });
-
-        final List<Integer> stocks = new ArrayList<>();
-        final List<LocalDate> stocksDate = new ArrayList<>();
-        listStock.forEach(item -> {
-            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
-        });
-
-        final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-
-        Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
-
-        if (!triplet.getValue0().isEmpty()) {
-            outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
-        } else {
-            System.out.println("can't resolve");
-        }
+        run(listStack, listStock);
     }
 
     public static void testCase2() {
-        /*"11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000|0"*/
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 20, 2000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 10, 3000, LocalDate.parse("2021-02-28")));
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(200, 2000));
+        listStack.add(new Material(100, 3000));
+        listStack.add(new Material(300, 5000));
+        listStack.add(new Material(400, 7000));
 
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(10, 11700, LocalDate.parse("2021-02-15")));
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(1000, 11700));
 
-        final List<Integer> orders = new ArrayList<>();
-        final List<LocalDate> ordersDate = new ArrayList<>();
-        listStack.forEach(item -> {
-            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
-        });
+        run(listStack, listStock);
+    }
 
-        final List<Integer> stocks = new ArrayList<>();
-        final List<LocalDate> stocksDate = new ArrayList<>();
-        listStock.forEach(item -> {
-            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
-        });
+    public static void testCase3() {
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(300, 1250));
+        listStack.add(new Material(200, 1200));
+        listStack.add(new Material(400, 1000));
+        listStack.add(new Material(500, 5000));
+        listStack.add(new Material(600, 7000));
 
-        final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(1200, 11700));
+        listStock.add(new Material(300, 5623));
+        listStock.add(new Material(100, 1009));
+        listStock.add(new Material(200, 1640));
+        run(listStack, listStock);
+    }
 
-        Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
+    public static void testCase33() {
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(100, 2000));
+        listStack.add(new Material(200, 1000));
+        listStack.add(new Material(300, 4000));
+        listStack.add(new Material(400, 4000));
+        listStack.add(new Material(500, 8000));
+        listStack.add(new Material(200, 2000));
 
-        if (!triplet.getValue0().isEmpty()) {
-            outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
-        } else {
-            System.out.println("can't resolve");
-        }
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(2000, 11700));
+        listStock.add(new Material(150, 8000));
+        listStock.add(new Material(300, 7995));
+
+        run(listStack, listStock);
     }
 
     public static void testCase4() {
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 200, 2000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 100, 3000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 300, 5000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 400, 7000, LocalDate.parse("2021-12-28")));
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(100, 3000));
+        listStack.add(new Material(200, 2000));
+        listStack.add(new Material(300, 5000));
+        listStack.add(new Material(400, 5000));
+        listStack.add(new Material(500, 7000));
+        listStack.add(new Material(200, 3000));
 
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(1000, 11700, LocalDate.parse("2021-02-15")));
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(2000, 11700));
+        listStock.add(new Material(150, 8000));
+        listStock.add(new Material(300, 7995));
 
-        final List<Integer> orders = new ArrayList<>();
-        final List<LocalDate> ordersDate = new ArrayList<>();
-        listStack.forEach(item -> {
-            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            ordersDate.addAll(Collections.nCopies(item.getQuantity(), item.getDeliveryDate()));
-        });
-
-        final List<Integer> stocks = new ArrayList<>();
-        final List<LocalDate> stocksDate = new ArrayList<>();
-        listStock.forEach(item -> {
-            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-            stocksDate.addAll(Collections.nCopies(item.getQuantity(), item.getImportDate()));
-        });
-
-        final List<Machine> machines = new ArrayList<>();
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-        machines.add(new Machine(0, 1, LocalDate.parse("2021-02-20"), 240));
-
-        Triplet<List<Integer>, List<Integer>, List<String>> triplet = getMessageFromGreedyAlgorithm(orders, stocks, ordersDate, stocksDate, machines);
-
-        if (!triplet.getValue0().isEmpty()) {
-            outputStatistic(triplet.getValue0(), triplet.getValue1(), triplet.getValue2(), machines, listStack, orders, stocks);
-        } else {
-            System.out.println("can't resolve");
-        }
+        run(listStack, listStock);
     }
 
-    public static void testCase5() {
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 2, 2000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 1, 3000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 3, 5000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 4, 7000, LocalDate.parse("2021-12-28")));
-
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(10, 11700, LocalDate.parse("2021-02-15")));
-
+    public static void run(List<Material> listStack, List<Material> listStock) {
         final List<Integer> orders = new ArrayList<>();
         listStack.forEach(item -> {
             orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
@@ -215,61 +114,7 @@ public class AFast {
             stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
         });
         System.out.println(getMessageFromFastCut(orders.stream().map(String::valueOf).collect(Collectors.joining(COMMA)),
-            stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
-    }
-
-    public static void testCase11() {
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 10, 3000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 20, 2000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 30, 5000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 40, 5000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 50, 7000, LocalDate.parse("2021-12-28")));
-        listStack.add(new Stack(1, 2, 20, 3000, LocalDate.parse("2021-12-28")));
-
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(200, 11700, LocalDate.parse("2021-02-15")));
-        listStock.add(new Stock(15, 8000, LocalDate.parse("2021-02-15")));
-        listStock.add(new Stock(30, 7995, LocalDate.parse("2021-02-15")));
-
-        final List<Integer> orders = new ArrayList<>();
-        listStack.forEach(item -> {
-            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-        });
-
-        final List<Integer> stocks = new ArrayList<>();
-        listStock.forEach(item -> {
-            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-        });
-        System.out.println(getMessageFromFastCut(orders.stream().map(String::valueOf).collect(Collectors.joining(COMMA)),
-            stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
-    }
-
-    public static void testCase12() {
-        List<Stack> listStack = new ArrayList<>();
-        listStack.add(new Stack(1, 1, 300, 1250, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 2, 200, 1200, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 3, 400, 1000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 3, 500, 5000, LocalDate.parse("2021-02-28")));
-        listStack.add(new Stack(1, 3, 600, 7000, LocalDate.parse("2021-02-28")));
-
-        List<Stock> listStock = new ArrayList<>();
-        listStock.add(new Stock(800, 11700, LocalDate.parse("2021-02-15")));
-        listStock.add(new Stock(100, 5623, LocalDate.parse("2021-02-12")));
-        listStock.add(new Stock(100, 1009, LocalDate.parse("2021-02-12")));
-        listStock.add(new Stock(200, 1640, LocalDate.parse("2021-02-12")));
-
-        final List<Integer> orders = new ArrayList<>();
-        listStack.forEach(item -> {
-            orders.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-        });
-
-        final List<Integer> stocks = new ArrayList<>();
-        listStock.forEach(item -> {
-            stocks.addAll(Collections.nCopies(item.getQuantity(), item.getLength()));
-        });
-        System.out.println(getMessageFromFastCut(orders.stream().map(String::valueOf).collect(Collectors.joining(COMMA)),
-            stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
+                stocks.stream().map(String::valueOf).collect(Collectors.joining(COMMA))));
     }
 
     private static void outputStatistic(List<Integer> chromosome, List<Integer> chromosomeMachine, List<String> chromosomeTime, List<Machine> machines, List<Stack> stacks, List<Integer> orders, List<Integer> stocks) {

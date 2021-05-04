@@ -1,7 +1,5 @@
 package com.duykypaul.arn;
 
-import java.time.LocalDate;
-
 public class Material {
     private int quantity;
     private int length;

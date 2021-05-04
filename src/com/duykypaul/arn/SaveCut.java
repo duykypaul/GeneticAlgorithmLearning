@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
  */
 public class SaveCut {
     public static final int DEFAULT_POPULATION_SIZE = 5000;
-    public static final double MUTATION_RATE = 0.001;
+    public static final double MUTATION_RATE = 0.01;
     public static final double CROSSOVER_RATE = 0.95;
     public static final double WORST_RATE = 0.01;
     public static final int ELITISM_COUNT = 3;
-    public static final int RUNNING_TIME_LIMIT = 200;
-    public static final int GENERATION_LIMIT = 3000;
+    public static final int RUNNING_TIME_LIMIT = 9000;
+    public static final int GENERATION_LIMIT = 100;
     public static final int GENERATION_SAME_LIMIT = 300;
     public static final int BLADE_THICKNESS = 5;
     public static final String COMMA = ",";
@@ -29,30 +29,38 @@ public class SaveCut {
         String inputContent3 = "11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700,11700|2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,2000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,3000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,5000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000,7000|0";
 
 //        testCase1();
-        testCase2();
+//        testCase2();
 //        testCase3();
+        testCase33();
 //        testCase4();
 //        testCase5();
     }
 
     public static void testCase1() {
         List<Material> listStack = new ArrayList<>();
-        listStack.add(new Material(10, 3000));
-        listStack.add(new Material(20, 2000));
-        listStack.add(new Material(30, 5000));
-        listStack.add(new Material(40, 5000));
-        listStack.add(new Material(50, 7000));
-        listStack.add(new Material(20, 3000));
+        listStack.add(new Material(2000, 2000));
+        listStack.add(new Material(1000, 3000));
 
         List<Material> listStock = new ArrayList<>();
-        listStock.add(new Material(200, 11700));
-        listStock.add(new Material(15, 8000));
-        listStock.add(new Material(30, 7995));
+        listStock.add(new Material(1000, 11700));
 
         run(listStack, listStock);
     }
 
     public static void testCase2() {
+        List<Material> listStack = new ArrayList<>();
+        listStack.add(new Material(200, 2000));
+        listStack.add(new Material(100, 3000));
+        listStack.add(new Material(300, 5000));
+        listStack.add(new Material(400, 7000));
+
+        List<Material> listStock = new ArrayList<>();
+        listStock.add(new Material(1000, 11700));
+
+        run(listStack, listStock);
+    }
+
+    public static void testCase3() {
         List<Material> listStack = new ArrayList<>();
         listStack.add(new Material(300, 1250));
         listStack.add(new Material(200, 1200));
@@ -68,26 +76,36 @@ public class SaveCut {
         run(listStack, listStock);
     }
 
-    public static void testCase3() {
+    public static void testCase33() {
         List<Material> listStack = new ArrayList<>();
-        listStack.add(new Material(2000, 2000));
-        listStack.add(new Material(1000, 3000));
+        listStack.add(new Material(100, 2000));
+        listStack.add(new Material(200, 1000));
+        listStack.add(new Material(300, 4000));
+        listStack.add(new Material(400, 4000));
+        listStack.add(new Material(500, 8000));
+        listStack.add(new Material(200, 2000));
 
         List<Material> listStock = new ArrayList<>();
-        listStock.add(new Material(1000, 11700));
+        listStock.add(new Material(5000, 11700));
+        listStock.add(new Material(150, 9000));
+        listStock.add(new Material(300, 7995));
 
         run(listStack, listStock);
     }
 
     public static void testCase4() {
         List<Material> listStack = new ArrayList<>();
-        listStack.add(new Material(200, 2000));
         listStack.add(new Material(100, 3000));
+        listStack.add(new Material(200, 2000));
         listStack.add(new Material(300, 5000));
-        listStack.add(new Material(400, 7000));
+        listStack.add(new Material(400, 5000));
+        listStack.add(new Material(500, 7000));
+        listStack.add(new Material(200, 3000));
 
         List<Material> listStock = new ArrayList<>();
-        listStock.add(new Material(1000, 11700));
+        listStock.add(new Material(2000, 11700));
+        listStock.add(new Material(150, 8000));
+        listStock.add(new Material(300, 7995));
 
         run(listStack, listStock);
     }
@@ -212,6 +230,7 @@ public class SaveCut {
         Individual best = population.getFittest(0);
         System.out.println("Best solution: " + best.getChromosome().stream().map(String::valueOf).collect(Collectors.joining(",")));
         System.out.println("Best value remain: " + best.getFitness());
+        System.out.println("Best value number stocks: " + best.getChromosome().stream().distinct().count());
         System.out.println();
     }
 }

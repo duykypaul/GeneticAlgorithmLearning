@@ -3,6 +3,8 @@ package com.duykypaul.arn;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -323,6 +325,12 @@ public class GeneticAlgorithm {
                 });
     }
 
+    private int getTotalOrderByStockIndex1(Integer stockAnotherIndex, List<Integer> chromosome, List<Integer> orders, int cutWidth) {
+        AtomicInteger check = new AtomicInteger(0);
+        return IntStream.range(0, chromosome.size()).filter(geneIndex -> chromosome.get(geneIndex).equals(stockAnotherIndex))
+                .reduce(0, (a, b) -> a + orders.get(b) + check.getAndIncrement() == 0 ? 0 : cutWidth);
+    }
+
     public Population mutatePopulation(Population population) {
         System.out.println("===========IN THE PROCESS OF MUTATION===========");
         // Initialize new population
@@ -331,19 +339,22 @@ public class GeneticAlgorithm {
         int maxRandomInt = this.populationSize - 1;
         // Loop over current population by fitness
         int mutationSize = (int) (this.populationSize * this.mutationRate);
+//        int mutationSize = this.populationSize;
         for (int i = 0; i < mutationSize; ++i) {
-            Integer worstPosition = findWorstPositionInPopulation(newPopulation, newPopulation.getIndividuals(), this.populationSize);
-            Individual worstIndividual = newPopulation.getIndividual(worstPosition);
-            double worstFitness = worstIndividual.getFitness();
+            if(this.mutationRate > Math.random()) {
+                Integer worstPosition = findWorstPositionInPopulation(newPopulation, newPopulation.getIndividuals(), this.populationSize);
+                Individual worstIndividual = newPopulation.getIndividual(worstPosition);
+                double worstFitness = worstIndividual.getFitness();
 
-            int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
-            Individual randIndividual = newPopulation.getIndividual(randInt);
+                int randInt = getRandomNumber(this.elitismCount + 1, maxRandomInt);
+                Individual randIndividual = newPopulation.getIndividual(randInt);
 
             /*Individual individualSpecial = mutateIndividualV2(newPopulation, randIndividual);
-            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);*/
+            mutateV2(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness(), individualSpecial);
 
-            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);
-            mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
+            Individual individualSpecial = mutateSpecial(newPopulation, randIndividual);*/
+                mutate(newPopulation, randIndividual.getChromosome(), worstPosition, worstFitness, randIndividual.getFitness());
+            }
         }
 
         // Return mutated population
