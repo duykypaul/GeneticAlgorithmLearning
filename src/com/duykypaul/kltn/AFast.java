@@ -79,7 +79,7 @@ public class AFast {
         listStack.add(new Material(200, 2000));
 
         List<Material> listStock = new ArrayList<>();
-        listStock.add(new Material(2000, 11700));
+        listStock.add(new Material(1000, 11700));
         listStock.add(new Material(150, 8000));
         listStock.add(new Material(300, 7995));
 

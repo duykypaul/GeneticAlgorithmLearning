@@ -87,7 +87,7 @@ public class SaveCut {
 
         List<Material> listStock = new ArrayList<>();
         listStock.add(new Material(5000, 11700));
-        listStock.add(new Material(150, 9000));
+        listStock.add(new Material(150, 8000));
         listStock.add(new Material(300, 7995));
 
         run(listStack, listStock);
