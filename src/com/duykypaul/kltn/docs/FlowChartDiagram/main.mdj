@@ -207,7 +207,7 @@
 									"left": 74,
 									"top": 642,
 									"width": 106.2216796875,
-									"height": 26,
+									"height": 39,
 									"text": "Cắt theo thanh đơn hàng dài nhất có thể",
 									"wordWrap": true
 								}
@@ -1128,9 +1128,9 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 70.25,
+									"left": 72.25,
 									"top": 357.5,
-									"width": 76.5,
+									"width": 80.5,
 									"height": 91,
 									"text": "Có thanh nguyên liệu dài hơn thanh đơn hàng",
 									"wordWrap": true
@@ -1140,7 +1140,7 @@
 							"font": "Arial;13;0",
 							"left": 32,
 							"top": 312,
-							"width": 153,
+							"width": 161,
 							"height": 182,
 							"nameLabel": {
 								"$ref": "AAAAAAF4c+9o/9fj6RA="
@@ -1363,7 +1363,7 @@
 								"$ref": "AAAAAAF4c+9o/tfitTc="
 							},
 							"lineStyle": 2,
-							"points": "184:376;496:376;496:181",
+							"points": "192:376;496:376;496:181",
 							"nameLabel": {
 								"$ref": "AAAAAAF4c/FcQdg9FP8="
 							}
@@ -1389,7 +1389,7 @@
 									"left": 439,
 									"top": 530,
 									"width": 112.06982421875,
-									"height": 13,
+									"height": 26,
 									"text": "Tìm phương án cắt",
 									"wordWrap": true
 								}
@@ -1507,7 +1507,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 311,
+									"left": 315,
 									"top": 409,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -1527,7 +1527,7 @@
 								"$ref": "AAAAAAF4iz1OL/D6MFQ="
 							},
 							"lineStyle": 2,
-							"points": "440:400;184:400",
+							"points": "440:400;192:400",
 							"nameLabel": {
 								"$ref": "AAAAAAF4iz3IX/EI7xA="
 							}
@@ -3045,7 +3045,7 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 252.542236328125,
+									"left": 260.542236328125,
 									"top": 965,
 									"width": 57.08447265625,
 									"height": 26,
@@ -3055,7 +3055,7 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 224,
+							"left": 232,
 							"top": 952,
 							"width": 114.1689453125,
 							"height": 52,
@@ -3368,7 +3368,7 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 393,
+									"left": 397,
 									"top": 955,
 									"width": 7.94091796875,
 									"height": 13,
@@ -3390,7 +3390,7 @@
 								"$ref": "AAAAAAF4fpYEU57ZUGM="
 							},
 							"lineStyle": 2,
-							"points": "337:976;456:976",
+							"points": "345:976;456:976",
 							"nameLabel": {
 								"$ref": "AAAAAAF4fsUC1qAXHlA="
 							}
@@ -3920,7 +3920,7 @@
 								"$ref": "AAAAAAF4fpYEU57ZUGM="
 							},
 							"lineStyle": 2,
-							"points": "224:977;160:977;160:707;224:707",
+							"points": "232:977;160:977;160:707;224:707",
 							"nameLabel": {
 								"$ref": "AAAAAAF4ftVYW6EINJk="
 							}
@@ -4895,7 +4895,7 @@
 											"left": 234,
 											"top": 354,
 											"width": 109,
-											"height": 13,
+											"height": 26,
 											"text": "Phương án hiện tại",
 											"wordWrap": true
 										}
@@ -6464,7 +6464,7 @@
 									"left": 514,
 									"top": 530,
 									"width": 106.2216796875,
-									"height": 26,
+									"height": 39,
 									"text": "Khởi tạo các giá trị mục tiêu tạm thời",
 									"wordWrap": true
 								}
@@ -6500,7 +6500,7 @@
 									"left": 506,
 									"top": 266,
 									"width": 106.2216796875,
-									"height": 26,
+									"height": 39,
 									"text": "Khởi tạo giá trị biến lặp nhiễm sắc thể",
 									"wordWrap": true
 								}
@@ -6678,7 +6678,7 @@
 									"left": 770,
 									"top": 530,
 									"width": 106.2216796875,
-									"height": 26,
+									"height": 39,
 									"text": "Khởi tạo giá trị biến lặp nguyên liệu",
 									"wordWrap": true
 								}
@@ -6714,7 +6714,7 @@
 									"left": 978,
 									"top": 858,
 									"width": 106.2216796875,
-									"height": 26,
+									"height": 39,
 									"text": "Cập nhật các giá trị mục tiêu tạm thời",
 									"wordWrap": true
 								}
@@ -8194,7 +8194,7 @@
 											"left": 234,
 											"top": 354,
 											"width": 109,
-											"height": 13,
+											"height": 26,
 											"text": "Phương án hiện tại",
 											"wordWrap": true
 										}
@@ -9786,9 +9786,9 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 270.25,
+									"left": 272.25,
 									"top": 46.25,
-									"width": 28.5,
+									"width": 32.5,
 									"height": 28.5,
 									"text": "Bắt đầu",
 									"wordWrap": true
@@ -9798,7 +9798,7 @@
 							"font": "Arial;13;0",
 							"left": 256,
 							"top": 32,
-							"width": 57,
+							"width": 65,
 							"height": 57,
 							"nameLabel": {
 								"$ref": "AAAAAAF4iTOa/02jVM8="
@@ -9858,9 +9858,9 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 242,
+									"left": 234,
 									"top": 138,
-									"width": 106.2216796875,
+									"width": 114.2216796875,
 									"height": 13,
 									"text": "Chọn cá thể cha",
 									"wordWrap": true
@@ -9868,9 +9868,9 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 232,
+							"left": 224,
 							"top": 128,
-							"width": 126.2216796875,
+							"width": 134.2216796875,
 							"height": 46,
 							"nameLabel": {
 								"$ref": "AAAAAAF4iTVn3U4rwpA="
@@ -9896,7 +9896,7 @@
 									"font": "Arial;13;0",
 									"left": 234,
 									"top": 234,
-									"width": 106.2216796875,
+									"width": 117,
 									"height": 13,
 									"text": "Chọn  cá thể mẹ",
 									"wordWrap": true
@@ -9906,7 +9906,7 @@
 							"font": "Arial;13;0",
 							"left": 224,
 							"top": 224,
-							"width": 126.2216796875,
+							"width": 137,
 							"height": 33,
 							"nameLabel": {
 								"$ref": "AAAAAAF4iTbufU5Iaeg="
@@ -9930,8 +9930,8 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 244.542236328125,
-									"top": 474,
+									"left": 252.542236328125,
+									"top": 506,
 									"width": 57.08447265625,
 									"height": 52,
 									"text": "Cá thể con lai tạo tốt hơn",
@@ -9940,8 +9940,8 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 216,
-							"top": 448,
+							"left": 224,
+							"top": 480,
 							"width": 114.1689453125,
 							"height": 104,
 							"nameLabel": {
@@ -10107,7 +10107,7 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 256,
+									"left": 264,
 									"top": 424,
 									"width": 7.94091796875,
 									"height": 13,
@@ -10129,7 +10129,7 @@
 								"$ref": "AAAAAAF4iVb4q06R0kQ="
 							},
 							"lineStyle": 2,
-							"points": "272:448;272:392;456:392",
+							"points": "280:480;280:392;456:392",
 							"nameLabel": {
 								"$ref": "AAAAAAF4iVjlDk7YzIg="
 							}
@@ -10155,12 +10155,12 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 256,
-									"top": 554,
+									"left": 264,
+									"top": 615,
 									"width": 7.94091796875,
 									"height": 13,
-									"alpha": -4.6217291625408174,
-									"distance": 143.58969322343438,
+									"alpha": -4.5551610483693885,
+									"distance": 83.02409288875127,
 									"hostEdge": {
 										"$ref": "AAAAAAF4iVkX4E7hYiE="
 									},
@@ -10177,7 +10177,7 @@
 								"$ref": "AAAAAAF4iVb4q06R0kQ="
 							},
 							"lineStyle": 2,
-							"points": "272:551;272:704;464:704",
+							"points": "280:583;280:704;464:704",
 							"nameLabel": {
 								"$ref": "AAAAAAF4iVkX4E7i+H0="
 							}
@@ -10285,7 +10285,7 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 299,
+									"left": 302,
 									"top": 101,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -10305,7 +10305,7 @@
 								"$ref": "AAAAAAF4iTOa/02iSdQ="
 							},
 							"lineStyle": 2,
-							"points": "285:88;285:128",
+							"points": "288:88;288:128",
 							"nameLabel": {
 								"$ref": "AAAAAAF4i2QTt/XoOYc="
 							}
@@ -10364,8 +10364,8 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 466,
-									"top": 474,
+									"left": 474,
+									"top": 506,
 									"width": 106.2216796875,
 									"height": 39,
 									"text": "Thử thay bằng đoạn gene tương ứng của mẹ",
@@ -10374,8 +10374,8 @@
 							],
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
-							"left": 456,
-							"top": 464,
+							"left": 464,
+							"top": 496,
 							"width": 126.2216796875,
 							"height": 59,
 							"nameLabel": {
@@ -10447,9 +10447,9 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 716.542236328125,
-									"top": 375.5,
+									"top": 371.5,
 									"width": 57.08447265625,
-									"height": 15,
+									"height": 23,
 									"text": "Tìm thấy",
 									"wordWrap": true
 								}
@@ -10457,9 +10457,9 @@
 							"fillColor": "#d8f2ff",
 							"font": "Arial;13;0",
 							"left": 688,
-							"top": 368,
+							"top": 360,
 							"width": 114.1689453125,
-							"height": 30,
+							"height": 46,
 							"nameLabel": {
 								"$ref": "AAAAAAF4i2tgffYyj7k="
 							}
@@ -10485,8 +10485,8 @@
 									},
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
-									"left": 724,
-									"top": 502,
+									"left": 732,
+									"top": 534,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -10507,7 +10507,7 @@
 								"$ref": "AAAAAAF4i2tgfPYxhtw="
 							},
 							"lineStyle": 2,
-							"points": "728:397;728:493;581:493",
+							"points": "736:405;736:525;589:525",
 							"nameLabel": {
 								"$ref": "AAAAAAF4i2u/N/Y9h/s="
 							}
@@ -10533,8 +10533,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": 391,
-									"top": 505,
+									"left": 399,
+									"top": 537,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -10553,7 +10553,7 @@
 								"$ref": "AAAAAAF4i2lxAvYP1Ug="
 							},
 							"lineStyle": 2,
-							"points": "456:496;329:496",
+							"points": "464:528;337:528",
 							"nameLabel": {
 								"$ref": "AAAAAAF4i2v0mPZHg34="
 							}
@@ -10580,7 +10580,7 @@
 									"fillColor": "#d8f2ff",
 									"font": "Arial;13;0",
 									"left": 760,
-									"top": 523,
+									"top": 527,
 									"width": 7.94091796875,
 									"height": 13,
 									"alpha": 1.5707963267948966,
@@ -10601,7 +10601,7 @@
 								"$ref": "AAAAAAF4i2tgfPYxhtw="
 							},
 							"lineStyle": 2,
-							"points": "748:397;748:664",
+							"points": "748:405;748:664",
 							"nameLabel": {
 								"$ref": "AAAAAAF4i2w2DvZQepQ="
 							}
@@ -12405,7 +12405,7 @@
 											"left": 234,
 											"top": 354,
 											"width": 109,
-											"height": 13,
+											"height": 26,
 											"text": "Phương án hiện tại",
 											"wordWrap": true
 										}
